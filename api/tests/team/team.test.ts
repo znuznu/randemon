@@ -1,0 +1,37 @@
+import teamService from '../../src/team/teamService';
+import {
+    mutipleGenerationsFixtures,
+    MultipleGenerationsFixture
+} from './multipleGenerations.fixture';
+import {
+    SingleGenerationFixture,
+    singleGenerationFixtures
+} from './singleGeneration.fixture';
+
+describe('in team', () => {
+    singleGenerationFixtures.forEach(
+        (fixture: SingleGenerationFixture, index: number) => {
+            it('should return the expected pokemon indexes for a single generation', () => {
+                const indexes = teamService.getIndexesOfOneGeneration(
+                    fixture.generation
+                );
+
+                expect(indexes).toStrictEqual(fixture.expectedIndexes);
+            });
+        }
+    );
+
+    mutipleGenerationsFixtures.forEach(
+        (fixture: MultipleGenerationsFixture, index: number) => {
+            describe(`fixture #${index}`, () => {
+                it('should return the expected pokemon indexes for multiple generations', () => {
+                    const indexes = teamService.getIndexesOfMultipleGenerations(
+                        fixture.generations
+                    );
+
+                    expect(indexes).toStrictEqual(fixture.expectedIndexes);
+                });
+            });
+        }
+    );
+});
