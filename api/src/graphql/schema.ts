@@ -16,6 +16,30 @@ const schema = buildSchema(`
         }
 
         """
+        The Pokémon types.
+        """
+        enum Type {
+            NORMAL,
+            FIRE,
+            FIGHTING,
+            WATER,
+            FLYING,
+            GRASS,
+            POISON,
+            ELECTRIC,
+            GROUND,
+            PSYCHIC,
+            ROCK,
+            ICE,
+            BUG,
+            DRAGON,
+            GHOST,
+            DARK,
+            STEEL,
+            FAIRY
+        }
+
+        """
         Pokémon team parameters.
         """
         input TeamParameters {
@@ -29,7 +53,10 @@ const schema = buildSchema(`
         Our favorite pocket monsters.
         """
         type Pokemon {
+            id: Int
             name: String
+            frontSprite: String
+            types: [Type]
         }
 
         """
@@ -40,7 +67,7 @@ const schema = buildSchema(`
         }
 
         type Query {
-            getTeam(parameters: TeamParameters): Team
+            getRandomTeam(parameters: TeamParameters): Team
         }
 
         schema {

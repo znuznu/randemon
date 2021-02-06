@@ -6,6 +6,6 @@ export interface Team {
 }
 
 export interface TeamParameters {
-    generations?: Generation[];
-    numbersOfPokemons?: number;
+    generations: Generation[];
+    numbersOfPokemons: number;
 }

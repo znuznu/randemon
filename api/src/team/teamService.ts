@@ -1,6 +1,9 @@
-import Generation from '../models/generation';
-import { TeamParameters } from '../models/team';
-import { range } from '../utils';
+import Generation from '../models/randemon/generation';
+import Pokemon from '../models/randemon/pokemon';
+import { Team, TeamParameters } from '../models/randemon/team';
+import Type from '../models/randemon/type';
+import { randInRange, range } from '../utils';
+import teamRequests from './teamRequests';
 
 interface Range {
     from: number;
@@ -21,8 +24,8 @@ const teamService = {
         ]);
 
         return range(
-            (genRangeIndexes.get(generation) as Range).from,
-            (genRangeIndexes.get(generation) as Range).to
+            genRangeIndexes.get(generation)!.from,
+            genRangeIndexes.get(generation)!.to
         );
     },
     getIndexesOfMultipleGenerations: (generations: Generation[]): number[] => {
@@ -34,10 +37,39 @@ const teamService = {
 
         return indexes;
     },
-    generateTeam: async (parameters: TeamParameters) => {
-        const { generations, numbersOfPokemons } = parameters;
+    generateTeam: async (parameters: Partial<TeamParameters>) => {
+        const generations = (parameters.generations as Generation[]) ?? [
+            Generation.I,
+            Generation.II,
+            Generation.III,
+            Generation.IV,
+            Generation.V,
+            Generation.VI,
+            Generation.VII,
+            Generation.VIII
+        ];
 
-        return { pokemons: [{ name: 'Pikachu' }] };
+        let numbersOfPokemons = parameters.numbersOfPokemons || 6;
+
+        const team: Team = {
+            pokemons: []
+        };
+
+        let indexes = teamService.getIndexesOfMultipleGenerations(generations);
+
+        while (numbersOfPokemons) {
+            const index = indexes.splice(randInRange(0, indexes.length), 1);
+
+            const pokemon = await teamRequests.getPokemonByNameOrId(
+                String(index)
+            );
+
+            team.pokemons.push(pokemon);
+
+            numbersOfPokemons--;
+        }
+
+        return team;
     }
 };
 
