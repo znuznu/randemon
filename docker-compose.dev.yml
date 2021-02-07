@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  randemon-api:
-    container_name: randemon-api
-    build: 
-      context: ./api
-      dockerfile: ./Dockerfile
+  randemon-cache:
     ports:
-      - '3000:3000'
-    environment:
-      - NODE_ENV=development
-      - PORT=3000
-    networks:
-      - randemon-network
-
-networks:
-  randemon-network:
+      - '6379:6379'

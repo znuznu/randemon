@@ -1,7 +1,8 @@
+import { RedisError } from 'redis';
+import CacheService from '../cache/cacheService';
+import { GENERATIONS } from '../constants';
 import Generation from '../models/randemon/generation';
-import Pokemon from '../models/randemon/pokemon';
 import { Team, TeamParameters } from '../models/randemon/team';
-import Type from '../models/randemon/type';
 import { randInRange, range } from '../utils';
 import teamRequests from './teamRequests';
 
@@ -9,6 +10,9 @@ interface Range {
     from: number;
     to: number;
 }
+
+const REDIS_URL = process.env.REDIS_URL || 'localhost';
+const cacheService = new CacheService(REDIS_URL);
 
 const teamService = {
     getIndexesOfOneGeneration: (generation: Generation): number[] => {
@@ -40,17 +44,7 @@ const teamService = {
         return indexes;
     },
     generateTeam: async (parameters: Partial<TeamParameters>) => {
-        const generations = (parameters.generations as Generation[]) ?? [
-            Generation.I,
-            Generation.II,
-            Generation.III,
-            Generation.IV,
-            Generation.V,
-            Generation.VI,
-            Generation.VII,
-            Generation.VIII
-        ];
-
+        const generations = (parameters.generations as Generation[]) ?? GENERATIONS;
         let numbersOfPokemons = parameters.numbersOfPokemons || 6;
 
         const team: Team = {
@@ -62,13 +56,29 @@ const teamService = {
         while (numbersOfPokemons) {
             const index = indexes.splice(randInRange(0, indexes.length), 1);
 
-            const pokemon = await teamRequests.getPokemonByNameOrId(
-                String(index)
-            );
+            await cacheService
+                .getAsync(`pokemon:id:${index}`)
+                .then(async (pokemonFromCache: string | null) => {
+                    if (pokemonFromCache) {
+                        team.pokemons.push(JSON.parse(pokemonFromCache));
+                    } else {
+                        console.log('aie');
+                        const pokemon = await teamRequests.getPokemonByNameOrId(
+                            String(index)
+                        );
 
-            if (pokemon) {
-                team.pokemons.push(pokemon);
-            }
+                        if (pokemon) {
+                            team.pokemons.push(pokemon);
+                            cacheService.client.set(
+                                `pokemon:id:${index}`,
+                                JSON.stringify(pokemon)
+                            );
+                        }
+                    }
+                })
+                .catch((error: RedisError) => {
+                    console.error(error);
+                });
 
             numbersOfPokemons--;
         }
