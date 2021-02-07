@@ -29,6 +29,8 @@ const teamService = {
         );
     },
     getIndexesOfMultipleGenerations: (generations: Generation[]): number[] => {
+        generations = Array.from(new Set(generations));
+
         let indexes: number[] = [];
 
         generations.forEach((gen: Generation) => {
