@@ -64,7 +64,9 @@ const teamService = {
                 String(index)
             );
 
-            team.pokemons.push(pokemon);
+            if (pokemon) {
+                team.pokemons.push(pokemon);
+            }
 
             numbersOfPokemons--;
         }

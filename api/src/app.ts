@@ -5,7 +5,12 @@ import schema from './graphql/schema';
 import rootResolver from './graphql/rootResolver';
 
 const app = express();
-const port = 3000;
+const PORT = process.env.API_PORT || 3000;
+
+process.on('uncaughtException', err => {
+    console.log(`[Uncaught Exception]: ${err.message}`)
+    process.exit(1)
+});
 
 app.use(
     '/graphql',
@@ -16,6 +21,6 @@ app.use(
     })
 );
 
-app.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`API listening on port ${PORT}`);
 });

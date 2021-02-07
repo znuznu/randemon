@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { API_URL } from '../constants';
 import { mapPokemonFromAPI } from '../mappers/pokemonMapper';
 import endpoints from '../pokeapi/endpoints';
@@ -16,6 +16,13 @@ const teamRequests = {
             .then((response: AxiosResponse) => {
                 const pokemonFromAPI: PokemonPAPI = response.data;
                 return mapPokemonFromAPI(pokemonFromAPI);
+            })
+            .catch((error: AxiosError) => {
+                console.error('[ERROR]');
+                console.error(error.message);
+                console.error(
+                    `An error occured while getting Pokémon with name or id ${nameOrId}`
+                );
             });
     }
 };
