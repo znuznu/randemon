@@ -11,8 +11,7 @@ interface Range {
     to: number;
 }
 
-const REDIS_URL = process.env.REDIS_URL || 'localhost';
-const cacheService = new CacheService(REDIS_URL);
+const cacheService = new CacheService();
 
 const teamService = {
     getIndexesOfOneGeneration: (generation: Generation): number[] => {
@@ -62,7 +61,6 @@ const teamService = {
                     if (pokemonFromCache) {
                         team.pokemons.push(JSON.parse(pokemonFromCache));
                     } else {
-                        console.log('aie');
                         const pokemon = await teamRequests.getPokemonByNameOrId(
                             String(index)
                         );

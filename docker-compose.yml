@@ -6,6 +6,8 @@ services:
     image: redis
     volumes:
       - cache-data:/data
+    networks:
+      - randemon-network
   randemon-api:
     container_name: randemon-api
     build: 

@@ -5,9 +5,9 @@ class CacheService {
     public client: RedisClient;
     public _getAsync: any;
 
-    constructor(host: string, port: number = 6379) {
+    constructor(port: number = 6379) {
         this.client = redis.createClient({
-            host: host,
+            host: process.env.REDIS_SERVICE || 'localhost',
             port
         });
 
