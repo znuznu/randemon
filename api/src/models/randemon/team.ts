@@ -1,11 +1,16 @@
 import Generation from './generation';
 import Pokemon from './pokemon';
+import Type from './type';
 
 export interface Team {
-    pokemons: Pokemon[];
+    pokemon: Pokemon[];
 }
 
-export interface TeamParameters {
+export interface TeamConfig {
     generations: Generation[];
-    numbersOfPokemons: number;
+    numbersOfPokemon: number;
+}
+
+export interface TeamConfigWithType extends TeamConfig {
+    type: Type;
 }

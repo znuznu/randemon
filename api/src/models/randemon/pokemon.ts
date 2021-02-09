@@ -3,6 +3,6 @@ import Type from './type';
 export default interface Pokemon {
     id: number;
     name: string;
-    frontSprite: string;
+    frontSprite?: string;
     types: [Type, Type?];
 }

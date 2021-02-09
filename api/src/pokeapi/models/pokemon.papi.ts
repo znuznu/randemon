@@ -1,9 +1,14 @@
+import { NamedAPIResourcePAPI } from './common.papi';
 import SpritePAPI from './sprite.papi';
-import TypePAPI from './type.papi';
 
-export default interface PokemonPAPI {
+export interface PokemonTypePAPI {
+    slot: number;
+    type: NamedAPIResourcePAPI;
+}
+
+export interface PokemonPAPI {
     id: number;
     name: string;
     sprites: SpritePAPI;
-    types: [TypePAPI, TypePAPI?];
+    types: [PokemonTypePAPI, PokemonTypePAPI?];
 }

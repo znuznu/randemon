@@ -1,7 +1,11 @@
-export default interface TypePAPI {
+import { NamedAPIResourcePAPI } from './common.papi';
+
+export interface TypePokemonPAPI {
     slot: number;
-    type: {
-        name: string;
-        url: string;
-    }
+    pokemon: NamedAPIResourcePAPI;
+}
+
+export interface TypePAPI {
+    name: string;
+    pokemon: TypePokemonPAPI[];
 }

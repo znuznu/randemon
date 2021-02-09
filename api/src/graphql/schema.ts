@@ -42,32 +42,34 @@ const schema = buildSchema(`
         """
         Pokémon team parameters.
         """
-        input TeamParameters {
+        input TeamConfig {
             "Of which generations should come Pokémons of the team"
             generations: [Generation]
             "How many Pokémons we want in the team"
-            numbersOfPokemons: Int
+            numbersOfPokemon: Int
+            "The type of the Pokemon of the team."
+            type: Type
         }
 
         """
         Our favorite pocket monsters.
         """
         type Pokemon {
-            id: Int
-            name: String
+            id: Int!
+            name: String!
             frontSprite: String
-            types: [Type]
+            types: [Type]!
         }
 
         """
         A generated Pokémon team.
         """
         type Team {
-            pokemons: [Pokemon]!
+            pokemon: [Pokemon]!
         }
 
         type Query {
-            getRandomTeam(parameters: TeamParameters): Team
+            getRandomTeam(parameters: TeamConfig): Team
         }
 
         schema {

@@ -1,6 +1,6 @@
 import Pokemon from '../models/randemon/pokemon';
 import Type from '../models/randemon/type';
-import PokemonPAPI from '../pokeapi/models/pokemon.papi';
+import { PokemonPAPI } from '../pokeapi/models/pokemon.papi';
 
 export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
     const { id, name } = pokemonPAPI;
