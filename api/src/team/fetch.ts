@@ -1,15 +1,15 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { API_URL } from '../constants';
 import { mapPokemonFromAPI } from '../mappers/pokemonMapper';
-import { PokemonPAPI } from '../pokeapi/models/pokemon.papi';
-import { TypePAPI } from '../pokeapi/models/type.papi';
+import { PokemonPAPI } from '../models/pokeapi/pokemon.papi';
+import { TypePAPI, TypePokemonPAPI } from '../models/pokeapi/type.papi';
 import { UrlBuilder } from '../utils';
 import endpoints from '../pokeapi/endpoints';
 import Pokemon from '../models/randemon/pokemon';
-import teamService from './teamService';
 import Type from '../models/randemon/type';
+import { getPokemonByName } from './getters';
 
-async function fetchPokemonByNameOrId(nameOrId: string): Promise<Pokemon | null> {
+async function fetchPokemonByNameOrId(nameOrId: string): Promise<Pokemon> {
     return axios
         .get(
             new UrlBuilder(API_URL).with(endpoints.get('getPokemonById')!).with(nameOrId)
@@ -24,38 +24,26 @@ async function fetchPokemonByNameOrId(nameOrId: string): Promise<Pokemon | null>
             console.error(
                 `An error occured while getting Pokémon with name or id ${nameOrId}`
             );
-            return null;
+            throw new Error(error.message);
         });
 }
 
-async function fetchPokemonByTypes(type: Type) {
+async function fetchTypePokemonPAPIByType(type: Type): Promise<TypePokemonPAPI[]> {
     return axios
         .get(
             new UrlBuilder(API_URL)
                 .with(endpoints.get('getTypeByName')!)
                 .with(type.toLowerCase()).url
         )
-        .then(async (response: AxiosResponse) => {
+        .then((response: AxiosResponse) => {
             const typeFromAPI: TypePAPI = response.data;
-            let pokemonFetched: Pokemon[] = [];
-
-            for (const typePokemonPAPI of typeFromAPI.pokemon) {
-                const pokemon = await teamService.getPokemonByName(
-                    typePokemonPAPI.pokemon.name
-                );
-
-                if (pokemon) {
-                    pokemonFetched.push(pokemon);
-                }
-            }
-
-            return pokemonFetched;
+            return typeFromAPI.pokemon;
         })
         .catch((error: AxiosError) => {
             console.error(error.message);
-            console.error(`An error occured while getting type with name or id ${type}`);
+            console.error(`An error occured while getting type with name ${type}`);
             throw new Error(error.message);
         });
 }
 
-export { fetchPokemonByNameOrId, fetchPokemonByTypes };
+export { fetchPokemonByNameOrId, fetchTypePokemonPAPIByType };

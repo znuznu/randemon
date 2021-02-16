@@ -1,4 +1,4 @@
-import teamResolver from '../team/teamResolver';
+import teamResolver from '../team/resolvers';
 
 const rootResolver = {
     ...teamResolver
