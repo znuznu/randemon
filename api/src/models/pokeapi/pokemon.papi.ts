@@ -1,14 +1,11 @@
-import { NamedAPIResourcePAPI } from './common.papi';
+import { PokemonMovePAPI } from './move.papi';
+import { PokemonTypePAPI } from './type.papi';
 import SpritePAPI from './sprite.papi';
-
-export interface PokemonTypePAPI {
-    slot: number;
-    type: NamedAPIResourcePAPI;
-}
 
 export interface PokemonPAPI {
     id: number;
     name: string;
     sprites: SpritePAPI;
     types: [PokemonTypePAPI, PokemonTypePAPI?];
+    moves: PokemonMovePAPI[];
 }

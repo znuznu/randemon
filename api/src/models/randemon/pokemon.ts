@@ -1,3 +1,4 @@
+import { Move } from './move';
 import Type from './type';
 
 export default interface Pokemon {
@@ -5,4 +6,6 @@ export default interface Pokemon {
     name: string;
     frontSprite?: string;
     types: [Type, Type?];
+    moves: Move[];
+    allMovesNames: string[];
 }

@@ -1,9 +1,12 @@
 import { RedisError } from 'redis';
 import CacheService from '../cache/cacheService';
+import { TypePokemonPAPI } from '../models/pokeapi/type.papi';
 import Generation from '../models/randemon/generation';
+import { Move } from '../models/randemon/move';
+import Pokemon from '../models/randemon/pokemon';
 import Type from '../models/randemon/type';
 import { range } from '../utils';
-import { fetchPokemonByNameOrId, fetchTypePokemonPAPIByType } from './fetch';
+import { fetchMove, fetchPokemonByNameOrId, fetchTypePokemonPAPIByType } from './fetch';
 
 const cacheService = new CacheService();
 
@@ -74,7 +77,7 @@ export async function getPokemonById(index: number) {
         .getAsync(`pokemon:id:${index}`)
         .then(async (pokemonFromCache: string | null) => {
             if (pokemonFromCache) {
-                return JSON.parse(pokemonFromCache);
+                return JSON.parse(pokemonFromCache) as Pokemon;
             } else {
                 const pokemon = await fetchPokemonByNameOrId(String(index));
 
@@ -102,7 +105,7 @@ export async function getPokemonByName(name: string) {
         .getAsync(`pokemon:name:${name}`)
         .then(async (pokemonFromCache: string | null) => {
             if (pokemonFromCache) {
-                return JSON.parse(pokemonFromCache);
+                return JSON.parse(pokemonFromCache) as Pokemon;
             } else {
                 const pokemon = await fetchPokemonByNameOrId(name);
 
@@ -116,6 +119,29 @@ export async function getPokemonByName(name: string) {
                         JSON.stringify(pokemon)
                     );
                     return pokemon;
+                }
+
+                return null;
+            }
+        })
+        .catch((error: RedisError) => {
+            console.error(error);
+            return null;
+        });
+}
+
+export async function getMoveByName(name: string) {
+    return await cacheService
+        .getAsync(`move:name:${name}`)
+        .then(async (moveFromCache: string | null) => {
+            if (moveFromCache) {
+                return JSON.parse(moveFromCache) as Move;
+            } else {
+                const move = await fetchMove(name);
+
+                if (move) {
+                    cacheService.client.set(`move:name:${name}`, JSON.stringify(move));
+                    return move;
                 }
 
                 return null;

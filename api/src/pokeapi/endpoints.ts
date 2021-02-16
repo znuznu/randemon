@@ -1,8 +1,7 @@
 const endpoints = new Map([
-    ['getPokemonByName', 'pokemon'],
-    ['getPokemonById', 'pokemon'],
-    ['getTypeById', 'type'],
-    ['getTypeByName', 'type'],
+    ['getPokemon', 'pokemon'],
+    ['getType', 'type'],
+    ['getMove', 'move']
 ]);
 
 export default endpoints;

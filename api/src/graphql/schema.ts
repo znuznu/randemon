@@ -51,6 +51,14 @@ const schema = buildSchema(`
             type: Type
         }
 
+        type Move {
+            accuracy: Int
+            power: Int
+            pp: Int
+            type: String
+            name: String
+        }
+
         """
         Our favorite pocket monsters.
         """
@@ -59,6 +67,8 @@ const schema = buildSchema(`
             name: String!
             frontSprite: String
             types: [Type]!
+            moves: [Move!]
+            allMovesNames: [String]
         }
 
         """

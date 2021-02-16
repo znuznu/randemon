@@ -9,3 +9,8 @@ export interface TypePAPI {
     name: string;
     pokemon: TypePokemonPAPI[];
 }
+
+export interface PokemonTypePAPI {
+    slot: number;
+    type: NamedAPIResourcePAPI;
+}
