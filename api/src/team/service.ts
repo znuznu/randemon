@@ -22,7 +22,7 @@ export async function generateTeam(parameters: TeamConfig): Promise<Team> {
         let pokemon = await getPokemonById(Number(index));
 
         if (pokemon) {
-            const moves = await getRandomMovesOfPokemon(4, pokemon.id);
+            const moves = await getRandomMoves(4, pokemon.allMovesNames);
             pokemon = { ...pokemon, moves };
             team.pokemon.push(pokemon);
             pokemonLeft--;
@@ -70,7 +70,7 @@ export async function generateTeamWithType(
         let pokemon = await getPokemonById(Number(index));
 
         if (pokemon) {
-            const moves = await getRandomMovesOfPokemon(4, pokemon.id);
+            const moves = await getRandomMoves(4, pokemon.allMovesNames);
             pokemon = { ...pokemon, moves };
             team.pokemon.push(pokemon);
             pokemonLeft--;
@@ -117,4 +117,26 @@ export async function getRandomMovesOfPokemon(
     throw new Error('Cannot find random moves.');
 }
 
-export default {};
+export async function getRandomMoves(
+    numbersOfMoves: number,
+    movesNames: string[],
+    excludedMovesNames?: string[]
+): Promise<Move[]> {
+    movesNames = movesNames.filter((moveName) => !excludedMovesNames?.includes(moveName));
+
+    let moves: Move[] = [];
+    let movesLeft = numbersOfMoves;
+
+    while (movesLeft) {
+        const moveName = movesNames.splice(randInRange(0, movesNames.length), 1)[0];
+
+        const move = await getMoveByName(moveName);
+
+        if (move) {
+            moves.push(move);
+            movesLeft--;
+        }
+    }
+
+    return moves;
+}
