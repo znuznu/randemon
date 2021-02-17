@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { API_URL } from '../constants';
+import getConfig from '../config';
 import { mapMoveFromAPI, mapPokemonFromAPI } from '../mappers/mappers';
 import { PokemonPAPI } from '../models/pokeapi/pokemon.papi';
 import { TypePAPI, TypePokemonPAPI } from '../models/pokeapi/type.papi';
@@ -9,6 +9,8 @@ import { Move } from '../models/randemon/move';
 import endpoints from '../pokeapi/endpoints';
 import Pokemon from '../models/randemon/pokemon';
 import Type from '../models/randemon/type';
+
+const API_URL = getConfig().API_URL;
 
 async function fetchPokemonByNameOrId(nameOrId: string): Promise<Pokemon> {
     return axios
