@@ -1,4 +1,5 @@
 import { RedisError } from 'redis';
+import { logger } from '../logger'
 import CacheService from '../cache/cacheService';
 import Generation from '../models/randemon/generation';
 import { Move } from '../models/randemon/move';
@@ -7,7 +8,7 @@ import Type from '../models/randemon/type';
 import { range } from '../utils';
 import { fetchMove, fetchPokemonByNameOrId, fetchTypePokemonPAPIByType } from './fetch';
 
-const cacheService = new CacheService();
+const cacheService = new CacheService(logger);
 
 interface Range {
     from: number;
