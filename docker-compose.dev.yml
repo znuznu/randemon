@@ -1,6 +1,0 @@
-version: '3.8'
-
-services:
-  randemon-cache:
-    ports:
-      - '6379:6379'

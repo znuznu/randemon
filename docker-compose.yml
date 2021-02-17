@@ -12,11 +12,13 @@ services:
     container_name: randemon-api
     build: 
       context: ./api
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.dev
     ports:
       - '3000:3000'
     env_file:
       - ./api/.env
+    volumes:
+      - ./api/:/app
     networks:
       - randemon-network
 

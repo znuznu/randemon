@@ -131,7 +131,6 @@ export async function getRandomMoves(
         const moveName = movesNames.splice(randInRange(0, movesNames.length), 1)[0];
 
         const move = await getMoveByName(moveName);
-
         if (move) {
             moves.push(move);
             movesLeft--;
