@@ -1,6 +1,5 @@
 import { RedisError } from 'redis';
 import CacheService from '../cache/cacheService';
-import { TypePokemonPAPI } from '../models/pokeapi/type.papi';
 import Generation from '../models/randemon/generation';
 import { Move } from '../models/randemon/move';
 import Pokemon from '../models/randemon/pokemon';
