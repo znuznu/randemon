@@ -19,14 +19,11 @@ export async function generateTeam(parameters: TeamConfig): Promise<Team> {
 
     while (pokemonLeft) {
         const index = indexes.splice(randInRange(0, indexes.length), 1)[0];
-        let pokemon = await getPokemonById(Number(index));
-
-        if (pokemon) {
-            const moves = await getRandomMoves(4, pokemon.allMovesNames);
-            pokemon = { ...pokemon, moves };
-            team.pokemon.push(pokemon);
-            pokemonLeft--;
-        }
+        let pokemon = await getPokemonById(index);
+        const moves = await getRandomMoves(4, pokemon.allMovesNames);
+        pokemon = { ...pokemon, moves };
+        team.pokemon.push(pokemon);
+        pokemonLeft--;
     }
 
     return team;
@@ -67,7 +64,7 @@ export async function generateTeamWithType(
         }
 
         const index = pokemonIds.splice(randInRange(0, pokemonIds.length), 1)[0];
-        let pokemon = await getPokemonById(Number(index));
+        let pokemon = await getPokemonById(index);
 
         if (pokemon) {
             const moves = await getRandomMoves(4, pokemon.allMovesNames);
@@ -87,34 +84,7 @@ export async function getRandomMovesOfPokemon(
 ): Promise<Move[]> {
     const pokemon = await getPokemonById(pokemonId);
 
-    if (pokemon) {
-        let allMovesNames = pokemon.allMovesNames;
-
-        allMovesNames = allMovesNames.filter(
-            (moveName) => !excludedMovesNames?.includes(moveName)
-        );
-
-        let moves: Move[] = [];
-        let movesLeft = numbersOfMoves;
-
-        while (movesLeft) {
-            const moveName = allMovesNames.splice(
-                randInRange(0, allMovesNames.length),
-                1
-            )[0];
-
-            const move = await getMoveByName(moveName);
-
-            if (move) {
-                moves.push(move);
-                movesLeft--;
-            }
-        }
-
-        return moves;
-    }
-
-    throw new Error('Cannot find random moves.');
+    return getRandomMoves(numbersOfMoves, pokemon.allMovesNames, excludedMovesNames);
 }
 
 export async function getRandomMoves(
@@ -122,12 +92,17 @@ export async function getRandomMoves(
     movesNames: string[],
     excludedMovesNames?: string[]
 ): Promise<Move[]> {
+    // Gen 8 doesn't have any moves yet
+    if (!movesNames.length) {
+        return [];
+    }
+
     movesNames = movesNames.filter((moveName) => !excludedMovesNames?.includes(moveName));
 
     let moves: Move[] = [];
     let movesLeft = numbersOfMoves;
 
-    while (movesLeft) {
+    while (movesNames.length && movesLeft) {
         const moveName = movesNames.splice(randInRange(0, movesNames.length), 1)[0];
 
         const move = await getMoveByName(moveName);

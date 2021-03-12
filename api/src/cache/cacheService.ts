@@ -14,7 +14,7 @@ class CacheService {
         });
 
         this.client.on('error', function (error: RedisError) {
-            console.error(error);
+            logger.error(error.message);
         });
 
         this._getAsync = promisify(this.client.get).bind(this.client);

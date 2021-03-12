@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
 import schema from './graphql/schema';
@@ -8,7 +8,7 @@ import { logger } from './logger';
 const app = express();
 const PORT = Number(process.env.API_PORT) || 3000;
 
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', (_req: Request, res: Response) => {
     res.status(200).send('OK');
 });
 
@@ -18,11 +18,18 @@ process.on('uncaughtException', (err) => {
 });
 
 app.use(
-    '/graphql',
+    '/querys',
     graphqlHTTP({
         schema,
         rootValue: rootResolver,
-        graphiql: true
+        graphiql: true,
+        customFormatErrorFn: (error) => {
+            logger.error(error.message);
+
+            return {
+                message: error.message
+            };
+        }
     })
 );
 

@@ -4,10 +4,10 @@ interface Config {
     API_URL: string;
 }
 
-export default function getConfig(): Config {
-    return {
-        APP_NAME: 'randemon-api',
-        LOG_LEVEL: 'debug',
-        API_URL: 'https://pokeapi.co/api/v2/'
-    };
-}
+const config: Config = {
+    APP_NAME: 'randemon-api',
+    LOG_LEVEL: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+    API_URL: 'https://pokeapi.co/api/v2/'
+};
+
+export { config };

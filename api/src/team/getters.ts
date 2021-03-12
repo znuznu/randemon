@@ -1,12 +1,13 @@
-import { RedisError } from 'redis';
-import { logger } from '../logger'
+import Type from '../models/randemon/type';
+import Pokemon from '../models/randemon/pokemon';
 import CacheService from '../cache/cacheService';
 import Generation from '../models/randemon/generation';
+import { logger } from '../logger';
 import { Move } from '../models/randemon/move';
-import Pokemon from '../models/randemon/pokemon';
-import Type from '../models/randemon/type';
 import { range } from '../utils';
+import { mapMoveFromAPI, mapPokemonFromAPI } from '../mappers/mappers';
 import { fetchMove, fetchPokemonByNameOrId, fetchTypePokemonPAPIByType } from './fetch';
+import { TypePokemonPAPI } from '../models/pokeapi/type.papi';
 
 const cacheService = new CacheService(logger);
 
@@ -45,7 +46,9 @@ export function getIndexesOfOneGeneration(generation: Generation): number[] {
     );
 }
 
-export async function getPokemonNamedAPIResourceOfTypeByName(type: Type) {
+export async function getPokemonNamedAPIResourceOfTypeByName(
+    type: Type
+): Promise<TypePokemonPAPI[]> {
     return await cacheService
         .getAsync(`type:pokemon:${type}`)
         .then(async (pokemonNamedResourceAPIFromCache: string | null) => {
@@ -53,102 +56,71 @@ export async function getPokemonNamedAPIResourceOfTypeByName(type: Type) {
                 return JSON.parse(pokemonNamedResourceAPIFromCache);
             } else {
                 const pokemonNamedAPIResource = await fetchTypePokemonPAPIByType(type);
+                cacheService.client.set(
+                    `type:pokemon:${type}`,
+                    JSON.stringify(pokemonNamedAPIResource)
+                );
 
-                if (pokemonNamedAPIResource) {
-                    cacheService.client.set(
-                        `type:pokemon:${type}`,
-                        JSON.stringify(pokemonNamedAPIResource)
-                    );
-
-                    return pokemonNamedAPIResource;
-                }
-
-                return null;
+                return pokemonNamedAPIResource;
             }
-        })
-        .catch((error: RedisError) => {
-            console.error(error);
-            return null;
         });
 }
 
-export async function getPokemonById(index: number) {
+export async function getPokemonById(index: number): Promise<Pokemon> {
     return await cacheService
         .getAsync(`pokemon:id:${index}`)
         .then(async (pokemonFromCache: string | null) => {
             if (pokemonFromCache) {
                 return JSON.parse(pokemonFromCache) as Pokemon;
             } else {
-                const pokemon = await fetchPokemonByNameOrId(String(index));
+                const pokemonPAPI = await fetchPokemonByNameOrId(String(index));
+                const pokemon = mapPokemonFromAPI(pokemonPAPI);
 
-                if (pokemon) {
-                    cacheService.client.set(
-                        `pokemon:id:${index}`,
-                        JSON.stringify(pokemon)
-                    );
-                    cacheService.client.set(
-                        `pokemon:name:${pokemon.name}`,
-                        JSON.stringify(pokemon)
-                    );
-                    return pokemon;
-                }
+                cacheService.client.set(`pokemon:id:${index}`, JSON.stringify(pokemon));
+                cacheService.client.set(
+                    `pokemon:name:${pokemon.name}`,
+                    JSON.stringify(pokemon)
+                );
+
+                return pokemon;
             }
-        })
-        .catch((error: RedisError) => {
-            console.error(error);
-            return null;
         });
 }
 
-export async function getPokemonByName(name: string) {
+export async function getPokemonByName(name: string): Promise<Pokemon> {
     return await cacheService
         .getAsync(`pokemon:name:${name}`)
         .then(async (pokemonFromCache: string | null) => {
             if (pokemonFromCache) {
                 return JSON.parse(pokemonFromCache) as Pokemon;
             } else {
-                const pokemon = await fetchPokemonByNameOrId(name);
+                const pokemonPAPI = await fetchPokemonByNameOrId(name);
 
-                if (pokemon) {
-                    cacheService.client.set(
-                        `pokemon:name:${name}`,
-                        JSON.stringify(pokemon)
-                    );
-                    cacheService.client.set(
-                        `pokemon:id:${pokemon.id}`,
-                        JSON.stringify(pokemon)
-                    );
-                    return pokemon;
-                }
+                const pokemon = mapPokemonFromAPI(pokemonPAPI);
+                cacheService.client.set(`pokemon:name:${name}`, JSON.stringify(pokemon));
+                cacheService.client.set(
+                    `pokemon:id:${pokemon.id}`,
+                    JSON.stringify(pokemon)
+                );
 
-                return null;
+                return pokemon;
             }
-        })
-        .catch((error: RedisError) => {
-            console.error(error);
-            return null;
         });
 }
 
-export async function getMoveByName(name: string) {
+export async function getMoveByName(name: string): Promise<Move> {
     return await cacheService
         .getAsync(`move:name:${name}`)
         .then(async (moveFromCache: string | null) => {
             if (moveFromCache) {
                 return JSON.parse(moveFromCache) as Move;
             } else {
-                const move = await fetchMove(name);
+                const movePAPI = await fetchMove(name);
 
-                if (move) {
-                    cacheService.client.set(`move:name:${name}`, JSON.stringify(move));
-                    return move;
-                }
+                const move = mapMoveFromAPI(movePAPI);
+                cacheService.client.set(`move:name:${name}`, JSON.stringify(move));
 
-                return null;
+                return move;
             }
-        })
-        .catch((error: RedisError) => {
-            console.error(error);
-            return null;
         });
 }
