@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { config } from '../config';
-import endpoints from '../pokeapi/endpoints';
+import endpoints from '../endpoints/endpoints';
 import Type from '../models/randemon/type';
 import { UrlBuilder } from '../utils';
 import { PokemonPAPI } from '../models/pokeapi/pokemon.papi';
