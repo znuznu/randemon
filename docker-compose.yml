@@ -4,8 +4,17 @@ services:
   randemon-cache:
     container_name: randemon-cache
     image: redis
+    ports:
+      - '6379'
     volumes:
       - cache-data:/data
+    networks:
+      - randemon-network
+  randemon-cache-test:
+    container_name: randemon-cache-test
+    image: redis
+    ports:
+      - '7777:6379'
     networks:
       - randemon-network
   randemon-api:
@@ -21,8 +30,6 @@ services:
       - ./api/:/app
     networks:
       - randemon-network
-    depends_on:
-      - randemon-cache
 
 networks:
   randemon-network:

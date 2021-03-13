@@ -26,16 +26,26 @@ class CacheService {
         });
     }
 
+    async connect(): Promise<void> {
+        await this.cacheClient.connect();
+        this.logger.info('Connected to Redis');
+    }
+
     async disconnect(): Promise<void> {
         await this.cacheClient.quit();
         this.logger.info('Disconnected from Redis');
     }
 
-    // Testing purpose
+    async clear(): Promise<void> {
+        this.logger.info('Cache cleared');
+        await this.cacheClient.flushall();
+    }
+
     static createRedisClient({ host, port }: RedisConfig): IORedis.Redis {
         return new IORedis({
             host,
-            port
+            port,
+            lazyConnect: true
         });
     }
 }

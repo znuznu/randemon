@@ -10,11 +10,6 @@ import Type from '../randemon/models/type';
 import Pokemon from '../randemon/models/pokemon';
 import { Move } from '../randemon/models/move';
 
-const cacheService = new CacheService(
-    CacheService.createRedisClient({ host: config.REDIS_HOST, port: 6379 }),
-    logger
-);
-
 interface Range {
     from: number;
     to: number;
@@ -51,6 +46,7 @@ export function getIndexesOfOneGeneration(generation: Generation): number[] {
 }
 
 export async function getPokemonNamedAPIResourceOfTypeByName(
+    cacheService: CacheService,
     type: Type
 ): Promise<TypePokemonPAPI[]> {
     return await cacheService
@@ -70,7 +66,10 @@ export async function getPokemonNamedAPIResourceOfTypeByName(
         });
 }
 
-export async function getPokemonById(index: number): Promise<Pokemon> {
+export async function getPokemonById(
+    cacheService: CacheService,
+    index: number
+): Promise<Pokemon> {
     return await cacheService
         .get(`pokemon:id:${index}`)
         .then(async (pokemonFromCache: string | null) => {
@@ -88,7 +87,10 @@ export async function getPokemonById(index: number): Promise<Pokemon> {
         });
 }
 
-export async function getPokemonByName(name: string): Promise<Pokemon> {
+export async function getPokemonByName(
+    cacheService: CacheService,
+    name: string
+): Promise<Pokemon> {
     return await cacheService
         .get(`pokemon:name:${name}`)
         .then(async (pokemonFromCache: string | null) => {
@@ -106,7 +108,10 @@ export async function getPokemonByName(name: string): Promise<Pokemon> {
         });
 }
 
-export async function getMoveByName(name: string): Promise<Move> {
+export async function getMoveByName(
+    cacheService: CacheService,
+    name: string
+): Promise<Move> {
     return await cacheService
         .get(`move:name:${name}`)
         .then(async (moveFromCache: string | null) => {

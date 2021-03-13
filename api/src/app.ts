@@ -17,6 +17,16 @@ process.on('uncaughtException', (err) => {
     process.exit(1);
 });
 
+process.on('uncaughtException', (err) => {
+    console.log(`Uncaught Exception: ${err.message}`);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.log('Unhandled rejection at ', promise);
+    process.exit(1);
+});
+
 app.use(
     '/queries',
     graphqlHTTP({
