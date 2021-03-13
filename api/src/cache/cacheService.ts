@@ -11,14 +11,13 @@ class CacheService {
     }
 
     async set(key: string, value: string): Promise<void> {
+        this.logger.info(`[CACHE] set key: '${key}'`);
         this.cacheClient.set(key, value);
     }
 
     async get(key: string): Promise<string | null> {
         return this.cacheClient.get(key).then((result: string | null) => {
-            if (result) {
-                this.logger.info(`[CACHE] '${key}' already in cache`);
-            } else {
+            if (!result) {
                 this.logger.info(`[CACHE] '${key}' not found in cache`);
             }
 
