@@ -19,7 +19,7 @@ interface Range {
 export function getIndexesOfMultipleGenerations(generations: Generation[]): number[] {
     generations = Array.from(new Set(generations));
 
-    let indexes: number[] = [];
+    const indexes: number[] = [];
 
     generations.forEach((gen: Generation) => {
         indexes.push(...getIndexesOfOneGeneration(gen));

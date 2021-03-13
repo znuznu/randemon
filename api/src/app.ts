@@ -2,8 +2,8 @@ import express, { Request, Response } from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
 import { logger } from './logger';
-import schema from './graphql/schema';
 import rootResolver from './graphql/rootResolver';
+import schema from './graphql/schema';
 
 const app = express();
 const PORT = Number(process.env.API_PORT) || 3000;

@@ -13,7 +13,7 @@ import {
 
 describe('in team', () => {
     singleGenerationFixtures.forEach(
-        (fixture: SingleGenerationFixture, index: number) => {
+        (fixture: SingleGenerationFixture) => {
             it('should return the expected pokemon indexes for a single generation', () => {
                 const indexes = getIndexesOfOneGeneration(fixture.generation);
                 expect(indexes).toStrictEqual(fixture.expectedIndexes);

@@ -14,7 +14,7 @@ export async function generateTeam(parameters: TeamConfig): Promise<Team> {
     const team: Team = {
         pokemon: []
     };
-    let indexes = getIndexesOfMultipleGenerations(generations);
+    const indexes = getIndexesOfMultipleGenerations(generations);
     let pokemonLeft = numbersOfPokemon;
 
     while (pokemonLeft) {
@@ -37,8 +37,8 @@ export async function generateTeamWithType(
     const team: Team = {
         pokemon: []
     };
-    let indexes = getIndexesOfMultipleGenerations(generations);
-    let pokemonNamedAPIResources: TypePokemonPAPI[] = await getPokemonNamedAPIResourceOfTypeByName(
+    const indexes = getIndexesOfMultipleGenerations(generations);
+    const pokemonNamedAPIResources: TypePokemonPAPI[] = await getPokemonNamedAPIResourceOfTypeByName(
         type!
     );
 
@@ -99,7 +99,7 @@ export async function getRandomMoves(
 
     movesNames = movesNames.filter((moveName) => !excludedMovesNames?.includes(moveName));
 
-    let moves: Move[] = [];
+    const moves: Move[] = [];
     let movesLeft = numbersOfMoves;
 
     while (movesNames.length && movesLeft) {
