@@ -1,4 +1,5 @@
 import CacheService from '../cache/cacheService';
+import { config } from '../config';
 import { logger } from '../logger';
 import { range } from '../utils';
 import { mapMoveFromAPI, mapPokemonFromAPI } from '../mappers/mappers';
@@ -9,7 +10,10 @@ import Type from '../randemon/models/type';
 import Pokemon from '../randemon/models/pokemon';
 import { Move } from '../randemon/models/move';
 
-const cacheService = new CacheService(logger);
+const cacheService = new CacheService(
+    CacheService.createRedisClient({ host: config.REDIS_HOST, port: 6379 }),
+    logger
+);
 
 interface Range {
     from: number;
@@ -50,13 +54,13 @@ export async function getPokemonNamedAPIResourceOfTypeByName(
     type: Type
 ): Promise<TypePokemonPAPI[]> {
     return await cacheService
-        .getAsync(`type:pokemon:${type}`)
+        .get(`type:pokemon:${type}`)
         .then(async (pokemonNamedResourceAPIFromCache: string | null) => {
             if (pokemonNamedResourceAPIFromCache) {
                 return JSON.parse(pokemonNamedResourceAPIFromCache);
             } else {
                 const pokemonNamedAPIResource = await fetchTypePokemonPAPIByType(type);
-                cacheService.client.set(
+                cacheService.set(
                     `type:pokemon:${type}`,
                     JSON.stringify(pokemonNamedAPIResource)
                 );
@@ -68,7 +72,7 @@ export async function getPokemonNamedAPIResourceOfTypeByName(
 
 export async function getPokemonById(index: number): Promise<Pokemon> {
     return await cacheService
-        .getAsync(`pokemon:id:${index}`)
+        .get(`pokemon:id:${index}`)
         .then(async (pokemonFromCache: string | null) => {
             if (pokemonFromCache) {
                 return JSON.parse(pokemonFromCache) as Pokemon;
@@ -76,11 +80,8 @@ export async function getPokemonById(index: number): Promise<Pokemon> {
                 const pokemonPAPI = await fetchPokemonByNameOrId(String(index));
                 const pokemon = mapPokemonFromAPI(pokemonPAPI);
 
-                cacheService.client.set(`pokemon:id:${index}`, JSON.stringify(pokemon));
-                cacheService.client.set(
-                    `pokemon:name:${pokemon.name}`,
-                    JSON.stringify(pokemon)
-                );
+                cacheService.set(`pokemon:id:${index}`, JSON.stringify(pokemon));
+                cacheService.set(`pokemon:name:${pokemon.name}`, JSON.stringify(pokemon));
 
                 return pokemon;
             }
@@ -89,7 +90,7 @@ export async function getPokemonById(index: number): Promise<Pokemon> {
 
 export async function getPokemonByName(name: string): Promise<Pokemon> {
     return await cacheService
-        .getAsync(`pokemon:name:${name}`)
+        .get(`pokemon:name:${name}`)
         .then(async (pokemonFromCache: string | null) => {
             if (pokemonFromCache) {
                 return JSON.parse(pokemonFromCache) as Pokemon;
@@ -97,11 +98,8 @@ export async function getPokemonByName(name: string): Promise<Pokemon> {
                 const pokemonPAPI = await fetchPokemonByNameOrId(name);
 
                 const pokemon = mapPokemonFromAPI(pokemonPAPI);
-                cacheService.client.set(`pokemon:name:${name}`, JSON.stringify(pokemon));
-                cacheService.client.set(
-                    `pokemon:id:${pokemon.id}`,
-                    JSON.stringify(pokemon)
-                );
+                cacheService.set(`pokemon:name:${name}`, JSON.stringify(pokemon));
+                cacheService.set(`pokemon:id:${pokemon.id}`, JSON.stringify(pokemon));
 
                 return pokemon;
             }
@@ -110,7 +108,7 @@ export async function getPokemonByName(name: string): Promise<Pokemon> {
 
 export async function getMoveByName(name: string): Promise<Move> {
     return await cacheService
-        .getAsync(`move:name:${name}`)
+        .get(`move:name:${name}`)
         .then(async (moveFromCache: string | null) => {
             if (moveFromCache) {
                 return JSON.parse(moveFromCache) as Move;
@@ -118,7 +116,7 @@ export async function getMoveByName(name: string): Promise<Move> {
                 const movePAPI = await fetchMove(name);
 
                 const move = mapMoveFromAPI(movePAPI);
-                cacheService.client.set(`move:name:${name}`, JSON.stringify(move));
+                cacheService.set(`move:name:${name}`, JSON.stringify(move));
 
                 return move;
             }

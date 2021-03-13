@@ -3,5 +3,5 @@ module.exports = {
     transform: {
         '^.+\\.ts$': 'ts-jest'
     },
-    testMatch: ['**/tests/**/*.test.ts']
+    testMatch: ['**/src/**/*.spec.ts', '**/tests/**/*.spec.ts']
 };

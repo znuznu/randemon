@@ -21,6 +21,8 @@ services:
       - ./api/:/app
     networks:
       - randemon-network
+    depends_on:
+      - randemon-cache
 
 networks:
   randemon-network:
