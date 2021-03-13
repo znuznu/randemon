@@ -1,5 +1,6 @@
-import { Team, TeamConfig, TeamConfigWithType } from '../models/randemon/team';
-import { TypePokemonPAPI } from '../models/pokeapi/type.papi';
+import { TypePokemonPAPI } from '../pokeapi/models/type.papi';
+import { Move } from '../randemon/models/move';
+import { Team, TeamConfig, TeamConfigWithType } from '../randemon/models/team';
 import { randInRange } from '../utils';
 import {
     getIndexesOfMultipleGenerations,
@@ -7,7 +8,6 @@ import {
     getPokemonById,
     getPokemonNamedAPIResourceOfTypeByName
 } from './getters';
-import { Move } from '../models/randemon/move';
 
 export async function generateTeam(parameters: TeamConfig): Promise<Team> {
     const { generations, numbersOfPokemon } = parameters;

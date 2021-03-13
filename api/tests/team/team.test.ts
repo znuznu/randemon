@@ -16,7 +16,6 @@ describe('in team', () => {
         (fixture: SingleGenerationFixture, index: number) => {
             it('should return the expected pokemon indexes for a single generation', () => {
                 const indexes = getIndexesOfOneGeneration(fixture.generation);
-
                 expect(indexes).toStrictEqual(fixture.expectedIndexes);
             });
         }
@@ -27,7 +26,6 @@ describe('in team', () => {
             describe(`fixture #${index}`, () => {
                 it('should return the expected pokemon indexes for multiple generations', () => {
                     const indexes = getIndexesOfMultipleGenerations(fixture.generations);
-
                     expect(indexes).toStrictEqual(fixture.expectedIndexes);
                 });
             });

@@ -1,4 +1,4 @@
-import { Team } from '../models/randemon/team';
+import { Team } from '../randemon/models/team';
 import { generateTeam, generateTeamWithType } from './service';
 
 const teamResolver = {

@@ -1,12 +1,12 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import { config } from '../config';
-import endpoints from '../endpoints/endpoints';
-import Type from '../models/randemon/type';
+import endpoints from '../pokeapi/endpoints/endpoints';
 import { UrlBuilder } from '../utils';
-import { PokemonPAPI } from '../models/pokeapi/pokemon.papi';
-import { TypePAPI, TypePokemonPAPI } from '../models/pokeapi/type.papi';
-import { MovePAPI } from '../models/pokeapi/move.papi';
+import { PokemonPAPI } from '../pokeapi/models/pokemon.papi';
+import { TypePAPI, TypePokemonPAPI } from '../pokeapi/models/type.papi';
+import Type from '../randemon/models/type';
+import { MovePAPI } from '../pokeapi/models/move.papi';
 
 const API_URL = config.API_URL;
 

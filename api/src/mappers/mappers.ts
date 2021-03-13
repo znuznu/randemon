@@ -1,8 +1,8 @@
-import Pokemon from '../models/randemon/pokemon';
-import Type from '../models/randemon/type';
-import { PokemonPAPI } from '../models/pokeapi/pokemon.papi';
-import { MovePAPI } from '../models/pokeapi/move.papi';
-import { Move } from '../models/randemon/move';
+import { MovePAPI } from '../pokeapi/models/move.papi';
+import { PokemonPAPI } from '../pokeapi/models/pokemon.papi';
+import { Move } from '../randemon/models/move';
+import Pokemon from '../randemon/models/pokemon';
+import Type from '../randemon/models/type';
 
 export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
     const { id, name } = pokemonPAPI;

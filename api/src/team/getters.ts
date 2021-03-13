@@ -1,13 +1,13 @@
-import Type from '../models/randemon/type';
-import Pokemon from '../models/randemon/pokemon';
 import CacheService from '../cache/cacheService';
-import Generation from '../models/randemon/generation';
 import { logger } from '../logger';
-import { Move } from '../models/randemon/move';
 import { range } from '../utils';
 import { mapMoveFromAPI, mapPokemonFromAPI } from '../mappers/mappers';
 import { fetchMove, fetchPokemonByNameOrId, fetchTypePokemonPAPIByType } from './fetch';
-import { TypePokemonPAPI } from '../models/pokeapi/type.papi';
+import Generation from '../randemon/models/generation';
+import { TypePokemonPAPI } from '../pokeapi/models/type.papi';
+import Type from '../randemon/models/type';
+import Pokemon from '../randemon/models/pokemon';
+import { Move } from '../randemon/models/move';
 
 const cacheService = new CacheService(logger);
 

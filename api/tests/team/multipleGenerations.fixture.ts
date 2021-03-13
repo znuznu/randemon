@@ -1,4 +1,4 @@
-import Generation from '../../src/models/randemon/generation';
+import Generation from '../../src/randemon/models/generation';
 
 export interface MultipleGenerationsFixture {
     generations: Generation[];

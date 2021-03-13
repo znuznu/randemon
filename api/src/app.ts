@@ -1,9 +1,9 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
+import { logger } from './logger';
 import schema from './graphql/schema';
 import rootResolver from './graphql/rootResolver';
-import { logger } from './logger';
 
 const app = express();
 const PORT = Number(process.env.API_PORT) || 3000;
@@ -18,7 +18,7 @@ process.on('uncaughtException', (err) => {
 });
 
 app.use(
-    '/querys',
+    '/queries',
     graphqlHTTP({
         schema,
         rootValue: rootResolver,
