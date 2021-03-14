@@ -1,7 +1,7 @@
 import {
     getIndexesOfMultipleGenerations,
     getIndexesOfOneGeneration
-} from '../../src/team/getters';
+} from '../../../src/team/getters';
 import {
     mutipleGenerationsFixtures,
     MultipleGenerationsFixture
@@ -12,14 +12,12 @@ import {
 } from './singleGeneration.fixture';
 
 describe('in team', () => {
-    singleGenerationFixtures.forEach(
-        (fixture: SingleGenerationFixture) => {
-            it('should return the expected pokemon indexes for a single generation', () => {
-                const indexes = getIndexesOfOneGeneration(fixture.generation);
-                expect(indexes).toStrictEqual(fixture.expectedIndexes);
-            });
-        }
-    );
+    singleGenerationFixtures.forEach((fixture: SingleGenerationFixture) => {
+        it('should return the expected pokemon indexes for a single generation', () => {
+            const indexes = getIndexesOfOneGeneration(fixture.generation);
+            expect(indexes).toStrictEqual(fixture.expectedIndexes);
+        });
+    });
 
     mutipleGenerationsFixtures.forEach(
         (fixture: MultipleGenerationsFixture, index: number) => {

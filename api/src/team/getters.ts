@@ -1,6 +1,4 @@
 import CacheService from '../cache/cacheService';
-import { config } from '../config';
-import { logger } from '../logger';
 import { range } from '../utils';
 import { mapMoveFromAPI, mapPokemonFromAPI } from '../mappers/mappers';
 import { fetchMove, fetchPokemon, fetchTypePokemonPAPIByType } from './fetch';
