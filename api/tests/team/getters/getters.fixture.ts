@@ -1,4 +1,6 @@
+import { MovePAPI } from '../../../src/pokeapi/models/move.papi';
 import { PokemonPAPI } from '../../../src/pokeapi/models/pokemon.papi';
+import { Move } from '../../../src/randemon/models/move';
 import Pokemon from '../../../src/randemon/models/pokemon';
 
 const pokemon110: Pokemon = {
@@ -33,4 +35,23 @@ const pokemonPAPI110: PokemonPAPI = {
     ]
 };
 
-export { pokemon110, pokemonPAPI110 };
+const movePAPIHyperBeam: MovePAPI = {
+    accuracy: 90,
+    power: 150,
+    pp: 5,
+    type: {
+        name: 'normal',
+        url: 'http://hyper_beam_url'
+    },
+    name: 'hyper-beam'
+};
+
+const moveHyperBeam: Move = {
+    accuracy: 90,
+    power: 150,
+    pp: 5,
+    type: 'normal',
+    name: 'hyper-beam'
+};
+
+export { pokemon110, pokemonPAPI110, moveHyperBeam, movePAPIHyperBeam };

@@ -3,7 +3,7 @@ import { config } from '../config';
 import { logger } from '../logger';
 import { range } from '../utils';
 import { mapMoveFromAPI, mapPokemonFromAPI } from '../mappers/mappers';
-import { fetchMove, fetchPokemonByNameOrId, fetchTypePokemonPAPIByType } from './fetch';
+import { fetchMove, fetchPokemon, fetchTypePokemonPAPIByType } from './fetch';
 import Generation from '../randemon/models/generation';
 import { TypePokemonPAPI } from '../pokeapi/models/type.papi';
 import Type from '../randemon/models/type';
@@ -76,7 +76,7 @@ export async function getPokemonById(
             if (pokemonFromCache) {
                 return JSON.parse(pokemonFromCache) as Pokemon;
             } else {
-                const pokemonPAPI = await fetchPokemonByNameOrId(String(index));
+                const pokemonPAPI = await fetchPokemon(String(index));
                 const pokemon = mapPokemonFromAPI(pokemonPAPI);
 
                 cacheService.set(`pokemon:id:${index}`, JSON.stringify(pokemon));
@@ -97,7 +97,7 @@ export async function getPokemonByName(
             if (pokemonFromCache) {
                 return JSON.parse(pokemonFromCache) as Pokemon;
             } else {
-                const pokemonPAPI = await fetchPokemonByNameOrId(name);
+                const pokemonPAPI = await fetchPokemon(name);
 
                 const pokemon = mapPokemonFromAPI(pokemonPAPI);
                 cacheService.set(`pokemon:name:${name}`, JSON.stringify(pokemon));

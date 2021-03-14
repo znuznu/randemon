@@ -10,7 +10,7 @@ import Type from '../randemon/models/type';
 
 const API_URL = config.API_URL;
 
-async function fetchPokemonByNameOrId(nameOrId: string): Promise<PokemonPAPI> {
+async function fetchPokemon(nameOrId: string): Promise<PokemonPAPI> {
     return axios
         .get(
             new UrlBuilder(API_URL).with(endpoints.get('getPokemon')!).with(nameOrId).url
@@ -43,4 +43,4 @@ async function fetchMove(nameOrId: string): Promise<MovePAPI> {
         });
 }
 
-export { fetchMove, fetchPokemonByNameOrId, fetchTypePokemonPAPIByType };
+export { fetchMove, fetchPokemon, fetchTypePokemonPAPIByType };
