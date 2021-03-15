@@ -16,9 +16,5 @@
     "prettier.printWidth": 100,
     "editor.rulers": [
         90
-    ],
-    "eslint.workingDirectories": [],
-    "eslint.options": {
-        "configFile": "./.eslintrc.js"
-    }
+    ]
 }
