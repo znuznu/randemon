@@ -17,6 +17,7 @@ export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
         id,
         name,
         frontSprite: pokemonPAPI.sprites.front_default,
+        officialArtwork: pokemonPAPI.sprites.other['official-artwork'].front_default,
         types: [
             pokemonPAPI.types[0].type.name.toUpperCase() as Type,
             pokemonPAPI.types[1]?.type.name.toUpperCase() as Type

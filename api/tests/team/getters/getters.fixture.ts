@@ -8,6 +8,7 @@ const pokemon110: Pokemon = {
     id: 110,
     name: 'pokemon110',
     frontSprite: 'http://front_default',
+    officialArtwork: 'http://artwork',
     types: ['FIRE', 'ICE'],
     moves: [],
     allMovesNames: ['some', 'cool', 'moves']
@@ -17,7 +18,12 @@ const pokemonPAPI110: PokemonPAPI = {
     id: 110,
     name: 'pokemon110',
     sprites: {
-        front_default: 'http://front_default'
+        front_default: 'http://front_default',
+        other: {
+            'official-artwork': {
+                front_default: 'http://artwork'
+            }
+        }
     },
     types: [
         {

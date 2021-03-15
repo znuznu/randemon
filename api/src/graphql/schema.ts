@@ -66,6 +66,7 @@ const schema = buildSchema(`
             id: Int!
             name: String!
             frontSprite: String
+            officialArtwork: String
             types: [Type]!
             moves: [Move!]
             allMovesNames: [String]
