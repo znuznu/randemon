@@ -18,8 +18,8 @@ const Options = () => {
   return (
     <Fragment>
       <Generation />
-      <Types />
-      <Pokeballs />
+      <Types currentType={type} setType={setType} />
+      <Pokeballs quantity={quantity} setQuantity={setQuantity} />
       <button onClick={generate}>Generate</button>
     </Fragment>
   );

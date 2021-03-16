@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-const Pokeballs = () => {
-  const [quantity, setQuantity] = useState(1);
+type PokeballsProps = {
+  quantity: number;
+  setQuantity: (quantity: number) => void;
+};
 
+const Pokeballs = ({ quantity, setQuantity }: PokeballsProps) => {
   useEffect(() => {}, [quantity]);
 
   return (
