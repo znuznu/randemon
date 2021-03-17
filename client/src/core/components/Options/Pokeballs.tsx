@@ -12,7 +12,7 @@ const Pokeballs = ({ quantity, setQuantity }: PokeballsProps) => {
     <div>
       {[...Array(6)].map((_, index) => {
         return (
-          <p onClick={() => setQuantity(index + 1)} key={`pokeball-${index}`}>
+          <p key={`pokeball-${index}`} onClick={() => setQuantity(index + 1)}>
             {index >= quantity ? 'O' : 'X'}
           </p>
         );
