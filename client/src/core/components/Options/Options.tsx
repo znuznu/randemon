@@ -1,6 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Generation } from '../../models/generation';
+import { getRandomTeam } from '../../services/graphql/service';
 
-import Generation from './Generations';
+import Generations from './Generations';
 import Pokeballs from './Pokeballs';
 import Types from './Types';
 
@@ -8,6 +10,10 @@ const Options = () => {
   const [type, setType] = useState<string | null>(null);
   const [generations, setGenerations] = useState(new Set<string>());
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    getRandomTeam(10);
+  }, []);
 
   const emitGeneration = (generation: string) => {
     generations.has(generation)
@@ -26,7 +32,7 @@ const Options = () => {
 
   return (
     <Fragment>
-      <Generation
+      <Generations
         currentGenerations={Array.from(generations)}
         emitGeneration={emitGeneration}
       />
