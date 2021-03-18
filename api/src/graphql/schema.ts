@@ -43,9 +43,9 @@ const schema = buildSchema(`
         Pokémon team parameters.
         """
         input TeamConfig {
-            "Of which generations should come Pokémons of the team"
+            "Of which generations should come Pokémon of the team"
             generations: [Generation]
-            "How many Pokémons we want in the team"
+            "How many Pokémon we want in the team"
             numbersOfPokemon: Int
             "The type of the Pokemon of the team."
             type: Type

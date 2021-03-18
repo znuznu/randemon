@@ -23,7 +23,7 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     ports:
-      - '3000:3000'
+      - '4000:3000'
     env_file:
       - ./api/.env
     volumes:

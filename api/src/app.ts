@@ -1,12 +1,16 @@
 import express, { Request, Response } from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
+import cors from 'cors';
+
 import { logger } from './logger';
 import rootResolver from './graphql/rootResolver';
 import schema from './graphql/schema';
 
 const app = express();
 const PORT = Number(process.env.API_PORT) || 3000;
+
+app.use(cors());
 
 app.get('/health', (_req: Request, res: Response) => {
     res.status(200).send('OK');
@@ -22,7 +26,7 @@ process.on('uncaughtException', (err) => {
     process.exit(1);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
+process.on('unhandledRejection', (_reason, promise) => {
     console.log('Unhandled rejection at ', promise);
     process.exit(1);
 });
