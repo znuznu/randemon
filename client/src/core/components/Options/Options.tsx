@@ -1,33 +1,34 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { Generation } from '../../models/generation';
 import { getRandomTeam } from '../../services/graphql/service';
+
+import { Context as TeamContext } from '../../contexts/teamContext';
 
 import Generations from './Generations';
 import Pokeballs from './Pokeballs';
 import Types from './Types';
+import { Team } from '../../models/team';
+import { Type } from '../../models/type';
 
 const Options = () => {
-  const [type, setType] = useState<string | null>(null);
-  const [generations, setGenerations] = useState(new Set<string>());
+  const [type, setType] = useState<Type | null>(null);
+  const [generations, setGenerations] = useState(new Set<Generation>());
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    getRandomTeam(10);
-  }, []);
+  const teamContext = useContext(TeamContext);
 
-  const emitGeneration = (generation: string) => {
+  const emitGeneration = (generation: Generation) => {
     generations.has(generation)
       ? setGenerations(
           new Set(Array.from(generations).filter((gen) => gen !== generation))
         )
       : setGenerations(new Set([...Array.from(generations), generation]));
-    console.log(generations);
   };
 
   const generate = () => {
-    console.log(type);
-    console.log(generations);
-    console.log(quantity);
+    getRandomTeam(quantity, Array.from(generations), type).then((team: Team | null) => {
+      team && teamContext.setTeam!(team);
+    });
   };
 
   return (

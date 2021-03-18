@@ -1,5 +1,5 @@
-import { Move } from './move';
-import Type from './type';
+import Move from './move';
+import { Type } from './type';
 
 export default interface Pokemon {
   id: number;

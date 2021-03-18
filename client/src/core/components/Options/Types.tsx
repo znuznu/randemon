@@ -1,36 +1,16 @@
 import React, { Fragment } from 'react';
+import { Type, types } from '../../models/type';
 
 type TypesProps = {
   currentType: string | null;
-  setType: (type: string) => void;
+  setType: (type: Type) => void;
 };
-
-const TYPES = [
-  'bug',
-  'dark',
-  'dragon',
-  'fairy',
-  'fire',
-  'fighting',
-  'flying',
-  'electric',
-  'grass',
-  'ghost',
-  'ground',
-  'ice',
-  'normal',
-  'psychic',
-  'poison',
-  'rock',
-  'steel',
-  'water'
-];
 
 const Types = ({ currentType, setType }: TypesProps) => {
   return (
     <Fragment>
       <h2>Types</h2>
-      {TYPES.map((type: string) => (
+      {types.map((type) => (
         <p key={`${type}`} onClick={() => setType(type)}>
           {type}
         </p>

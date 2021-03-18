@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Generation } from '../../models/generation';
 
-const GENERATIONS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+const GENERATIONS: Generation[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
 
 type GenerationsProps = {
-  currentGenerations: string[];
-  emitGeneration: (generation: string) => void;
+  currentGenerations: Generation[];
+  emitGeneration: (generation: Generation) => void;
 };
 
 const Generations = ({ currentGenerations, emitGeneration }: GenerationsProps) => {

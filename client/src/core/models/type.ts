@@ -19,6 +19,6 @@ const types = [
   'FAIRY'
 ] as const;
 
-type Type = typeof types[number];
+export type Type = typeof types[number];
 
-export default Type;
+export { types };

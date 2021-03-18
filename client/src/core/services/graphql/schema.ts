@@ -1,9 +1,13 @@
 import { gql } from 'graphql-request';
 
 const qGetRandomTeam = gql`
-  query getRandomTeam($generations: [Generation], $numbersOfPokemon: Int) {
+  query getRandomTeam($generations: [Generation], $numbersOfPokemon: Int, $type: Type) {
     getRandomTeam(
-      parameters: { generations: $generations, numbersOfPokemon: $numbersOfPokemon }
+      parameters: {
+        generations: $generations
+        numbersOfPokemon: $numbersOfPokemon
+        type: $type
+      }
     ) {
       pokemon {
         id

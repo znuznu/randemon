@@ -1,4 +1,4 @@
-export interface Move {
+export default interface Move {
   accuracy: number | null;
   power: number | null;
   pp: number;
