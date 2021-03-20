@@ -14,6 +14,7 @@ const qGetRandomTeam = gql`
         name
         frontSprite
         officialArtwork
+        types
         moves {
           name
           type

@@ -23,8 +23,6 @@ const getRandomTeam = async (
   type: Type | null = null
 ): Promise<Team | null> => {
   try {
-    console.log(numbersOfPokemon, generations, type);
-
     const response: GetRandomTeamResponse = await request(API_URL, qGetRandomTeam, {
       generations,
       numbersOfPokemon,

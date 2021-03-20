@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import { Team } from '../../models/team';
-import PokemonCard from './PokemonCard';
+import Card from './Card/Card';
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 2rem;
+`;
 
 type TeamProps = {
   team: Team;
@@ -9,11 +16,11 @@ type TeamProps = {
 
 const TeamSection = ({ team }: TeamProps) => {
   return (
-    <div>
+    <Container>
       {team.pokemon.map((pokemon) => {
-        return <PokemonCard key={pokemon.id} pokemon={pokemon} />;
+        return <Card key={pokemon.id} pokemon={pokemon} />;
       })}
-    </div>
+    </Container>
   );
 };
 

@@ -28,5 +28,5 @@ export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
 }
 
 export function mapMoveFromAPI(movePAPI: MovePAPI): Move {
-    return { ...movePAPI, type: movePAPI.type.name };
+    return { ...movePAPI, type: movePAPI.type.name.toUpperCase() as Type };
 }

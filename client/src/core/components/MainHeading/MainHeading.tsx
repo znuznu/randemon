@@ -1,13 +1,20 @@
 import React from 'react';
+import styled from 'styled-components';
 import MainTitle from './MainTitle';
 import Subtitle from './Subtitle';
 
+const Heading = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;
+
 const MainHeading = () => {
   return (
-    <div>
-      <MainTitle content={'Randemon'} />
+    <Heading>
+      <MainTitle content={'RANDEMON'} />
       <Subtitle content={'Random Pokemon team generator'} />
-    </div>
+    </Heading>
   );
 };
 
