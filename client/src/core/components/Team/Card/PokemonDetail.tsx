@@ -9,6 +9,8 @@ import TypeBadge from '../../commons/styles/TypeBadge';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid black;
 `;
 
 const Name = styled.h2`
