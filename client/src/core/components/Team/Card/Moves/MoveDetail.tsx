@@ -69,12 +69,12 @@ const MoveDetail = ({ move }: MoveDetailProps) => {
       <TypeBadge color={TYPES_COLORS[move.type]}>{move.type}</TypeBadge>
       <Stats>
         <Stat>
-          <StatTitle>Accuracy</StatTitle>
-          <StatDetail>{move.accuracy ? move.accuracy : '-'}</StatDetail>
-        </Stat>
-        <Stat>
           <StatTitle>Power</StatTitle>
           <StatDetail>{move.power ? move.power : '-'}</StatDetail>
+        </Stat>
+        <Stat>
+          <StatTitle>Accuracy</StatTitle>
+          <StatDetail>{move.accuracy ? move.accuracy : '-'}</StatDetail>
         </Stat>
         <Stat>
           <StatTitle>PP</StatTitle>

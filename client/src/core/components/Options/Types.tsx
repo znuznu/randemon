@@ -11,10 +11,11 @@ const Section = styled.div`
 
 const Title = styled.h2`
   font-family: 'OpenSans';
+  text-align: center;
 `;
 
 const Badges = styled.div`
-  margin: auto;
+  margin: 0 auto;
   display: grid;
   column-gap: 0.5rem;
   row-gap: 0.5rem;

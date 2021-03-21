@@ -20,7 +20,7 @@ const Id = styled.h2`
   font-family: 'Inter';
   margin: 0;
   font-weight: 800;
-  color: #666666;
+  color: black;
   opacity: 0.2;
 `;
 
@@ -41,6 +41,7 @@ const TypeBadge = styled.span`
   font-family: 'OpenSans';
   font-weight: 800;
   font-size: 16px;
+  
   &:last-child {
     margin-left: 0.25rem;
   }

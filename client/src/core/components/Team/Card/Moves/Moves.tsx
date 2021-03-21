@@ -5,6 +5,7 @@ import Move from '../../../../models/move';
 import MoveDetail from './MoveDetail';
 
 const Container = styled.div`
+  margin: 0 auto;
   display: grid;
   column-gap: 4rem;
   row-gap: 1rem;

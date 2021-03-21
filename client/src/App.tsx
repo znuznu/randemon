@@ -1,6 +1,6 @@
 import React from 'react';
 
-import IndexPage from './pages/Index';
+import IndexPage from './pages';
 
 function App() {
   return <IndexPage />;

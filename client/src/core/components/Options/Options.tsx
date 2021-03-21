@@ -12,8 +12,8 @@ import { Type } from '../../models/type';
 import styled from 'styled-components';
 
 const OptionsSection = styled.div`
-  width: 100%;
-  margin-bottom: 2rem;
+  width: 900px;
+  margin: 0 auto 2rem;
 `;
 
 const Flex = styled.div`

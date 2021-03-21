@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Generation } from '../../models/generation';
+import { Region } from '../../models/region';
 
 const Section = styled.div`
   display: flex;
@@ -10,29 +11,27 @@ const Section = styled.div`
 
 const Title = styled.h2`
   font-family: 'OpenSans';
+  text-align: center;
 `;
-
-interface BadgeProps {
-  something: boolean;
-}
 
 const Badge = styled.span`
   font-family: 'Inter';
-  background-color: white;
   display: inline-block;
   vertical-align: middle;
   text-align: center;
-  color: black;
-  text-transform: uppercase;
+  text-transform: capitalize;
   padding: 0 0.25rem;
   border-radius: 0.125rem;
   font-weight: 800;
   font-size: 16px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  background-color: white;
+  color: black;
+  border: 1px solid black;
 
   &:hover {
     cursor: pointer;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    background-color: black;
+    color: white;
   }
 `;
 
@@ -42,13 +41,34 @@ const BadgeSelected = styled(Badge)`
 `;
 
 const Badges = styled.div`
+  margin: 0 auto;
   display: grid;
   column-gap: 0.5rem;
   row-gap: 0.5rem;
-  grid-template-columns: repeat(3, 40px [col-start]);
+  grid-template-columns: repeat(3, auto [col-start]);
 `;
 
-const GENERATIONS: Generation[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+const regionsToGeneration: Record<Region, Generation> = {
+  Kanto: 'I',
+  Johto: 'II',
+  Hoenn: 'III',
+  Sinnoh: 'IV',
+  Unova: 'V',
+  Kalos: 'VI',
+  Alola: 'VII',
+  Galar: 'VIII'
+};
+
+const REGIONS: Region[] = [
+  'Kanto',
+  'Johto',
+  'Hoenn',
+  'Sinnoh',
+  'Unova',
+  'Kalos',
+  'Alola',
+  'Galar'
+];
 
 type GenerationsProps = {
   currentGenerations: Generation[];
@@ -58,19 +78,22 @@ type GenerationsProps = {
 const Generations = ({ currentGenerations, emitGeneration }: GenerationsProps) => {
   return (
     <Section>
-      <Title>Generation</Title>
+      <Title>Generations</Title>
       <Badges>
-        {GENERATIONS.map((generation) => {
-          return currentGenerations.includes(generation) ? (
+        {REGIONS.map((region) => {
+          return currentGenerations.includes(regionsToGeneration[region]) ? (
             <BadgeSelected
-              key={`${generation}`}
-              onClick={() => emitGeneration(generation)}
+              key={`${region}`}
+              onClick={() => emitGeneration(regionsToGeneration[region])}
             >
-              {generation}
+              {region}
             </BadgeSelected>
           ) : (
-            <Badge key={`${generation}`} onClick={() => emitGeneration(generation)}>
-              {generation}
+            <Badge
+              key={`${region}`}
+              onClick={() => emitGeneration(regionsToGeneration[region])}
+            >
+              {region}
             </Badge>
           );
         })}

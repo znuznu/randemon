@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 
-import { Context as TeamContext } from '../../core/contexts/teamContext';
+import { Context as TeamContext } from '../core/contexts/teamContext';
 
-import MainHeading from '../../core/components/MainHeading/MainHeading';
-import Options from '../../core/components/Options/Options';
-import { Team } from '../../core/models/team';
-import TeamSection from '../../core/components/Team/TeamSection';
-import GlobalStyle from '../../styles/theme/GlobalStyle';
+import MainHeading from '../core/components/MainHeading/MainHeading';
+import Options from '../core/components/Options/Options';
+import { Team } from '../core/models/team';
+import TeamSection from '../core/components/Team/TeamSection';
+import GlobalStyle from '../styles/theme/GlobalStyle';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 900px;
   margin: 0 auto;
 `;
 

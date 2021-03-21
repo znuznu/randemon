@@ -5,8 +5,13 @@ import { Team } from '../../models/team';
 import Card from './Card/Card';
 
 const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 400px [col-start]);
+  column-gap: 16px;
+  row-gap: 16px;
+  margin: auto;
+
+  width: 1232px;
   padding-bottom: 2rem;
 `;
 
