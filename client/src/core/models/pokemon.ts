@@ -9,4 +9,5 @@ export default interface Pokemon {
   types: [Type, Type?];
   moves: Move[];
   allMovesNames: string[];
+  isLocked: boolean;
 }

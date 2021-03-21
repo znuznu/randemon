@@ -23,7 +23,8 @@ export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
             pokemonPAPI.types[1]?.type.name.toUpperCase() as Type
         ],
         allMovesNames,
-        moves: []
+        moves: [],
+        isLocked: false
     };
 }
 

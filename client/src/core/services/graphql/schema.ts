@@ -22,6 +22,7 @@ const qGetRandomTeam = gql`
           power
           pp
         }
+        isLocked
       }
     }
   }

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
+import { IconContext } from 'react-icons';
+import { IoLockClosedSharp, IoLockOpenSharp } from 'react-icons/io5';
+
 import { TYPES_COLORS } from '../../../../styles/theme/typesColors';
 import Pokemon from '../../../models/pokemon';
 import TypeBadge from '../../commons/styles/TypeBadge';
@@ -17,6 +20,17 @@ const Name = styled.h2`
   font-family: 'Inter';
   text-transform: capitalize;
   text-align: center;
+`;
+
+const Heading = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Lock = styled.span`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Id = styled.h2`
@@ -49,7 +63,18 @@ type PokemonDetailProps = {
 const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
   return (
     <Container>
-      <Id>#{pokemon.id}</Id>
+      <Heading>
+        <Id>#{pokemon.id}</Id>
+        <IconContext.Provider value={{ color: 'black', size: '24px' }}>
+          <Lock>
+            {pokemon.isLocked ? (
+              <IoLockClosedSharp opacity={1} />
+            ) : (
+              <IoLockOpenSharp opacity={1} />
+            )}
+          </Lock>
+        </IconContext.Provider>
+      </Heading>
       {pokemon.officialArtwork && <Artwork src={pokemon.officialArtwork} />}
       <Name>{pokemon.name}</Name>
       {pokemon.types && (

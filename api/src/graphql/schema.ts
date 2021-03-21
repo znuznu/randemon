@@ -70,6 +70,7 @@ const schema = buildSchema(`
             types: [Type]!
             moves: [Move!]
             allMovesNames: [String]
+            isLocked: Boolean
         }
 
         """
