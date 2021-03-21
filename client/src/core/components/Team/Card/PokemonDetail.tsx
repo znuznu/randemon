@@ -22,7 +22,6 @@ const Id = styled.h2`
   margin: 0;
   font-weight: 800;
   color: black;
-  opacity: 0.2;
 `;
 
 const Types = styled.div`
