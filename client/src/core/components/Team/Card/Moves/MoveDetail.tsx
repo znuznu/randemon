@@ -4,6 +4,7 @@ import { TYPES_COLORS } from '../../../../../styles/theme/typesColors';
 
 import Move from '../../../../models/move';
 import { Type } from '../../../../models/type';
+import TypeBadge from '../../../commons/styles/TypeBadge';
 
 const Container = styled.div`
   display: flex;
@@ -43,18 +44,7 @@ const StatDetail = styled.span`
   font-weight: 200;
 `;
 
-const TypeBadge = styled.span`
-  display: inline-block;
-  vertical-align: middle;
-  text-align: center;
-  color: white;
-  background-color: ${(props) => props.color};
-  text-transform: uppercase;
-  padding: 0 0.25rem;
-  border-radius: 0.125rem;
-  font-family: 'OpenSans';
-  font-weight: 800;
-  font-size: 16px;
+const Badge = styled(TypeBadge)`
   margin: 0.4rem auto;
 `;
 
@@ -66,7 +56,7 @@ const MoveDetail = ({ move }: MoveDetailProps) => {
   return (
     <Container>
       <Name>{move.name}</Name>
-      <TypeBadge color={TYPES_COLORS[move.type]}>{move.type}</TypeBadge>
+      <Badge color={TYPES_COLORS[move.type]}>{move.type}</Badge>
       <Stats>
         <Stat>
           <StatTitle>Power</StatTitle>

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { TYPES_COLORS } from '../../../styles/theme/typesColors';
 import { Type, types } from '../../models/type';
+import TypeBadge from '../commons/styles/TypeBadge';
 
 const Section = styled.div`
   display: flex;
@@ -22,18 +23,7 @@ const Badges = styled.div`
   grid-template-columns: repeat(3, auto [col-start]);
 `;
 
-const Badge = styled.span`
-  display: inline-block;
-  vertical-align: middle;
-  text-align: center;
-  color: white;
-  background-color: ${(props) => props.color};
-  text-transform: uppercase;
-  padding: 0 0.25rem;
-  border-radius: 0.125rem;
-  font-family: 'OpenSans';
-  font-weight: 800;
-  font-size: 16px;
+const Badge = styled(TypeBadge)`
   opacity: 0.4;
 
   &:hover {

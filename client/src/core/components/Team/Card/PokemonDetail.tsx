@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { TYPES_COLORS } from '../../../../styles/theme/typesColors';
 import Pokemon from '../../../models/pokemon';
+import TypeBadge from '../../commons/styles/TypeBadge';
 
 const Container = styled.div`
   display: flex;
@@ -29,19 +30,7 @@ const Types = styled.div`
   margin: 0 auto;
 `;
 
-const TypeBadge = styled.span`
-  display: inline-block;
-  vertical-align: middle;
-  text-align: center;
-  color: white;
-  background-color: ${(props) => props.color};
-  text-transform: uppercase;
-  padding: 0 0.25rem;
-  border-radius: 0.125rem;
-  font-family: 'OpenSans';
-  font-weight: 800;
-  font-size: 16px;
-  
+const Badge = styled(TypeBadge)`
   &:last-child {
     margin-left: 0.25rem;
   }
@@ -67,9 +56,9 @@ const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
           {pokemon.types.map((type) => {
             return (
               type && (
-                <TypeBadge key={`${type}`} color={TYPES_COLORS[type]}>
+                <Badge key={`${type}`} color={TYPES_COLORS[type]}>
                   {type}
-                </TypeBadge>
+                </Badge>
               )
             );
           })}
