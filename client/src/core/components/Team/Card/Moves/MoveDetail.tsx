@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const Name = styled.h3`
   margin: 0;
-  font-family: 'OpenSans';
+  font-family: 'Lato';
   text-transform: capitalize;
   font-weight: 800;
   text-align: center;
@@ -27,7 +27,7 @@ const Stats = styled.div`
 `;
 
 const Stat = styled.p`
-  font-family: 'OpenSans';
+  font-family: 'Lato';
   font-weight: 800;
   margin: 0;
   display: flex;
@@ -35,12 +35,12 @@ const Stat = styled.p`
 `;
 
 const StatTitle = styled.span`
-  font-family: 'OpenSans';
+  font-family: 'Lato';
   font-weight: 400;
 `;
 
 const StatDetail = styled.span`
-  font-family: 'OpenSans';
+  font-family: 'Lato';
   font-weight: 200;
 `;
 

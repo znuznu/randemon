@@ -17,7 +17,7 @@ const Container = styled.div`
 `;
 
 const Name = styled.h2`
-  font-family: 'Inter';
+  font-family: 'Lato';
   text-transform: capitalize;
   text-align: center;
 `;
@@ -34,7 +34,7 @@ const Lock = styled.span`
 `;
 
 const Id = styled.h2`
-  font-family: 'Inter';
+  font-family: 'Lato';
   margin: 0;
   font-weight: 800;
   color: black;

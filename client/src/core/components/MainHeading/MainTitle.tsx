@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 const Title = styled.h1`
   font-family: 'KaBlam';
-  color: white;
-  text-shadow: 0 0 5px black;
-  font-size: 128px;
+  color: black;
+  font-size: 150px;
   margin: 3rem 0 0;
 `;
 

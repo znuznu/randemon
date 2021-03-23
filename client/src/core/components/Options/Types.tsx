@@ -11,7 +11,7 @@ const Section = styled.div`
 `;
 
 const Title = styled.h2`
-  font-family: 'OpenSans';
+  font-family: 'Lato';
   text-align: center;
 `;
 

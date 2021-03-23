@@ -10,12 +10,12 @@ const Section = styled.div`
 `;
 
 const Title = styled.h2`
-  font-family: 'OpenSans';
+  font-family: 'Lato';
   text-align: center;
 `;
 
 const Badge = styled.span`
-  font-family: 'Inter';
+  font-family: 'Lato';
   display: inline-block;
   vertical-align: middle;
   text-align: center;

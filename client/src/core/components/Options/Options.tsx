@@ -23,8 +23,8 @@ const Flex = styled.div`
 
 const Button = styled.button`
   padding: 0.25rem 25px;
-  font-family: 'Inter';
-  font-size: 20px;
+  font-family: 'Lato';
+  font-size: 24px;
   font-weight: 700;
   background-color: white;
   color: black;

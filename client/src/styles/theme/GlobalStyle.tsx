@@ -6,6 +6,9 @@ import OpenSans2 from '../fonts/open-sans-v18-latin-regular.woff2';
 import Inter from '../fonts/inter-v3-latin-regular.woff';
 import Inter2 from '../fonts/inter-v3-latin-regular.woff2';
 
+import Lato from '../fonts/lato-v17-latin-regular.woff';
+import Lato2 from '../fonts/lato-v17-latin-regular.woff2';
+
 import KaBlam from '../fonts/ka-blam.ttf';
 
 const GlobalStyle = createGlobalStyle`
@@ -27,6 +30,14 @@ const GlobalStyle = createGlobalStyle`
     src: local('Inter'), local('Inter'),
     url(${Inter2}) format('woff2'),
     url(${Inter}) format('woff');
+    font-style: normal;
+  }  
+  
+  @font-face {
+    font-family: 'Lato';
+    src: local('Lato'), local('Lato'),
+    url(${Lato2}) format('woff2'),
+    url(${Lato}) format('woff');
     font-style: normal;
   }
 
