@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
 import { IconContext } from 'react-icons';
 import { IoLockClosedSharp, IoLockOpenSharp } from 'react-icons/io5';
+
+import { Context as TeamContext } from '../../../contexts/teamContext';
 
 import { TYPES_COLORS } from '../../../../styles/theme/typesColors';
 import Pokemon from '../../../models/pokemon';
@@ -58,15 +60,22 @@ const Artwork = styled.img`
 
 type PokemonDetailProps = {
   pokemon: Pokemon;
+  teamIndex: number;
 };
 
-const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
+const PokemonDetail = ({ pokemon, teamIndex }: PokemonDetailProps) => {
+  const teamContext = useContext(TeamContext);
+
+  const updateLock = (teamIndex: number) => {
+    teamContext.toggleLock!(teamIndex);
+  };
+
   return (
     <Container>
       <Heading>
         <Id>#{pokemon.id}</Id>
         <IconContext.Provider value={{ color: 'black', size: '24px' }}>
-          <Lock>
+          <Lock onClick={() => updateLock(teamIndex)}>
             {pokemon.isLocked ? (
               <IoLockClosedSharp opacity={1} />
             ) : (

@@ -1,4 +1,5 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+
 import { Generation } from '../../models/generation';
 import { getRandomTeam } from '../../services/graphql/service';
 
@@ -66,8 +67,10 @@ const Options = () => {
   };
 
   const generate = () => {
+    teamContext.setIsLoading!(true);
     getRandomTeam(quantity, Array.from(generations), type).then((team: Team | null) => {
       team && teamContext.setTeam!(team);
+      teamContext.setIsLoading!(false);
     });
   };
 
@@ -82,7 +85,7 @@ const Options = () => {
       </Flex>
       <Pokeballs quantity={quantity} setQuantity={setQuantity} />
       <Flex>
-        {generations.size ? (
+        {!teamContext.isLoading && generations.size ? (
           <Button onClick={generate}>Generate</Button>
         ) : (
           <ButtonDisabled disabled onClick={generate}>

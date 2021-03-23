@@ -10,7 +10,6 @@ const Container = styled.div`
   column-gap: 16px;
   row-gap: 16px;
   margin: auto;
-
   width: 1232px;
   padding-bottom: 2rem;
 `;
@@ -22,8 +21,8 @@ type TeamProps = {
 const TeamSection = ({ team }: TeamProps) => {
   return (
     <Container>
-      {team.pokemon.map((pokemon) => {
-        return <Card key={pokemon.id} pokemon={pokemon} />;
+      {team.pokemon.map((pokemon, index) => {
+        return <Card key={pokemon.id} pokemon={pokemon} teamIndex={index} />;
       })}
     </Container>
   );
