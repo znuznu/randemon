@@ -1,12 +1,8 @@
 import { Team } from '../randemon/models/team';
-import { generateTeam, generateTeamWithType } from './service';
+import { generateTeam } from './service';
 
 const teamResolver = {
     getRandomTeam: async (args: any): Promise<Team> => {
-        if (args.parameters.type) {
-            return generateTeamWithType({ ...args.parameters });
-        }
-
         return generateTeam({ ...args.parameters });
     }
 };
