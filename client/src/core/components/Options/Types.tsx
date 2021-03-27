@@ -38,10 +38,10 @@ const BadgeSelected = styled(Badge)`
 
 type TypesProps = {
   currentType: string | null;
-  setType: (type: Type) => void;
+  emitType: (type: Type) => void;
 };
 
-const Types = ({ currentType, setType }: TypesProps) => {
+const Types = ({ currentType, emitType }: TypesProps) => {
   return (
     <Section>
       <Title>Types</Title>
@@ -51,7 +51,7 @@ const Types = ({ currentType, setType }: TypesProps) => {
             <BadgeSelected
               key={`${type}`}
               color={TYPES_COLORS[type]}
-              onClick={() => setType(type)}
+              onClick={() => emitType(type)}
             >
               {type}
             </BadgeSelected>
@@ -59,7 +59,7 @@ const Types = ({ currentType, setType }: TypesProps) => {
             <Badge
               key={`${type}`}
               color={TYPES_COLORS[type]}
-              onClick={() => setType(type)}
+              onClick={() => emitType(type)}
             >
               {type}
             </Badge>

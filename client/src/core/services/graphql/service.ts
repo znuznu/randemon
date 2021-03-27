@@ -4,7 +4,7 @@ import Pokemon from '../../models/pokemon';
 import { Team } from '../../models/team';
 import { Type } from '../../models/type';
 
-import { qGetRandomTeam } from './schema';
+import { qGetRandomTeam, qUpdateTeamRandomly } from './schema';
 
 const API_URL = `http://localhost:4000/queries`;
 
@@ -31,8 +31,40 @@ const getRandomTeam = async (
 
     return response.getRandomTeam;
   } catch (error) {
+    // fixme: handle error
     return null;
   }
 };
 
-export { getRandomTeam };
+interface UpdateRandomTeamResponse {
+  updateTeamRandomly: {
+    pokemon: Pokemon[];
+  };
+}
+
+const updateTeamRandomly = async (
+  numbersOfPokemon: number = 6,
+  generations: Generation[] = ['I'],
+  type: Type | null = null,
+  team: Team
+): Promise<Team | null> => {
+  try {
+    const response: UpdateRandomTeamResponse = await request(
+      API_URL,
+      qUpdateTeamRandomly,
+      {
+        generations,
+        numbersOfPokemon,
+        type,
+        team
+      }
+    );
+
+    return response.updateTeamRandomly;
+  } catch (error) {
+    // fixme: handle error
+    return null;
+  }
+};
+
+export { getRandomTeam, updateTeamRandomly };

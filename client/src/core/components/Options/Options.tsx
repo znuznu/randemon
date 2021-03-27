@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { Generation } from '../../models/generation';
-import { getRandomTeam } from '../../services/graphql/service';
+import { getRandomTeam, updateTeamRandomly } from '../../services/graphql/service';
 
 import { Context as TeamContext } from '../../contexts/teamContext';
 
@@ -66,12 +66,27 @@ const Options = () => {
       : setGenerations(new Set([...Array.from(generations), generation]));
   };
 
+  const emitType = (emittedType: Type) => {
+    type === emittedType ? setType(null) : setType(emittedType);
+  };
+
   const generate = () => {
     teamContext.setIsLoading!(true);
-    getRandomTeam(quantity, Array.from(generations), type).then((team: Team | null) => {
-      team && teamContext.setTeam!(team);
-      teamContext.setIsLoading!(false);
-    });
+
+    if (teamContext.team) {
+      console.log(teamContext.team);
+      updateTeamRandomly(quantity, Array.from(generations), type, teamContext.team).then(
+        (team: Team | null) => {
+          team && teamContext.setTeam!(team);
+          teamContext.setIsLoading!(false);
+        }
+      );
+    } else {
+      getRandomTeam(quantity, Array.from(generations), type).then((team: Team | null) => {
+        team && teamContext.setTeam!(team);
+        teamContext.setIsLoading!(false);
+      });
+    }
   };
 
   return (
@@ -81,7 +96,7 @@ const Options = () => {
           currentGenerations={Array.from(generations)}
           emitGeneration={emitGeneration}
         />
-        <Types currentType={type} setType={setType} />
+        <Types currentType={type} emitType={emitType} />
       </Flex>
       <Pokeballs quantity={quantity} setQuantity={setQuantity} />
       <Flex>
