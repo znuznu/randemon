@@ -13,28 +13,19 @@ import {
 } from './getters';
 
 const cacheService = new CacheService(
-    CacheService.createRedisClient({ host: config.REDIS_HOST, port: 6379 }),
+    CacheService.createRedisClient({
+        host: config.REDIS_HOST,
+        port: config.REDIS_PORT
+    }),
     logger
 );
 
 export async function generateTeam(parameters: TeamConfig): Promise<Team> {
     const { generations, numbersOfPokemon } = parameters;
-    const team: Team = {
-        pokemon: []
-    };
     const indexes = getIndexesOfMultipleGenerations(generations);
     let pokemonLeft = numbersOfPokemon;
 
-    while (pokemonLeft) {
-        const index = indexes.splice(randInRange(0, indexes.length), 1)[0];
-        let pokemon = await getPokemonById(cacheService, index);
-        const moves = await getRandomMoves(4, pokemon.allMovesNames);
-        pokemon = { ...pokemon, moves };
-        team.pokemon.push(pokemon);
-        pokemonLeft--;
-    }
-
-    return team;
+    return getTeam(indexes, pokemonLeft);
 }
 
 export async function generateTeamWithType(
@@ -42,9 +33,6 @@ export async function generateTeamWithType(
 ): Promise<Team> {
     const { generations, numbersOfPokemon, type } = parameters;
 
-    const team: Team = {
-        pokemon: []
-    };
     const indexes = getIndexesOfMultipleGenerations(generations);
     const pokemonNamedAPIResources: TypePokemonPAPI[] = await getPokemonNamedAPIResourceOfTypeByName(
         cacheService,
@@ -67,20 +55,25 @@ export async function generateTeamWithType(
 
     let pokemonLeft = numbersOfPokemon;
 
-    while (pokemonLeft) {
+    return getTeam(pokemonIds, pokemonLeft);
+}
+
+async function getTeam(pokemonIds: number[], amount: number): Promise<Team> {
+    const team: Team = {
+        pokemon: []
+    };
+
+    while (amount) {
         if (!pokemonIds.length) {
             break;
         }
 
         const index = pokemonIds.splice(randInRange(0, pokemonIds.length), 1)[0];
         let pokemon = await getPokemonById(cacheService, index);
-
-        if (pokemon) {
-            const moves = await getRandomMoves(4, pokemon.allMovesNames);
-            pokemon = { ...pokemon, moves };
-            team.pokemon.push(pokemon);
-            pokemonLeft--;
-        }
+        const moves = await getRandomMoves(4, pokemon.allMovesNames);
+        pokemon = { ...pokemon, moves };
+        team.pokemon.push(pokemon);
+        amount--;
     }
 
     return team;
