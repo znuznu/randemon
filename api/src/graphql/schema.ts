@@ -43,9 +43,9 @@ const schema = buildSchema(`
         Pokémon team parameters.
         """
         input TeamConfig {
-            "Of which generations should come Pokémon of the team"
+            "Of which generations should come Pokémon of the team."
             generations: [Generation]
-            "How many Pokémon we want in the team"
+            "How many Pokémon we want in the team."
             numbersOfPokemon: Int
             "The type of the Pokemon of the team."
             type: Type
@@ -80,8 +80,33 @@ const schema = buildSchema(`
             pokemon: [Pokemon]!
         }
 
+        input MoveInput {
+            accuracy: Int
+            power: Int
+            pp: Int
+            type: String
+            name: String
+        }
+
+        input PokemonInput {
+            id: Int!
+            name: String!
+            frontSprite: String
+            officialArtwork: String
+            types: [Type]!
+            moves: [MoveInput!]
+            allMovesNames: [String]
+            isLocked: Boolean
+        }
+
+        input TeamInput {
+            "The Pokemon team to update."
+            pokemon: [PokemonInput]!
+        }
+
         type Query {
             getRandomTeam(parameters: TeamConfig): Team
+            updateTeamRandomly(parameters: TeamConfig, team: TeamInput): Team
         }
 
         schema {

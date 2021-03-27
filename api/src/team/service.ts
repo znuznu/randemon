@@ -3,6 +3,7 @@ import { config } from '../config';
 import { logger } from '../logger';
 import { TypePokemonPAPI } from '../pokeapi/models/type.papi';
 import { Move } from '../randemon/models/move';
+import Pokemon from '../randemon/models/pokemon';
 import { Team, TeamConfig } from '../randemon/models/team';
 import Type from '../randemon/models/type';
 import { randInRange } from '../utils';
@@ -21,8 +22,8 @@ const cacheService = new CacheService(
     logger
 );
 
-export async function generateTeam(parameters: TeamConfig): Promise<Team> {
-    const { generations, numbersOfPokemon, type } = parameters;
+export async function generateTeam(config: TeamConfig): Promise<Team> {
+    const { generations, numbersOfPokemon, type } = config;
     let indexes = getIndexesOfMultipleGenerations(generations);
     let pokemonLeft = numbersOfPokemon;
 
@@ -66,14 +67,19 @@ async function getTeam(pokemonIds: number[], amount: number): Promise<Team> {
         }
 
         const index = pokemonIds.splice(randInRange(0, pokemonIds.length), 1)[0];
-        let pokemon = await getPokemonById(cacheService, index);
-        const moves = await getRandomMoves(4, pokemon.allMovesNames);
-        pokemon = { ...pokemon, moves };
+        const pokemon = await getPokemon(index);
         team.pokemon.push(pokemon);
         amount--;
     }
 
     return team;
+}
+
+async function getPokemon(pokemonId: number): Promise<Pokemon> {
+    const pokemon = await getPokemonById(cacheService, pokemonId);
+    const moves = await getRandomMoves(4, pokemon.allMovesNames);
+
+    return { ...pokemon, moves };
 }
 
 export async function getRandomMovesOfPokemon(
@@ -112,4 +118,58 @@ export async function getRandomMoves(
     }
 
     return moves;
+}
+
+export async function updateTeamRandomly(config: TeamConfig, team: Team): Promise<Team> {
+    const { generations, numbersOfPokemon, type } = config;
+    const { pokemon } = team;
+
+    const lockedTeamIndexes: number[] = [];
+    const lockedPokemon = pokemon.filter((pokemon, index) => {
+        lockedTeamIndexes.push(index);
+        return pokemon.isLocked;
+    });
+
+    let pokemonLeft = numbersOfPokemon - lockedPokemon.length;
+
+    if (pokemonLeft < 0) {
+        logger.info(
+            `Number of locked Pokemon (${lockedPokemon.length}) is superior to numbersOfPokemon (${numbersOfPokemon})`
+        );
+        return { pokemon: lockedPokemon };
+    }
+
+    let indexes = getIndexesOfMultipleGenerations(generations);
+
+    const lockedPokemonIds = lockedPokemon.map((pokemon) => pokemon.id);
+    indexes = indexes.filter((id) => !lockedPokemonIds.includes(id));
+    if (type) {
+        indexes = await filterIdsByType(indexes, type);
+    }
+
+    const newTeam: Team = { pokemon: [] };
+
+    for (const teamPokemon of pokemon) {
+        if (!teamPokemon.isLocked) {
+            if (!pokemonLeft) {
+                continue;
+            }
+
+            const newPokemonId = indexes.splice(randInRange(0, indexes.length), 1)[0];
+            const newPokemon = await getPokemon(newPokemonId);
+            newTeam.pokemon.push(newPokemon);
+            pokemonLeft--;
+        } else {
+            newTeam.pokemon.push(teamPokemon);
+        }
+    }
+
+    while (pokemonLeft) {
+        const newPokemonId = indexes.splice(randInRange(0, indexes.length), 1)[0];
+        const newPokemon = await getPokemon(newPokemonId);
+        newTeam.pokemon.push(newPokemon);
+        pokemonLeft--;
+    }
+
+    return newTeam;
 }
