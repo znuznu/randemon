@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { TYPES_COLORS } from '../../../../../styles/theme/typesColors';
 
 import Move from '../../../../models/move';
-import { Type } from '../../../../models/type';
 import TypeBadge from '../../../commons/styles/TypeBadge';
 
 const Container = styled.div`

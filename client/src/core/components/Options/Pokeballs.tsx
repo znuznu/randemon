@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import PokeballIconEmpty from '../../../styles/svg/pokeball-empty.svg';
 import PokeballIconFilled from '../../../styles/svg/pokeball-filled.svg';
 
 import styled from 'styled-components';
-
-type PokeballsProps = {
-  quantity: number;
-  setQuantity: (quantity: number) => void;
-};
 
 const Flex = styled.div`
   display: flex;
@@ -39,6 +34,11 @@ const Icon = styled.img<IconProps>`
     }
   }
 `;
+
+type PokeballsProps = {
+  quantity: number;
+  setQuantity: (quantity: number) => void;
+};
 
 const Pokeballs = ({ quantity, setQuantity }: PokeballsProps) => {
   useEffect(() => {}, [quantity]);

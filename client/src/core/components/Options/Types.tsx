@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { TYPES_COLORS } from '../../../styles/theme/typesColors';
 import { Type, types } from '../../models/type';

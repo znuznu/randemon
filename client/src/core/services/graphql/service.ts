@@ -1,10 +1,11 @@
-import { GraphQLClient, request } from 'graphql-request';
-import { Generation } from '../../models/generation';
-import Pokemon from '../../models/pokemon';
-import { Team } from '../../models/team';
-import { Type } from '../../models/type';
+import { request } from 'graphql-request';
 
 import { qGetRandomTeam, qUpdateTeamRandomly } from './schema';
+
+import { Generation } from '../../models/generation';
+import { Team } from '../../models/team';
+import { Type } from '../../models/type';
+import Pokemon from '../../models/pokemon';
 
 const API_URL = `http://localhost:4000/queries`;
 

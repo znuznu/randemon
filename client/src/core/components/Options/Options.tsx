@@ -74,14 +74,13 @@ const Options = () => {
     teamContext.setIsLoading!(true);
 
     if (teamContext.team) {
-      console.log(teamContext.team);
       updateTeamRandomly(quantity, Array.from(generations), type, teamContext.team).then(
         (team: Team | null) => {
           team && teamContext.setTeam!(team);
           teamContext.setIsLoading!(false);
         }
       );
-    } else {
+    } else { 
       getRandomTeam(quantity, Array.from(generations), type).then((team: Team | null) => {
         team && teamContext.setTeam!(team);
         teamContext.setIsLoading!(false);
