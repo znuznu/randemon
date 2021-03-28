@@ -147,10 +147,14 @@ export async function updateTeamRandomly(config: TeamConfig, team: Team): Promis
         indexes = await filterIdsByType(indexes, type);
     }
 
+    if (!indexes.length) {
+        return { pokemon: lockedPokemon };
+    }
+
     const newTeam: Team = { pokemon: [] };
 
     for (const teamPokemon of pokemon) {
-        if (!teamPokemon.isLocked) {
+        if (!teamPokemon.isLocked && indexes.length) {
             if (!pokemonLeft) {
                 continue;
             }
@@ -164,7 +168,7 @@ export async function updateTeamRandomly(config: TeamConfig, team: Team): Promis
         }
     }
 
-    while (pokemonLeft) {
+    while (indexes.length && pokemonLeft) {
         const newPokemonId = indexes.splice(randInRange(0, indexes.length), 1)[0];
         const newPokemon = await getPokemon(newPokemonId);
         newTeam.pokemon.push(newPokemon);
