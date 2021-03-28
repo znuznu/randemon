@@ -6,12 +6,16 @@ import Card from './Card/Card';
 
 const Container = styled.div`
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(auto-fill, 400px [col-start]);
   column-gap: 16px;
   row-gap: 16px;
   margin: auto;
-  width: 1232px;
   padding-bottom: 2rem;
+
+  @media only screen and (min-width: 1660px) {
+    grid-template-columns: repeat(3, 400px [col-start]);
+  }
 `;
 
 type TeamProps = {
