@@ -20,6 +20,11 @@ const Flex = styled.div`
 const Icon = styled.img`
   width: 50px;
   cursor: pointer;
+  transition: transform 0.8s ease-out;
+
+  &:hover {
+    transform: rotate(90deg);
+  }
 `;
 
 const Pokeballs = ({ quantity, setQuantity }: PokeballsProps) => {

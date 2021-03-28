@@ -1,8 +1,9 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import SkeletonContainer from '../../commons/styles/SkeletonContainer';
 
-const Container = styled.div`
+const Container = styled(SkeletonContainer)`
   margin: 0 auto 0;
   display: grid;
   column-gap: 4rem;
@@ -10,24 +11,24 @@ const Container = styled.div`
   grid-template-columns: repeat(2, 150px [col-start]);
 `;
 
-const Move = styled.div`
-  width: 150px;
-  height: 60px;
-  background-color: #dfe5ec;
-  margin: 0 auto 0.25rem;
-`;
-
 const Name = styled.div`
   width: 104px;
   height: 24px;
-  background-color: #dfe5ec;
+  background-color: ${(props) => props.theme.skeleton};
+  margin: 0 auto 0.25rem;
+`;
+
+const Move = styled.div`
+  width: 150px;
+  height: 60px;
+  background-color: ${(props) => props.theme.skeleton};
   margin: 0 auto 0.25rem;
 `;
 
 const TypeBadge = styled.div`
   width: 76px;
   height: 20px;
-  background-color: #dfe5ec;
+  background-color: ${(props) => props.theme.skeleton};
   margin: 0 auto 0.25rem;
 `;
 
