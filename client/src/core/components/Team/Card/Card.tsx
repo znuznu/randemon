@@ -12,7 +12,7 @@ import SkeletonMoves from './SkeletonMoves';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${(props) => props.theme['primary']};
+  border: 1px solid ${(props) => props.theme.primary};
   border-radius: 0.25rem;
   padding: 0.8rem;
 `;

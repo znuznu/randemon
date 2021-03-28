@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'OpenSans';
+  font-style: normal;
+  src: local('OpenSans'), local('OpenSans'),
+    url('./open-sans-v18-latin-regular.woff2') format('woff2'),
+    url('./open-sans-v18-latin-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  src: local('Inter'), local('Inter'),
+    url('./inter-v3-latin-regular.woff2') format('woff2'),
+    url('./inter-v3-latin-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  src: local('Lato'), local('Lato'), url('./lato-v17-latin-regular.woff2') format('woff2'),
+    url('./lato-v17-latin-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'KaBlam';
+  font-style: normal;
+  src: local('KaBlam'), local('KaBlam'), url('./ka-blam.ttf') format('woff2');
+}

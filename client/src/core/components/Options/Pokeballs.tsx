@@ -27,7 +27,7 @@ const Icon = styled.img<IconProps>`
   animation: slide-in ${(props) => props.slideInTime};
   @keyframes slide-in {
     0% {
-      transform: translateX(1300px);
+      transform: translateX(500px);
     }
     100% {
       transform: translateX(0);
