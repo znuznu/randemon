@@ -25,18 +25,18 @@ const Badge = styled.span`
   font-weight: 800;
   font-size: 18px;
   background-color: white;
-  color: black;
-  border: 1px solid black;
+  color: ${(props) => props.theme['primary']};
+  border: 1px solid ${(props) => props.theme['primary']};
 
   &:hover {
     cursor: pointer;
-    background-color: black;
+    background-color: ${(props) => props.theme['primary']};
     color: white;
   }
 `;
 
 const BadgeSelected = styled(Badge)`
-  background-color: black;
+  background-color: ${(props) => props.theme['primary']};
   color: white;
 `;
 

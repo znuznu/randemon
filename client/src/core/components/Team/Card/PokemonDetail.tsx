@@ -10,12 +10,13 @@ import { Context as TeamContext } from '../../../contexts/teamContext';
 import { TYPES_COLORS } from '../../../../styles/theme/typesColors';
 import Pokemon from '../../../models/pokemon';
 import TypeBadge from '../../commons/styles/TypeBadge';
+import { theme } from '../../../../styles/theme/theme';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 1rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid ${(props) => props.theme['primary']};
 `;
 
 const Name = styled.h2`
@@ -39,7 +40,7 @@ const Id = styled.h2`
   font-family: 'Lato';
   margin: 0;
   font-weight: 800;
-  color: black;
+  color: ${(props) => props.theme['primary']};
 `;
 
 const Types = styled.div`
@@ -74,7 +75,7 @@ const PokemonDetail = ({ pokemon, teamIndex }: PokemonDetailProps) => {
     <Container>
       <Heading>
         <Id>#{pokemon.id}</Id>
-        <IconContext.Provider value={{ color: 'black', size: '24px' }}>
+        <IconContext.Provider value={{ color: theme['primary'], size: '24px' }}>
           <Lock onClick={() => updateLock(teamIndex)}>
             {pokemon.isLocked ? (
               <IoLockClosedSharp opacity={1} />

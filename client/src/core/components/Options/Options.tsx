@@ -28,12 +28,12 @@ const Button = styled.button`
   font-size: 24px;
   font-weight: 700;
   background-color: white;
-  color: black;
+  color: ${(props) => props.theme['primary']};
   border-radius: 0.25rem;
-  border: 1px solid black;
+  border: 1px solid ${(props) => props.theme['primary']};
 
   &:hover {
-    background-color: black;
+    background-color: ${(props) => props.theme['primary']};
     color: white;
     cursor: pointer;
   }
@@ -80,7 +80,7 @@ const Options = () => {
           teamContext.setIsLoading!(false);
         }
       );
-    } else { 
+    } else {
       getRandomTeam(quantity, Array.from(generations), type).then((team: Team | null) => {
         team && teamContext.setTeam!(team);
         teamContext.setIsLoading!(false);
