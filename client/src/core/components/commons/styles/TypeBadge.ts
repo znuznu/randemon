@@ -11,7 +11,7 @@ const TypeBadge = styled.span`
   border-radius: 0.125rem;
   font-family: 'OpenSans';
   font-weight: 800;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 export default TypeBadge;

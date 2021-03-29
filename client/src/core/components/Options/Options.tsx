@@ -13,8 +13,19 @@ import { Type } from '../../models/type';
 import styled from 'styled-components';
 
 const OptionsSection = styled.div`
-  width: 900px;
   margin: 0 auto 2rem;
+`;
+
+const FlexOptions = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  margin: 0 auto;
+
+  @media only screen and (max-width: 630px) {
+    flex-direction: column;
+    width: auto;
+  }
 `;
 
 const Flex = styled.div`
@@ -24,8 +35,9 @@ const Flex = styled.div`
 
 const Button = styled.button`
   padding: 0.25rem 25px;
+  margin: 0 auto;
   font-family: 'Lato';
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   background-color: white;
   color: ${(props) => props.theme.primary};
@@ -90,13 +102,13 @@ const Options = () => {
 
   return (
     <OptionsSection>
-      <Flex>
+      <FlexOptions>
         <Generations
           currentGenerations={Array.from(generations)}
           emitGeneration={emitGeneration}
         />
         <Types currentType={type} emitType={emitType} />
-      </Flex>
+      </FlexOptions>
       <Pokeballs quantity={quantity} setQuantity={setQuantity} />
       <Flex>
         {!teamContext.isLoading && generations.size ? (

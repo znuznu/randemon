@@ -21,6 +21,16 @@ const Badges = styled.div`
   column-gap: 0.5rem;
   row-gap: 0.5rem;
   grid-template-columns: repeat(3, auto [col-start]);
+
+  @media only screen and (max-width: 300px) {
+    width: auto;
+    grid-template-columns: repeat(2, auto [col-start]);
+  }
+
+  @media only screen and (max-width: 210px) {
+    width: auto;
+    grid-template-columns: repeat(1, auto [col-start]);
+  }
 `;
 
 const Badge = styled(TypeBadge)`

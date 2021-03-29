@@ -23,7 +23,7 @@ const Badge = styled.span`
   padding: 0 0.25rem;
   border-radius: 0.125rem;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 16px;
   background-color: white;
   color: ${(props) => props.theme.primary};
   border: 1px solid ${(props) => props.theme.primary};
@@ -41,11 +41,21 @@ const BadgeSelected = styled(Badge)`
 `;
 
 const Badges = styled.div`
-  margin: 0 auto;
   display: grid;
   column-gap: 0.5rem;
   row-gap: 0.5rem;
-  grid-template-columns: repeat(3, auto [col-start]);
+  grid-template-columns: repeat(3, 65px [col-start]);
+  margin: 0 auto;
+
+  @media only screen and (max-width: 300px) {
+    width: auto;
+    grid-template-columns: repeat(2, 65px [col-start]);
+  }
+
+  @media only screen and (max-width: 210px) {
+    width: auto;
+    grid-template-columns: repeat(auto-fill, 65px [col-start]);
+  }
 `;
 
 const regionsToGeneration: Record<Region, Generation> = {

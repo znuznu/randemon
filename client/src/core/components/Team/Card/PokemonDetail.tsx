@@ -49,6 +49,8 @@ const Types = styled.div`
 `;
 
 const Badge = styled(TypeBadge)`
+  font-size: 16px;
+
   &:last-child {
     margin-left: 0.25rem;
   }

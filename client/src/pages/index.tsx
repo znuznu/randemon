@@ -9,7 +9,7 @@ import { Team } from '../core/models/team';
 import TeamSection from '../core/components/Team/TeamSection';
 
 const Container = styled.div`
-  margin: 0 auto;
+  margin: 0 2rem;
 `;
 
 const IndexPage = () => {
