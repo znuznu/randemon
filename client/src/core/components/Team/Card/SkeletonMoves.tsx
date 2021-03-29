@@ -9,6 +9,10 @@ const Container = styled(SkeletonContainer)`
   column-gap: 4rem;
   row-gap: 1.5rem;
   grid-template-columns: repeat(2, 150px [col-start]);
+
+  @media only screen and (max-width: 895px) {
+    margin: auto 0;
+  }
 `;
 
 const Name = styled.div`

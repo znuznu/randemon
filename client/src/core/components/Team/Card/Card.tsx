@@ -15,6 +15,10 @@ const Container = styled.div`
   border: 1px solid ${(props) => props.theme.primary};
   border-radius: 0.25rem;
   padding: 0.8rem;
+
+  @media only screen and (max-width: 895px) {
+    flex-direction: row;
+  }
 `;
 
 type CardProps = {

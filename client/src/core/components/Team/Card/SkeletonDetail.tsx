@@ -4,7 +4,11 @@ import styled from 'styled-components';
 
 import SkeletonContainer from '../../commons/styles/SkeletonContainer';
 
-const Container = styled(SkeletonContainer)``;
+const Container = styled(SkeletonContainer)`
+  @media only screen and (max-width: 895px) {
+    margin: 0 1rem;
+  }
+`;
 
 const Id = styled.div`
   width: 60px;

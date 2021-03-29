@@ -16,6 +16,10 @@ const Container = styled.div`
   @media only screen and (min-width: 1660px) {
     grid-template-columns: repeat(3, 400px [col-start]);
   }
+
+  @media only screen and (max-width: 895px) {
+    grid-template-columns: repeat(1, auto [col-start]);
+  }
 `;
 
 const Warning = styled.p`

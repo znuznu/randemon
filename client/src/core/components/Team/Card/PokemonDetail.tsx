@@ -15,8 +15,15 @@ import { theme } from '../../../../styles/theme/theme';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 1rem;
+  padding: 0 0 1rem 0;
   border-bottom: 1px solid ${(props) => props.theme.primary};
+
+  @media only screen and (max-width: 895px) {
+    padding: 0 1rem 0 0;
+    margin: 0 1rem 0 0;
+    border-bottom: none;
+    border-right: 1px solid ${(props) => props.theme.primary};
+  }
 `;
 
 const Name = styled.h2`

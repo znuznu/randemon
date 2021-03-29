@@ -11,6 +11,12 @@ const Container = styled.div`
   column-gap: 4rem;
   row-gap: 1rem;
   grid-template-columns: repeat(2, 150px [col-start]);
+
+  @media only screen and (max-width: 895px) {
+    /* padding: 0 1rem 0 0;
+    margin: 0 1rem 0; */
+    margin: auto 0;
+  }
 `;
 
 type MovesProps = {
