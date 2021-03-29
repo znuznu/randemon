@@ -12,7 +12,7 @@ const Heading = styled.div`
 const MainHeading = () => {
   return (
     <Heading>
-      {/* <MainTitle content={'randemon'} /> */}
+      <MainTitle content={'randemon'} />
       <Subtitle content={'Random Pokemon team generator'} />
     </Heading>
   );
