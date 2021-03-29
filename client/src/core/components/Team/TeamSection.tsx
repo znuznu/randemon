@@ -18,17 +18,24 @@ const Container = styled.div`
   }
 `;
 
+const Warning = styled.p`
+  font-family: 'Lato';
+  text-align: center;
+`;
+
 type TeamProps = {
   team: Team;
 };
 
 const TeamSection = ({ team }: TeamProps) => {
-  return (
+  return team.pokemon.length ? (
     <Container>
       {team.pokemon.map((pokemon, index) => {
         return <Card key={pokemon.id} pokemon={pokemon} teamIndex={index} />;
       })}
     </Container>
+  ) : (
+    <Warning>No pokemon found with the selected options.</Warning>
   );
 };
 
