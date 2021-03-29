@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import SkeletonContainer from '../../commons/styles/SkeletonContainer';
 
 const Container = styled(SkeletonContainer)`
-  @media only screen and (max-width: 895px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
     margin: 0 1rem;
   }
 `;

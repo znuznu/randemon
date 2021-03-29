@@ -47,7 +47,7 @@ const Badges = styled.div`
   grid-template-columns: repeat(3, 65px [col-start]);
   margin: 0 auto;
 
-  @media only screen and (max-width: 300px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
     width: auto;
     grid-template-columns: repeat(2, 65px [col-start]);
   }

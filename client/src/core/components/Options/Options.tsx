@@ -22,7 +22,7 @@ const FlexOptions = styled.div`
   width: 500px;
   margin: 0 auto;
 
-  @media only screen and (max-width: 630px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}) {
     flex-direction: column;
     width: auto;
   }

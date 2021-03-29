@@ -18,7 +18,7 @@ const Grid = styled.div`
   grid-template-columns: repeat(6, 35px [col-start]);
   margin: 2rem 0;
 
-  @media only screen and (max-width: 300px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
     width: 100%;
     grid-template-columns: repeat(auto-fill, 35px [col-start]);
   }

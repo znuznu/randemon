@@ -8,12 +8,8 @@ const Title = styled.h1`
   font-size: 120px;
   margin: 3rem 0 0;
   text-transform: uppercase;
-  /* text-shadow: -15px -15px 0 ${(props) => props.theme.primary},
-    15px -15px 0 ${(props) => props.theme.primary},
-    -15px 15px 0 ${(props) => props.theme.primary},
-    15px 15px 0 ${(props) => props.theme.primary}; */
 
-  @media only screen and (max-width: 630px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}) {
     font-size: 90px;
   }
 

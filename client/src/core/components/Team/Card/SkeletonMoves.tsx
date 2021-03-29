@@ -10,7 +10,7 @@ const Container = styled(SkeletonContainer)`
   row-gap: 1.5rem;
   grid-template-columns: repeat(2, 150px [col-start]);
 
-  @media only screen and (max-width: 895px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
     margin: auto 0;
   }
 `;

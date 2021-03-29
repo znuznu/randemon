@@ -18,7 +18,7 @@ const Container = styled.div`
   padding: 0 0 1rem 0;
   border-bottom: 1px solid ${(props) => props.theme.primary};
 
-  @media only screen and (max-width: 895px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
     padding: 0 1rem 0 0;
     margin: 0 1rem 0 0;
     border-bottom: none;
@@ -30,6 +30,10 @@ const Name = styled.h2`
   font-family: 'Lato';
   text-transform: capitalize;
   text-align: center;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}) {
+    font-size: 18px;
+  }
 `;
 
 const Heading = styled.div`

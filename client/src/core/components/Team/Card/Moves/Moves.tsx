@@ -12,7 +12,7 @@ const Container = styled.div`
   row-gap: 1rem;
   grid-template-columns: repeat(2, 150px [col-start]);
 
-  @media only screen and (max-width: 895px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
     /* padding: 0 1rem 0 0;
     margin: 0 1rem 0; */
     margin: auto 0;
