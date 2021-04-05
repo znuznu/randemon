@@ -18,6 +18,10 @@ const Line = styled.p`
   margin: 0;
 `;
 
+const LineNintendo = styled.p`
+  margin: 1rem 0 0;
+`;
+
 const Footer = () => {
   return (
     <Container>
@@ -31,10 +35,10 @@ const Footer = () => {
         </Link>
         .
       </Line>
-      <Line>
+      <LineNintendo>
         <b>Pokémon</b> and <b>Pokémon</b> character names are trademarks of{' '}
         <b>Nintendo</b>.
-      </Line>
+      </LineNintendo>
     </Container>
   );
 };
