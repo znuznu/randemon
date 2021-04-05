@@ -16,6 +16,12 @@ const GlobalStyle = createGlobalStyle`
   html, body, #root {
     padding: 0;
     margin: 0;
+    height: 100%;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
   }
 
   @font-face {
