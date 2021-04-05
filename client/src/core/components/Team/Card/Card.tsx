@@ -46,7 +46,7 @@ const Card = ({ pokemon, teamIndex }: CardProps) => {
       ) : (
         <>
           <PokemonDetail pokemon={pokemon} teamIndex={teamIndex} />
-          <Moves moves={pokemon.moves}></Moves>
+          <Moves moves={pokemon.moves} pokemonId={pokemon.id}></Moves>
         </>
       )}
     </Container>

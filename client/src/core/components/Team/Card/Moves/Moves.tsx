@@ -78,9 +78,10 @@ const Triangle = styled.div<TriangleProps>`
 
 type MovesProps = {
   moves: Move[];
+  pokemonId: number;
 };
 
-const Moves = ({ moves }: MovesProps) => {
+const Moves = ({ moves, pokemonId }: MovesProps) => {
   const [isHidden, setIsHidden] = useState(true);
   const [triangleAngle, setTriangleAngle] = useState(360);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -107,8 +108,7 @@ const Moves = ({ moves }: MovesProps) => {
         maxHeight={!isSmallScreen || (isSmallScreen && !isHidden) ? '1000px' : '0px'}
       >
         {moves.map((move, index) => {
-          // TODO: pass the pokemon id here in key
-          return <MoveDetail key={`${move}-${index}`} move={move} />;
+          return <MoveDetail key={`${move}-${index}-${pokemonId}`} move={move} />;
         })}
       </Container>
     </>
