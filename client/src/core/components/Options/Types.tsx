@@ -22,7 +22,7 @@ const Badges = styled.div`
   row-gap: 0.5rem;
   grid-template-columns: repeat(3, auto [col-start]);
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}px) {
     width: auto;
     grid-template-columns: repeat(2, auto [col-start]);
   }

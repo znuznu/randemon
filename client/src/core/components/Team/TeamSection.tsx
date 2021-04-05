@@ -13,12 +13,17 @@ const Container = styled.div`
   margin: auto;
   padding-bottom: 2rem;
 
-  @media only screen and (min-width: ${(props) => props.theme.breakpoints.xl}) {
+  @media only screen and (min-width: ${(props) => props.theme.breakpoints.xl}px) {
     grid-template-columns: repeat(3, 400px [col-start]);
   }
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
     grid-template-columns: repeat(1, auto [col-start]);
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+    display: flex;
+    flex-direction: column;
   }
 `;
 

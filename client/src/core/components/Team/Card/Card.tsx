@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
+
 import styled from 'styled-components';
 
 import { Context as TeamContext } from '../../../contexts/teamContext';
-
+import useWindowSize from '../../../hooks/useWindowSize';
+import { breakpoints } from '../../../../styles/theme/breakpoints';
 import Pokemon from '../../../models/pokemon';
 import PokemonDetail from './PokemonDetail';
 import Moves from './Moves/Moves';
@@ -16,8 +18,12 @@ const Container = styled.div`
   border-radius: 0.25rem;
   padding: 0.8rem;
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
     flex-direction: row;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+    flex-direction: column;
   }
 `;
 
@@ -28,13 +34,14 @@ type CardProps = {
 
 const Card = ({ pokemon, teamIndex }: CardProps) => {
   const teamContext = useContext(TeamContext);
+  const windowSizes = useWindowSize();
 
   return (
     <Container>
       {!pokemon.isLocked && teamContext.isLoading ? (
         <>
           <SkeletonDetail />
-          <SkeletonMoves />
+          {windowSizes.size.width > breakpoints.s && <SkeletonMoves />}
         </>
       ) : (
         <>

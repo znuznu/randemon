@@ -10,6 +10,10 @@ import TeamSection from '../core/components/Team/TeamSection';
 
 const Container = styled.div`
   margin: 0 2rem;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+    margin: 0 1rem;
+  }
 `;
 
 const IndexPage = () => {
@@ -26,15 +30,13 @@ const IndexPage = () => {
 
   return (
     <Container>
-      <main>
-        <TeamContext.Provider
-          value={{ team, setTeam, toggleLock, isLoading, setIsLoading }}
-        >
-          <MainHeading />
-          <Options />
-          {team && <TeamSection team={team} />}
-        </TeamContext.Provider>
-      </main>
+      <TeamContext.Provider
+        value={{ team, setTeam, toggleLock, isLoading, setIsLoading }}
+      >
+        <MainHeading />
+        <Options />
+        {team && <TeamSection team={team} />}
+      </TeamContext.Provider>
     </Container>
   );
 };

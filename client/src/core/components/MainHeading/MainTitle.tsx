@@ -9,7 +9,7 @@ const Title = styled.h1`
   margin: 3rem 0 0;
   text-transform: uppercase;
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
     font-size: 90px;
   }
 

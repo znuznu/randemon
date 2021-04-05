@@ -10,7 +10,7 @@ const Container = styled(SkeletonContainer)`
   row-gap: 1.5rem;
   grid-template-columns: repeat(2, 150px [col-start]);
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
     margin: auto 0;
   }
 `;
@@ -37,7 +37,7 @@ const TypeBadge = styled.div`
 `;
 
 const Flex = styled.div`
-  width: 160px;
+  width: 150px;
   height: 114px;
   flex-direction: column;
   justify-content: center;

@@ -18,11 +18,17 @@ const Container = styled.div`
   padding: 0 0 1rem 0;
   border-bottom: 1px solid ${(props) => props.theme.primary};
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}) {
-    padding: 0 1rem 0 0;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
+    padding: 0 1rem 1rem 0;
     margin: 0 1rem 0 0;
     border-bottom: none;
     border-right: 1px solid ${(props) => props.theme.primary};
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+    padding: 0 0 1rem 0;
+    margin: 0;
+    border: none;
   }
 `;
 
@@ -31,8 +37,8 @@ const Name = styled.h2`
   text-transform: capitalize;
   text-align: center;
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}) {
-    font-size: 18px;
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 20px;
   }
 `;
 
@@ -52,6 +58,10 @@ const Id = styled.h2`
   margin: 0;
   font-weight: 800;
   color: ${(props) => props.theme.primary};
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 20px;
+  }
 `;
 
 const Types = styled.div`
@@ -64,6 +74,10 @@ const Badge = styled(TypeBadge)`
 
   &:last-child {
     margin-left: 0.25rem;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 14px;
   }
 `;
 

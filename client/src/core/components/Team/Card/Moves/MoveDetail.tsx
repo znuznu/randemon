@@ -17,12 +17,16 @@ const Name = styled.h3`
   text-transform: capitalize;
   font-weight: 800;
   text-align: center;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 17px;
+  }
 `;
 
 const Stats = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: span-space-between;
+  justify-content: space-between;
 `;
 
 const Stat = styled.p`
@@ -31,6 +35,10 @@ const Stat = styled.p`
   margin: 0;
   display: flex;
   justify-content: space-between;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 15px;
+  }
 `;
 
 const StatTitle = styled.span`
@@ -45,6 +53,10 @@ const StatDetail = styled.span`
 
 const Badge = styled(TypeBadge)`
   margin: 0.4rem auto;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 12px;
+  }
 `;
 
 type MoveDetailProps = {
