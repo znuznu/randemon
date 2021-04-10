@@ -1,12 +1,12 @@
 import { Team } from '../randemon/models/team';
-import { generateTeam, updateTeamRandomly } from './service';
+import { generateTeam, updateTeam } from './service';
 
 const teamResolver = {
-    getRandomTeam: async (args: any): Promise<Team> => {
+    createTeamRandomly: async (args: any): Promise<Team> => {
         return generateTeam({ ...args.parameters });
     },
     updateTeamRandomly: async (args: any): Promise<Team> => {
-        return updateTeamRandomly(args.parameters, args.team);
+        return updateTeam(args.parameters, args.team);
     }
 };
 

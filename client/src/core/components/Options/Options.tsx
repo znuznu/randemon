@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { Generation } from '../../models/generation';
-import { getRandomTeam, updateTeamRandomly } from '../../services/graphql/service';
+import { createTeamRandomly, updateTeamRandomly } from '../../services/graphql/service';
 
 import { Context as TeamContext } from '../../contexts/teamContext';
 
@@ -93,10 +93,12 @@ const Options = () => {
         }
       );
     } else {
-      getRandomTeam(quantity, Array.from(generations), type).then((team: Team | null) => {
-        team && teamContext.setTeam!(team);
-        teamContext.setIsLoading!(false);
-      });
+      createTeamRandomly(quantity, Array.from(generations), type).then(
+        (team: Team | null) => {
+          team && teamContext.setTeam!(team);
+          teamContext.setIsLoading!(false);
+        }
+      );
     }
   };
 

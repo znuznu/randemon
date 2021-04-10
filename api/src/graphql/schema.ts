@@ -105,7 +105,7 @@ const schema = buildSchema(`
         }
 
         type Query {
-            getRandomTeam(parameters: TeamConfig): Team
+            createTeamRandomly(parameters: TeamConfig): Team
             updateTeamRandomly(parameters: TeamConfig, team: TeamInput): Team
         }
 

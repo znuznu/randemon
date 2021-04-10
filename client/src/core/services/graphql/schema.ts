@@ -1,8 +1,12 @@
 import { gql } from 'graphql-request';
 
-const qGetRandomTeam = gql`
-  query getRandomTeam($generations: [Generation], $numbersOfPokemon: Int, $type: Type) {
-    getRandomTeam(
+const qCreateTeamRandomly = gql`
+  query createTeamRandomly(
+    $generations: [Generation]
+    $numbersOfPokemon: Int
+    $type: Type
+  ) {
+    createTeamRandomly(
       parameters: {
         generations: $generations
         numbersOfPokemon: $numbersOfPokemon
@@ -62,4 +66,4 @@ const qUpdateTeamRandomly = gql`
   }
 `;
 
-export { qGetRandomTeam, qUpdateTeamRandomly };
+export { qCreateTeamRandomly, qUpdateTeamRandomly };

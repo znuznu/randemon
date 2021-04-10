@@ -1,6 +1,6 @@
 import { request } from 'graphql-request';
 
-import { qGetRandomTeam, qUpdateTeamRandomly } from './schema';
+import { qCreateTeamRandomly, qUpdateTeamRandomly } from './schema';
 
 import { Generation } from '../../models/generation';
 import { Team } from '../../models/team';
@@ -12,25 +12,29 @@ const API_URL = `http://localhost:4000/queries`;
 // Stay here for now
 // const client = new GraphQLClient(API_URL, { headers: {} });
 
-interface GetRandomTeamResponse {
-  getRandomTeam: {
+interface createTeamRandomlyResponse {
+  createTeamRandomly: {
     pokemon: Pokemon[];
   };
 }
 
-const getRandomTeam = async (
+const createTeamRandomly = async (
   numbersOfPokemon: number = 6,
   generations: Generation[] = ['I'],
   type: Type | null = null
 ): Promise<Team | null> => {
   try {
-    const response: GetRandomTeamResponse = await request(API_URL, qGetRandomTeam, {
-      generations,
-      numbersOfPokemon,
-      type
-    });
+    const response: createTeamRandomlyResponse = await request(
+      API_URL,
+      qCreateTeamRandomly,
+      {
+        generations,
+        numbersOfPokemon,
+        type
+      }
+    );
 
-    return response.getRandomTeam;
+    return response.createTeamRandomly;
   } catch (error) {
     // fixme: handle error
     return null;
@@ -68,4 +72,4 @@ const updateTeamRandomly = async (
   }
 };
 
-export { getRandomTeam, updateTeamRandomly };
+export { createTeamRandomly, updateTeamRandomly };

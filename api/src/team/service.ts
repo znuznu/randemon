@@ -120,7 +120,7 @@ export async function getRandomMoves(
     return moves;
 }
 
-export async function updateTeamRandomly(config: TeamConfig, team: Team): Promise<Team> {
+export async function updateTeam(config: TeamConfig, team: Team): Promise<Team> {
     const { generations, numbersOfPokemon, type } = config;
     const { pokemon } = team;
 
@@ -154,6 +154,10 @@ export async function updateTeamRandomly(config: TeamConfig, team: Team): Promis
     const newTeam: Team = { pokemon: [] };
 
     for (const teamPokemon of pokemon) {
+        if (!indexes.length) {
+            break;
+        }
+
         if (!teamPokemon.isLocked && indexes.length) {
             if (!pokemonLeft) {
                 continue;
