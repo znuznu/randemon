@@ -7,6 +7,7 @@ const Heading = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-bottom: 2rem;
 `;
 
 const MainHeading = () => {

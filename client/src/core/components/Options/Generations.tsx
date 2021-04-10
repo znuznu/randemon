@@ -1,17 +1,14 @@
 import React from 'react';
+
 import styled from 'styled-components';
+
 import { Generation } from '../../models/generation';
 import { Region } from '../../models/region';
 
 const Section = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-`;
-
-const Title = styled.h2`
-  font-family: 'Lato';
-  text-align: center;
+  margin: 0 0 1rem;
 `;
 
 const Badge = styled.span`
@@ -41,11 +38,11 @@ const BadgeSelected = styled(Badge)`
 `;
 
 const Badges = styled.div`
+  margin: 0 auto;
   display: grid;
   column-gap: 0.5rem;
   row-gap: 0.5rem;
   grid-template-columns: repeat(3, 65px [col-start]);
-  margin: 0 auto;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}px) {
     width: auto;
@@ -88,7 +85,6 @@ type GenerationsProps = {
 const Generations = ({ currentGenerations, emitGeneration }: GenerationsProps) => {
   return (
     <Section>
-      <Title>Generations</Title>
       <Badges>
         {REGIONS.map((region) => {
           return currentGenerations.includes(regionsToGeneration[region]) ? (

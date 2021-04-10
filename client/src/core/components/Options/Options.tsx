@@ -13,6 +13,7 @@ import Types from './Types';
 import { Team } from '../../models/team';
 import { Type } from '../../models/type';
 import styled from 'styled-components';
+import Panel from '../commons/components/Panel';
 
 const OptionsSection = styled.div`
   margin: 0 auto 2rem;
@@ -20,7 +21,7 @@ const OptionsSection = styled.div`
 
 const FlexOptions = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   width: 500px;
   margin: 0 auto;
 
@@ -118,18 +119,22 @@ const Options = () => {
   return (
     <OptionsSection>
       <FlexOptions>
-        <Generations
-          currentGenerations={Array.from(generations)}
-          emitGeneration={emitGeneration}
-        />
-        <Types currentType={type} emitType={emitType} />
+        <Panel title={'Generations'}>
+          <Generations
+            currentGenerations={Array.from(generations)}
+            emitGeneration={emitGeneration}
+          />
+        </Panel>
+        <Panel title={'Types'}>
+          <Types currentType={type} emitType={emitType} />
+        </Panel>
       </FlexOptions>
       <Pokeballs quantity={quantity} setQuantity={setQuantity} />
       <Flex>
         <Button
           onClick={generate}
           isLoading={!teamContext.isLoading && generations.size ? false : true}
-          disabled={teamContext.isLoading}
+          disabled={teamContext.isLoading || !generations.size ? true : false}
         >
           Generate
           <Reload isLoading={teamContext.isLoading} />

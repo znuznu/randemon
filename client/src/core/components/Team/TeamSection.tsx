@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Team } from '../../models/team';
+import Warning from '../commons/styles/Warning';
 import Card from './Card/Card';
 
 const Container = styled.div`
@@ -25,11 +26,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
   }
-`;
-
-const Warning = styled.p`
-  font-family: 'Lato';
-  text-align: center;
 `;
 
 type TeamProps = {

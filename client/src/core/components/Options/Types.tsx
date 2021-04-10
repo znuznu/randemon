@@ -1,5 +1,7 @@
 import React from 'react';
+
 import styled from 'styled-components';
+
 import { TYPES_COLORS } from '../../../styles/theme/typesColors';
 import { Type, types } from '../../models/type';
 import TypeBadge from '../commons/styles/TypeBadge';
@@ -7,20 +9,14 @@ import TypeBadge from '../commons/styles/TypeBadge';
 const Section = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-`;
-
-const Title = styled.h2`
-  font-family: 'Lato';
-  text-align: center;
 `;
 
 const Badges = styled.div`
-  margin: 0 auto;
+  margin: 0 auto 1rem;
   display: grid;
   column-gap: 0.5rem;
   row-gap: 0.5rem;
-  grid-template-columns: repeat(3, auto [col-start]);
+  grid-template-columns: repeat(3, 75px [col-start]);
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}px) {
     width: auto;
@@ -54,7 +50,6 @@ type TypesProps = {
 const Types = ({ currentType, emitType }: TypesProps) => {
   return (
     <Section>
-      <Title>Types</Title>
       <Badges>
         {types.map((type) =>
           currentType === type ? (

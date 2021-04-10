@@ -16,7 +16,7 @@ const Grid = styled.div`
   column-gap: 0.5rem;
   row-gap: 0.5rem;
   grid-template-columns: repeat(6, 35px [col-start]);
-  margin: 2rem 0;
+  margin: 0 0 1.25rem;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}px) {
     width: 100%;
