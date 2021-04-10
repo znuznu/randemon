@@ -13,7 +13,7 @@ const MainHeading = () => {
   return (
     <Heading>
       <MainTitle content={'randemon'} />
-      <Subtitle content={'Random Pokemon team generator'} />
+      <Subtitle content={'A random Pokemon team generator'} />
     </Heading>
   );
 };

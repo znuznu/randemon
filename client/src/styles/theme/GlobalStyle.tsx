@@ -9,6 +9,12 @@ import Inter2 from '../fonts/inter-v3-latin-regular.woff2';
 import Lato from '../fonts/lato-v17-latin-regular.woff';
 import Lato2 from '../fonts/lato-v17-latin-regular.woff2';
 
+import Bangers from '../fonts/bangers-v13-latin-regular.woff';
+import Bangers2 from '../fonts/bangers-v13-latin-regular.woff2';
+
+import PermanentMarker from '../fonts/permanent-marker-v10-latin-regular.woff';
+import PermanentMarker2 from '../fonts/permanent-marker-v10-latin-regular.woff2';
+
 import KaBlam from '../fonts/ka-blam.ttf';
 
 // FIXME: issue with flickering due to the inject remade
@@ -59,6 +65,26 @@ const GlobalStyle = createGlobalStyle`
     font-display: fallback;
     src: local('KaBlam'), local('KaBlam'),
     url(${KaBlam}) format('woff2');
+    font-style: normal;
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Bangers';
+    font-display: fallback;
+    src: local('Bangers'), local('Bangers'),
+    url(${Bangers2}) format('woff2'),
+    url(${Bangers}) format('woff');
+    font-style: normal;
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'PermanentMarker';
+    font-display: fallback;
+    src: local('PermanentMarker'), local('PermanentMarker'),
+    url(${PermanentMarker2}) format('woff2'),
+    url(${PermanentMarker}) format('woff');
     font-style: normal;
     font-display: fallback;
   }

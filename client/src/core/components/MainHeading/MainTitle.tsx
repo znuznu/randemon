@@ -3,22 +3,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Title = styled.h1`
-  font-family: 'KaBlam';
+  font-family: 'PermanentMarker';
   color: ${(props) => props.theme.primary};
-  font-size: 120px;
-  margin: 3rem 0 0;
+  font-size: 116px;
+  margin: 0 auto;
+  padding: 0 1rem;
   text-transform: uppercase;
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
     font-size: 90px;
   }
 
-  @media only screen and (max-width: 470px) {
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
     font-size: 60px;
   }
 
-  @media only screen and (max-width: 330px) {
-    font-size: 40px;
+  @media only screen and (max-width: 470px) {
+    font-size: 44px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    font-size: 36px;
   }
 `;
 
