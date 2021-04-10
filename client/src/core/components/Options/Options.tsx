@@ -3,6 +3,8 @@ import React, { useContext, useState } from 'react';
 import { Generation } from '../../models/generation';
 import { createTeamRandomly, updateTeamRandomly } from '../../services/graphql/service';
 
+import { ReloadCircle } from '@styled-icons/ionicons-solid';
+
 import { Context as TeamContext } from '../../contexts/teamContext';
 
 import Generations from './Generations';
@@ -33,33 +35,44 @@ const Flex = styled.div`
   justify-content: center;
 `;
 
-const Button = styled.button`
-  padding: 0.25rem 25px;
+type ReloadProps = {
+  isLoading: boolean;
+};
+
+const Reload = styled(ReloadCircle)<ReloadProps>`
+  width: 28px;
+  margin-left: 0.25rem;
+  animation: loading 1s linear ${(props) => (props.isLoading ? 'infinite' : '0')};
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+type ButtonProps = {
+  isLoading: boolean;
+};
+
+const Button = styled.button<ButtonProps>`
+  padding: 0.25rem 0.5rem;
   margin: 0 auto;
   font-family: 'Lato';
   font-size: 20px;
   font-weight: 700;
   background-color: white;
-  color: ${(props) => props.theme.primary};
   border-radius: 0.25rem;
-  border: 1px solid ${(props) => props.theme.primary};
+  color: ${(props) => (props.isLoading ? '#666666' : props.theme.primary)};
+  border: 1px solid ${(props) => (props.isLoading ? '#666666' : props.theme.primary)};
 
   &:hover {
-    background-color: ${(props) => props.theme.primary};
-    color: white;
-    cursor: pointer;
-  }
-`;
-
-const ButtonDisabled = styled(Button)`
-  background-color: white;
-  color: #666666;
-  border: 1px solid #666666;
-
-  &:hover {
-    background-color: white;
-    color: #666666;
-    cursor: default;
+    background-color: ${(props) => (props.isLoading ? 'white' : props.theme.primary)};
+    color: ${(props) => (props.isLoading ? '#666666' : 'white')};
+    cursor: ${(props) => (props.isLoading ? 'default' : 'pointer')};
   }
 `;
 
@@ -113,13 +126,14 @@ const Options = () => {
       </FlexOptions>
       <Pokeballs quantity={quantity} setQuantity={setQuantity} />
       <Flex>
-        {!teamContext.isLoading && generations.size ? (
-          <Button onClick={generate}>Generate</Button>
-        ) : (
-          <ButtonDisabled disabled onClick={generate}>
-            Generate
-          </ButtonDisabled>
-        )}
+        <Button
+          onClick={generate}
+          isLoading={!teamContext.isLoading && generations.size ? false : true}
+          disabled={teamContext.isLoading}
+        >
+          Generate
+          <Reload isLoading={teamContext.isLoading} />
+        </Button>
       </Flex>
     </OptionsSection>
   );
