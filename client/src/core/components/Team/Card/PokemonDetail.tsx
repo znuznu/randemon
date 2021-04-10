@@ -2,15 +2,13 @@ import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 
-import { IconContext } from 'react-icons';
-import { IoLockClosedSharp, IoLockOpenSharp } from 'react-icons/io5';
+import { LockOpen, LockClosed } from '@styled-icons/ionicons-sharp';
 
 import { Context as TeamContext } from '../../../contexts/teamContext';
 
 import { TYPES_COLORS } from '../../../../styles/theme/typesColors';
 import Pokemon from '../../../models/pokemon';
 import TypeBadge from '../../commons/styles/TypeBadge';
-import { theme } from '../../../../styles/theme/theme';
 
 const Container = styled.div`
   display: flex;
@@ -47,9 +45,25 @@ const Heading = styled.div`
   justify-content: space-between;
 `;
 
-const Lock = styled.span`
+const LockIconClosed = styled(LockClosed)`
+  width: 28px;
   &:hover {
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 24px;
+  }
+`;
+
+const LockIconOpen = styled(LockOpen)`
+  width: 28px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 24px;
   }
 `;
 
@@ -95,6 +109,10 @@ const PokemonDetail = ({ pokemon, teamIndex }: PokemonDetailProps) => {
   const teamContext = useContext(TeamContext);
 
   const updateLock = (teamIndex: number) => {
+    if (teamContext.isLoading) {
+      return;
+    }
+
     teamContext.toggleLock!(teamIndex);
   };
 
@@ -102,15 +120,11 @@ const PokemonDetail = ({ pokemon, teamIndex }: PokemonDetailProps) => {
     <Container>
       <Heading>
         <Id>#{pokemon.id}</Id>
-        <IconContext.Provider value={{ color: theme.primary, size: '24px' }}>
-          <Lock onClick={() => updateLock(teamIndex)}>
-            {pokemon.isLocked ? (
-              <IoLockClosedSharp opacity={1} />
-            ) : (
-              <IoLockOpenSharp opacity={1} />
-            )}
-          </Lock>
-        </IconContext.Provider>
+        {pokemon.isLocked ? (
+          <LockIconClosed opacity={1} onClick={() => updateLock(teamIndex)} />
+        ) : (
+          <LockIconOpen opacity={1} onClick={() => updateLock(teamIndex)} />
+        )}
       </Heading>
       {pokemon.officialArtwork && <Artwork src={pokemon.officialArtwork} />}
       <Name>{pokemon.name}</Name>
