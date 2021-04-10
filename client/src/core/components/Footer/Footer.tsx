@@ -12,6 +12,10 @@ const Container = styled.div`
   font-family: 'Lato';
   padding-bottom: 1rem;
   margin: 0 1rem;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 14px;
+  }
 `;
 
 const Line = styled.p`
