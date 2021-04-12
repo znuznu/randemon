@@ -47,6 +47,10 @@ class CacheService {
             lazyConnect: true
         });
     }
+
+    static createRedisClientFromURL(url: string): IORedis.Redis {
+        return new IORedis(url);
+    }
 }
 
 export interface RedisConfig {

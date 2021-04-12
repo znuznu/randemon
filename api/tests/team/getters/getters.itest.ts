@@ -25,7 +25,7 @@ describe('Getters', () => {
     beforeAll(() => {
         cacheService = new CacheService(
             CacheService.createRedisClient({
-                host: config.REDIS_URL_TEST,
+                host: config.REDIS_HOST_TEST,
                 port: config.REDIS_PORT_TEST
             }),
             loggerTest

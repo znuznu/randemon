@@ -15,10 +15,11 @@ import {
 } from './getters';
 
 const cacheService = new CacheService(
-    CacheService.createRedisClient({
-        host: config.REDIS_URL,
-        port: config.REDIS_PORT
-    }),
+    config.REDIS_URL ? CacheService.createRedisClientFromURL(config.REDIS_URL) :
+        CacheService.createRedisClient({
+            host: config.REDIS_HOST,
+            port: config.REDIS_PORT
+        }),
     logger
 );
 
