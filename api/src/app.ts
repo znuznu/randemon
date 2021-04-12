@@ -8,7 +8,7 @@ import rootResolver from './graphql/rootResolver';
 import schema from './graphql/schema';
 
 const app = express();
-const PORT = Number(process.env.API_PORT) || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(cors());
 

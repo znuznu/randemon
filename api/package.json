@@ -9,7 +9,8 @@
         "dev": "nodemon",
         "t:i": "jest --config jest.config.itest.ts",
         "lint": "eslint src/**/*.ts",
-        "lint:fix": "eslint --fix src/**/*.ts"
+        "lint:fix": "eslint --fix src/**/*.ts",
+        "postinstall": "tsc"
     },
     "repository": {
         "type": "git",
