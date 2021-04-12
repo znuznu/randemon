@@ -4,10 +4,10 @@
     "description": "Create random Pokémon team.",
     "main": "src/app.js",
     "scripts": {
-        "test": "jest",
-        "t:i": "jest --config jest.config.itest.ts",
-        "dev": "nodemon",
         "start": "tsc && node build/src/app.js",
+        "test": "jest",
+        "dev": "nodemon",
+        "t:i": "jest --config jest.config.itest.ts",
         "lint": "eslint src/**/*.ts",
         "lint:fix": "eslint --fix src/**/*.ts"
     },
@@ -63,5 +63,8 @@
     },
     "lint-staged": {
         "src/**/*.ts": "prettier --write --config .prettierrc"
+    },
+    "engines": {
+        "node": "14.15.3"
     }
 }

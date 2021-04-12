@@ -11,7 +11,8 @@ const pokemon110: Pokemon = {
     officialArtwork: 'http://artwork',
     types: ['FIRE', 'ICE'],
     moves: [],
-    allMovesNames: ['some', 'cool', 'moves']
+    allMovesNames: ['some', 'cool', 'moves'],
+    isLocked: false
 };
 
 const pokemonPAPI110: PokemonPAPI = {
@@ -47,7 +48,7 @@ const movePAPIHyperBeam: MovePAPI = {
     power: 150,
     pp: 5,
     type: {
-        name: 'normal',
+        name: 'NORMAL',
         url: 'http://hyper_beam_url'
     },
     name: 'hyper-beam'
@@ -57,7 +58,7 @@ const moveHyperBeam: Move = {
     accuracy: 90,
     power: 150,
     pp: 5,
-    type: 'normal',
+    type: 'NORMAL',
     name: 'hyper-beam'
 };
 
