@@ -20,14 +20,14 @@ services:
   randemon-api:
     container_name: randemon-api
     build: 
-      context: ./api
+      context: .
       dockerfile: ./Dockerfile.dev
     ports:
       - '4000:3000'
     env_file:
-      - ./api/.env
+      - .env
     volumes:
-      - ./api/:/app
+      - .:/app
     networks:
       - randemon-network
 
