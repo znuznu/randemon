@@ -16,7 +16,7 @@ import {
 
 const cacheService = new CacheService(
     CacheService.createRedisClient({
-        host: config.REDIS_HOST,
+        host: config.REDIS_URL,
         port: config.REDIS_PORT
     }),
     logger
