@@ -99,12 +99,15 @@ const Moves = ({ moves, pokemonId }: MovesProps) => {
       <Container
         maxHeight={!isSmallScreen || (isSmallScreen && !isHidden) ? '1000px' : '0px'}
       >
-        {!moves.length && <Warning>No moves found.</Warning>}
-        <Grid>
-          {moves.map((move, index) => {
-            return <MoveDetail key={`${move}-${index}-${pokemonId}`} move={move} />;
-          })}
-        </Grid>
+        {moves.length ? (
+          <Grid>
+            {moves.map((move, index) => {
+              return <MoveDetail key={`${move}-${index}-${pokemonId}`} move={move} />;
+            })}
+          </Grid>
+        ) : (
+          <Warning>No moves found.</Warning>
+        )}
       </Container>
     </>
   );
