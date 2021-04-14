@@ -7,7 +7,10 @@ import { Team } from '../../models/team';
 import { Type } from '../../models/type';
 import Pokemon from '../../models/pokemon';
 
-const API_URL = `http://localhost:4000/queries`;
+const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://randemon-api.herokuapp.com/queries'
+    : 'localhost:4000/queries';
 
 // Stay here for now
 // const client = new GraphQLClient(API_URL, { headers: {} });
