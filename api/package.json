@@ -10,6 +10,7 @@
         "t:i": "jest --config jest.config.itest.ts",
         "lint": "eslint src/**/*.ts",
         "lint:fix": "eslint --fix src/**/*.ts",
+        "format:fix": "prettier --write --config .prettierrc src/**/*.ts",
         "postinstall": "tsc"
     },
     "repository": {

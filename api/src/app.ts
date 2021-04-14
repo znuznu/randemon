@@ -1,16 +1,20 @@
 import express, { Request, Response } from 'express';
 import { graphqlHTTP } from 'express-graphql';
-
 import cors from 'cors';
 
 import { logger } from './logger';
 import rootResolver from './graphql/rootResolver';
 import schema from './graphql/schema';
+import { config } from './config';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
-app.use(cors());
+app.use(
+    cors({
+        origin: config.CLIENT_URL
+    })
+);
 
 app.get('/health', (_req: Request, res: Response) => {
     res.status(200).send('OK');
