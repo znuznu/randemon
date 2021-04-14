@@ -10,10 +10,7 @@ import Pokemon from '../../models/pokemon';
 const API_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://randemon-api.herokuapp.com/queries'
-    : 'localhost:4000/queries';
-
-// Stay here for now
-// const client = new GraphQLClient(API_URL, { headers: {} });
+    : 'http://localhost:4000/queries';
 
 interface createTeamRandomlyResponse {
   createTeamRandomly: {
