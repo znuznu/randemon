@@ -13,6 +13,7 @@ const Triangle = styled.div<TriangleProps>`
   border-left: 8px solid transparent;
   transition: transform 0.8s ease-in-out;
   transform: rotate(${(props) => props.rotateAngle}deg);
+  z-index: -1;
 `;
 
 export default Triangle;

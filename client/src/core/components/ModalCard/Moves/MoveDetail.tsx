@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TYPES_COLORS } from '../../../../../styles/theme/typesColors';
+import { TYPES_COLORS } from '../../../../styles/theme/typesColors';
 
-import Move from '../../../../models/move';
-import TypeBadge from '../../../commons/styles/TypeBadge';
+import Move from '../../../models/move';
+import TypeBadge from '../../commons/styles/TypeBadge';
 
 const Container = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const Name = styled.h3`
   text-align: center;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
-    font-size: 17px;
+    font-size: 16px;
   }
 `;
 
@@ -37,13 +37,17 @@ const Stat = styled.p`
   justify-content: space-between;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
-    font-size: 15px;
+    font-size: 13px;
   }
 `;
 
 const StatTitle = styled.span`
   font-family: 'Lato';
   font-weight: 400;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 13px;
+  }
 `;
 
 const StatDetail = styled.span`

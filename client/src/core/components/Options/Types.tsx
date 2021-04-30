@@ -1,7 +1,8 @@
-import React from 'react';
+import { useContext } from 'react';
 
 import styled from 'styled-components';
 
+import { Context as CurrentPokemonModalContext } from '../../contexts/currentPokemonModalContext';
 import { TYPES_COLORS } from '../../../styles/theme/typesColors';
 import { Type, types } from '../../models/type';
 import TypeBadge from '../commons/styles/TypeBadge';
@@ -12,7 +13,7 @@ const Section = styled.div`
 `;
 
 const Badges = styled.div`
-  margin: 0 auto 1rem;
+  margin: 0 auto;
   display: grid;
   column-gap: 0.5rem;
   row-gap: 0.5rem;
@@ -29,8 +30,13 @@ const Badges = styled.div`
   }
 `;
 
-const Badge = styled(TypeBadge)`
-  opacity: 0.4;
+// Useful in order to avoid Types buttons being hovered when the modal is open
+type BadgeProps = {
+  hasFullOpacity: boolean;
+};
+
+const Badge = styled(TypeBadge)<BadgeProps>`
+  opacity: ${(props) => (props.hasFullOpacity ? 1 : 0.4)};
 
   &:hover {
     cursor: pointer;
@@ -48,6 +54,8 @@ type TypesProps = {
 };
 
 const Types = ({ currentType, emitType }: TypesProps) => {
+  const currentPokemonModalContext = useContext(CurrentPokemonModalContext);
+
   return (
     <Section>
       <Badges>
@@ -57,6 +65,7 @@ const Types = ({ currentType, emitType }: TypesProps) => {
               key={`${type}`}
               color={TYPES_COLORS[type]}
               onClick={() => emitType(type)}
+              hasFullOpacity={currentPokemonModalContext.pokemon ? true : false}
             >
               {type}
             </BadgeSelected>
@@ -65,6 +74,7 @@ const Types = ({ currentType, emitType }: TypesProps) => {
               key={`${type}`}
               color={TYPES_COLORS[type]}
               onClick={() => emitType(type)}
+              hasFullOpacity={currentPokemonModalContext.pokemon ? true : false}
             >
               {type}
             </Badge>

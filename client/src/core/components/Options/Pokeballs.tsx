@@ -16,7 +16,7 @@ const Grid = styled.div`
   column-gap: 0.5rem;
   row-gap: 0.5rem;
   grid-template-columns: repeat(6, 35px [col-start]);
-  margin: 0 0 1.25rem;
+  margin: 1.25rem 0 1.25rem;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}px) {
     width: 100%;
@@ -32,7 +32,7 @@ type IconProps = {
 const Icon = styled.img<IconProps>`
   width: 35px;
   cursor: pointer;
-  transition: 0.8s ease-out;
+  transition: 0.6s ease-out;
 
   &:hover {
     transform: rotate(90deg);

@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
 import styled from 'styled-components';
 
-import { LockOpen, LockClosed } from '@styled-icons/ionicons-sharp';
+import { Close } from '@styled-icons/ionicons-sharp/Close';
 
-import { Context as TeamContext } from '../../../contexts/teamContext';
+import { Context as CurrentPokemonModalContext } from '../../contexts/currentPokemonModalContext';
 
-import { TYPES_COLORS } from '../../../../styles/theme/typesColors';
-import Pokemon from '../../../models/pokemon';
-import TypeBadge from '../../commons/styles/TypeBadge';
+import { TYPES_COLORS } from '../../../styles/theme/typesColors';
+import Pokemon from '../../models/pokemon';
+import TypeBadge from '../commons/styles/TypeBadge';
 
 const Container = styled.div`
   display: flex;
@@ -45,28 +45,6 @@ const Heading = styled.div`
   justify-content: space-between;
 `;
 
-const LockIconClosed = styled(LockClosed)`
-  width: 28px;
-  &:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
-    width: 24px;
-  }
-`;
-
-const LockIconOpen = styled(LockOpen)`
-  width: 28px;
-  &:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
-    width: 24px;
-  }
-`;
-
 const Id = styled.h2`
   font-family: 'Lato';
   margin: 0;
@@ -98,33 +76,39 @@ const Badge = styled(TypeBadge)`
 const Artwork = styled.img`
   width: 190px;
   margin: 0 auto;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 150px;
+  }
+`;
+
+const CloseIcon = styled(Close)`
+  width: 24px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 20px;
+  }
 `;
 
 type PokemonDetailProps = {
   pokemon: Pokemon;
-  teamIndex: number;
 };
 
-const PokemonDetail = ({ pokemon, teamIndex }: PokemonDetailProps) => {
-  const teamContext = useContext(TeamContext);
+const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
+  const currentPokemonModalContext = useContext(CurrentPokemonModalContext);
 
-  const updateLock = (teamIndex: number) => {
-    if (teamContext.isLoading) {
-      return;
-    }
-
-    teamContext.toggleLock!(teamIndex);
+  const removeCurrentPokemonDetail = () => {
+    currentPokemonModalContext.setPokemon!(null);
   };
 
   return (
     <Container>
       <Heading>
         <Id>#{pokemon.id}</Id>
-        {pokemon.isLocked ? (
-          <LockIconClosed opacity={1} onClick={() => updateLock(teamIndex)} />
-        ) : (
-          <LockIconOpen opacity={1} onClick={() => updateLock(teamIndex)} />
-        )}
+        <CloseIcon opacity={1} onClick={removeCurrentPokemonDetail} />
       </Heading>
       {pokemon.officialArtwork && <Artwork src={pokemon.officialArtwork} />}
       <Name>{pokemon.name}</Name>

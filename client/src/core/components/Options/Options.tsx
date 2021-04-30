@@ -14,16 +14,35 @@ import { Team } from '../../models/team';
 import { Type } from '../../models/type';
 import styled from 'styled-components';
 import Panel from '../commons/components/Panel';
+import useWindowSize from '../../hooks/useWindowSize';
+import { theme } from '../../../styles/theme/theme';
 
 const OptionsSection = styled.div`
   margin: 0 auto 2rem;
 `;
 
-const FlexOptions = styled.div`
+const OptionsHeading = styled.h2`
+  font-family: 'Lato';
+  text-align: center;
+`;
+
+const FlexColOptions = styled.div`
   display: flex;
   flex-direction: column;
   width: 500px;
   margin: 0 auto;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+    flex-direction: column;
+    width: auto;
+  }
+`;
+
+const FlexRowOptions = styled.div`
+  display: flex;
+  width: 500px;
+  margin: 0 auto;
+  justify-content: space-between;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
     flex-direction: column;
@@ -82,6 +101,8 @@ const Options = () => {
   const [generations, setGenerations] = useState(new Set<Generation>());
   const [quantity, setQuantity] = useState(1);
 
+  const windowSizes = useWindowSize();
+
   const teamContext = useContext(TeamContext);
 
   const emitGeneration = (generation: Generation) => {
@@ -118,17 +139,33 @@ const Options = () => {
 
   return (
     <OptionsSection>
-      <FlexOptions>
-        <Panel title={'Generations'}>
-          <Generations
-            currentGenerations={Array.from(generations)}
-            emitGeneration={emitGeneration}
-          />
-        </Panel>
-        <Panel title={'Types'}>
-          <Types currentType={type} emitType={emitType} />
-        </Panel>
-      </FlexOptions>
+      {windowSizes.size.width < theme.breakpoints.m ? (
+        <FlexColOptions>
+          <Panel title={'Generations'}>
+            <Generations
+              currentGenerations={Array.from(generations)}
+              emitGeneration={emitGeneration}
+            />
+          </Panel>
+          <Panel title={'Types'}>
+            <Types currentType={type} emitType={emitType} />
+          </Panel>
+        </FlexColOptions>
+      ) : (
+        <FlexRowOptions>
+          <div>
+            <OptionsHeading>Generations</OptionsHeading>
+            <Generations
+              currentGenerations={Array.from(generations)}
+              emitGeneration={emitGeneration}
+            />
+          </div>
+          <div>
+            <OptionsHeading>Types</OptionsHeading>
+            <Types currentType={type} emitType={emitType} />
+          </div>
+        </FlexRowOptions>
+      )}
       <Pokeballs quantity={quantity} setQuantity={setQuantity} />
       <Flex>
         <Button

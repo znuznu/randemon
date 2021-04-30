@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
-import useWindowSize from '../../../../hooks/useWindowSize';
-import { breakpoints } from '../../../../../styles/theme/breakpoints';
-import Move from '../../../../models/move';
+import useWindowSize from '../../../hooks/useWindowSize';
+import { breakpoints } from '../../../../styles/theme/breakpoints';
+import Move from '../../../models/move';
 import MoveDetail from './MoveDetail';
-import Triangle from '../../../commons/styles/Triangle';
-import Warning from '../../../commons/styles/Warning';
+import Triangle from '../../commons/styles/Triangle';
+import Warning from '../../commons/styles/Warning';
 
 type HiddenProps = {
   hide: boolean;
@@ -38,7 +38,14 @@ const Grid = styled.div`
     margin: 1rem auto 0;
     column-gap: 1rem;
     row-gap: 1rem;
-    grid-template-columns: repeat(auto-fill, 190px [col-start]);
+    grid-template-columns: repeat(2, 150px [col-start]);
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    margin: 1rem auto 0;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    grid-template-columns: repeat(2, 120px [col-start]);
   }
 `;
 
@@ -49,7 +56,7 @@ const Container = styled.div<ContainerProps>`
   display: flex;
 `;
 
-const Bar = styled.div<HiddenProps>`
+const SmallCard = styled.div<HiddenProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -91,10 +98,10 @@ const Moves = ({ moves, pokemonId }: MovesProps) => {
   return (
     <>
       {isSmallScreen && (
-        <Bar hide={isHidden} onClick={toggleMoves}>
+        <SmallCard hide={isHidden} onClick={toggleMoves}>
           <BarTitle>Moves</BarTitle>
           <Triangle rotateAngle={triangleAngle} />
-        </Bar>
+        </SmallCard>
       )}
       <Container
         maxHeight={!isSmallScreen || (isSmallScreen && !isHidden) ? '1000px' : '0px'}

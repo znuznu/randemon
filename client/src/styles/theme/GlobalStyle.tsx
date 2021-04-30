@@ -17,7 +17,6 @@ import PermanentMarker2 from '../fonts/permanent-marker-v10-latin-regular.woff2'
 
 import KaBlam from '../fonts/ka-blam.ttf';
 
-// FIXME: issue with flickering due to the inject remade
 const GlobalStyle = createGlobalStyle`
   html, body, #root {
     padding: 0;
