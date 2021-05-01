@@ -24,6 +24,7 @@ const OptionsSection = styled.div`
 const OptionsHeading = styled.h2`
   font-family: 'Lato';
   text-align: center;
+  margin-top: 0;
 `;
 
 const FlexColOptions = styled.div`

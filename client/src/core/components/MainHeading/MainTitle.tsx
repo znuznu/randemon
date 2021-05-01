@@ -1,24 +1,28 @@
-import React from 'react';
-
 import styled from 'styled-components';
 
-const Title = styled.h1`
-  font-family: 'PermanentMarker';
-  color: ${(props) => props.theme.primary};
-  font-size: 116px;
+import Espeon from '../../../styles/svg/espeon.svg';
+
+const Container = styled.div`
+  display: flex;
   margin: 0 auto;
-  padding: 0 1rem;
+`;
+
+const Title = styled.h1`
+  font-family: 'Lato';
+  color: ${(props) => props.theme.primary};
+  font-size: 100px;
+  margin: auto 0;
   text-transform: uppercase;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
     font-size: 90px;
   }
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+  @media only screen and (max-width: 734px) {
     font-size: 60px;
   }
 
-  @media only screen and (max-width: 470px) {
+  @media only screen and (max-width: 510px) {
     font-size: 44px;
   }
 
@@ -27,12 +31,37 @@ const Title = styled.h1`
   }
 `;
 
+const EspeonIcon = styled.img`
+  width: 150px;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
+    width: 140px;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
+    width: 110px;
+  }
+
+  @media only screen and (max-width: 470px) {
+    width: 94px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    width: 85px;
+  }
+`;
+
 type MainTitleProps = {
   content: string;
 };
 
 const MainTitle = ({ content }: MainTitleProps) => {
-  return <Title>{content}</Title>;
+  return (
+    <Container>
+      <Title>{content}</Title>
+      <EspeonIcon src={Espeon} />
+    </Container>
+  );
 };
 
 export default MainTitle;

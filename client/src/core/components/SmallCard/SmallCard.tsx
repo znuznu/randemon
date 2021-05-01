@@ -1,4 +1,4 @@
-import React, { MouseEvent, useContext, useState } from 'react';
+import { MouseEvent, useContext, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -7,7 +7,7 @@ import { LockOpen, LockClosed } from '@styled-icons/ionicons-sharp';
 import { Context as CurrentPokemonModalContext } from '../../contexts/currentPokemonModalContext';
 import { Context as TeamContext } from '../../contexts/teamContext';
 import Pokemon from '../../models/pokemon';
-import SkeletonBar from './SkeletonBar';
+import Skeleton from './Skeleton';
 
 const Container = styled.div`
   display: flex;
@@ -28,10 +28,6 @@ const Heading = styled.div`
   justify-content: space-between;
 `;
 
-type NameProps = {
-  isHovered: boolean;
-};
-
 const Id = styled.h3`
   font-family: 'Lato';
   margin: auto 0.5rem 0 0;
@@ -43,16 +39,22 @@ const Id = styled.h3`
   }
 `;
 
+type NameProps = {
+  isStrong: boolean;
+};
+
 const Name = styled.h3<NameProps>`
   font-family: 'Lato';
-  margin: auto 0 0;
-  padding: 0;
+  margin: auto auto 0 auto;
+  padding: 0.2rem 0.4rem;
   text-transform: capitalize;
   text-align: center;
+  border-radius: 3px;
+  background-size: 100px;
 
   background-color: ${(props) =>
-    props.isHovered ? props.theme.primary : props.theme.secondary};
-  color: ${(props) => (props.isHovered ? props.theme.secondary : props.theme.primary)};
+    props.isStrong ? props.theme.primary : props.theme.secondary};
+  color: ${(props) => (props.isStrong ? props.theme.secondary : props.theme.primary)};
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
     font-size: 17px;
@@ -121,7 +123,7 @@ const SmallCard = ({ pokemon, teamIndex }: BarProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {!pokemon.isLocked && teamContext.isLoading ? (
-        <SkeletonBar />
+        <Skeleton />
       ) : (
         <>
           <Heading>
@@ -139,7 +141,7 @@ const SmallCard = ({ pokemon, teamIndex }: BarProps) => {
             )}
           </Heading>
           {pokemon.frontSprite && <Sprite src={pokemon.frontSprite} />}
-          <Name isHovered={isHovered}>{pokemon.name}</Name>{' '}
+          <Name isStrong={isHovered || pokemon.isLocked}>{pokemon.name}</Name>
         </>
       )}
     </Container>

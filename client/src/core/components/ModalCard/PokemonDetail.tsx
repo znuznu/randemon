@@ -2,8 +2,7 @@ import { useContext } from 'react';
 
 import styled from 'styled-components';
 
-import { Close } from '@styled-icons/ionicons-sharp/Close';
-
+import { CloseCircle } from '@styled-icons/ionicons-sharp/CloseCircle';
 import { Context as CurrentPokemonModalContext } from '../../contexts/currentPokemonModalContext';
 
 import { TYPES_COLORS } from '../../../styles/theme/typesColors';
@@ -82,7 +81,7 @@ const Artwork = styled.img`
   }
 `;
 
-const CloseIcon = styled(Close)`
+const CloseIcon = styled(CloseCircle)`
   width: 24px;
   &:hover {
     cursor: pointer;

@@ -3,13 +3,7 @@ import styled from 'styled-components';
 import SkeletonContainer from '../commons/styles/SkeletonContainer';
 
 const Container = styled(SkeletonContainer)`
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
-    margin: 0 1rem 0 0;
-  }
-
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
-    margin: 0;
-  }
+  margin: 0;
 `;
 
 const Id = styled.div`
@@ -17,6 +11,12 @@ const Id = styled.div`
   height: 20px;
   margin-bottom: 1rem;
   background-color: ${(props) => props.theme.skeleton};
+  border-radius: 4px;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 38px;
+    height: 18px;
+  }
 `;
 
 const Sprite = styled.div`
@@ -32,9 +32,15 @@ const Name = styled.div`
   height: 24px;
   margin: 0 auto;
   background-color: ${(props) => props.theme.skeleton};
+  border-radius: 4px;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 80px;
+    height: 20px;
+  }
 `;
 
-const SkeletonBar = () => {
+const Skeleton = () => {
   return (
     <Container>
       <Id />
@@ -44,4 +50,4 @@ const SkeletonBar = () => {
   );
 };
 
-export default SkeletonBar;
+export default Skeleton;
