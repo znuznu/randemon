@@ -142,13 +142,21 @@ const Options = () => {
     <OptionsSection>
       {windowSizes.size.width < theme.breakpoints.m ? (
         <FlexColOptions>
-          <Panel title={'Generations'}>
+          <Panel
+            title={'Generations'}
+            contentHeight={
+              windowSizes.size.width < theme.breakpoints.xxs ? 125 + 16 : 95 + 16
+            }
+          >
             <Generations
               currentGenerations={Array.from(generations)}
               emitGeneration={emitGeneration}
             />
           </Panel>
-          <Panel title={'Types'}>
+          <Panel
+            title={'Types'}
+            contentHeight={windowSizes.size.width < theme.breakpoints.xxs ? 250 : 170}
+          >
             <Types currentType={type} emitType={emitType} />
           </Panel>
         </FlexColOptions>

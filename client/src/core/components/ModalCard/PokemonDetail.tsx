@@ -15,13 +15,6 @@ const Container = styled.div`
   padding: 0 0 1rem 0;
   border-bottom: 1px solid ${(props) => props.theme.primary};
 
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
-    padding: 0 1rem 1rem 0;
-    margin: 0 1rem 0 0;
-    border-bottom: none;
-    border-right: 1px solid ${(props) => props.theme.primary};
-  }
-
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
     padding: 0 0 1rem 0;
     margin: 0;

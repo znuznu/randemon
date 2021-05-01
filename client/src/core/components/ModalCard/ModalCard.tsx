@@ -30,7 +30,7 @@ const Container = styled.div`
   background-color: white;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
-    flex-direction: row;
+    flex-direction: column;
   }
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {

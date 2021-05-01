@@ -13,20 +13,12 @@ type HiddenProps = {
   hide: boolean;
 };
 
-type ContainerProps = {
-  maxHeight: string;
-};
-
 const Grid = styled.div`
   margin: 1rem auto 0;
   display: grid;
   column-gap: 4rem;
   row-gap: 1rem;
   grid-template-columns: repeat(2, 150px [col-start]);
-
-  @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
-    margin: auto 0;
-  }
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.s}px) {
     margin: 1rem auto 0;
@@ -49,9 +41,13 @@ const Grid = styled.div`
   }
 `;
 
+type ContainerProps = {
+  contentHeight: number;
+};
+
 const Container = styled.div<ContainerProps>`
   transition: max-height 0.8s ease-in-out;
-  max-height: ${(props) => props.maxHeight};
+  max-height: ${(props) => props.contentHeight}px;
   overflow: hidden;
   display: flex;
 `;
@@ -81,7 +77,7 @@ type MovesProps = {
 };
 
 const Moves = ({ moves, pokemonId }: MovesProps) => {
-  const [isHidden, setIsHidden] = useState(true);
+  const [isHidden, setIsHidden] = useState(false);
   const [triangleAngle, setTriangleAngle] = useState(360);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const windowSizes = useWindowSize();
@@ -103,9 +99,7 @@ const Moves = ({ moves, pokemonId }: MovesProps) => {
           <Triangle rotateAngle={triangleAngle} />
         </SmallCard>
       )}
-      <Container
-        maxHeight={!isSmallScreen || (isSmallScreen && !isHidden) ? '1000px' : '0px'}
-      >
+      <Container contentHeight={!isSmallScreen || (isSmallScreen && !isHidden) ? 269 : 0}>
         {moves.length ? (
           <Grid>
             {moves.map((move, index) => {

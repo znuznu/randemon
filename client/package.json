@@ -5,6 +5,7 @@
   "dependencies": {
     "@iconify/icons-mdi": "^1.1.13",
     "@iconify/react": "^1.1.4",
+    "@styled-icons/heroicons-solid": "^10.28.0",
     "@styled-icons/ionicons-sharp": "^10.28.0",
     "@styled-icons/ionicons-solid": "^10.28.0",
     "@testing-library/jest-dom": "^5.11.9",

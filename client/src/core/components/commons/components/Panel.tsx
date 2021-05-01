@@ -1,8 +1,8 @@
-import React, { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 
 import styled from 'styled-components';
 
-import Triangle from '../styles/Triangle';
+import { PlusCircle, MinusCircle } from '@styled-icons/heroicons-solid';
 
 const Container = styled.div``;
 
@@ -27,26 +27,40 @@ const Title = styled.h2`
 `;
 
 type ContentProps = {
-  maxHeight: string;
-  isOpen: boolean;
+  height: number;
 };
 
 const Content = styled.div<ContentProps>`
-  transition: max-height 0.8s ease-in-out;
-  max-height: ${(props) => props.maxHeight};
+  transition: max-height 0.3s ease-in;
+  max-height: ${(props) => props.height}px;
   overflow: hidden;
+`;
+
+const PlusIcon = styled(PlusCircle)`
+  width: 24px;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 20px;
+  }
+`;
+
+const MinusIcon = styled(MinusCircle)`
+  width: 24px;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    width: 20px;
+  }
 `;
 
 interface PanelProps {
   title: string;
+  contentHeight: number;
 }
 
-const Panel = ({ title, children }: PropsWithChildren<PanelProps>) => {
-  const [triangleAngle, setTriangleAngle] = useState(360);
+const Panel = ({ title, children, contentHeight }: PropsWithChildren<PanelProps>) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
-    setTriangleAngle(triangleAngle - 180);
     setIsOpen(!isOpen);
   };
 
@@ -54,11 +68,9 @@ const Panel = ({ title, children }: PropsWithChildren<PanelProps>) => {
     <Container>
       <TopBar onClick={toggle}>
         <Title>{title}</Title>
-        <Triangle rotateAngle={triangleAngle} />
+        {isOpen ? <MinusIcon /> : <PlusIcon />}
       </TopBar>
-      <Content maxHeight={isOpen ? '1000px' : '0px'} isOpen={isOpen}>
-        {children}
-      </Content>
+      <Content height={isOpen ? contentHeight : 0}>{children}</Content>
     </Container>
   );
 };

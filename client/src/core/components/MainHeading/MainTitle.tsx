@@ -29,6 +29,10 @@ const Title = styled.h1`
   @media only screen and (max-width: 400px) {
     font-size: 36px;
   }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}px) {
+    font-size: 26px;
+  }
 `;
 
 const EspeonIcon = styled.img`
@@ -48,6 +52,10 @@ const EspeonIcon = styled.img`
 
   @media only screen and (max-width: 400px) {
     width: 85px;
+  }
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xxs}px) {
+    width: 76px;
   }
 `;
 
