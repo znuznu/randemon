@@ -1,4 +1,4 @@
-import { NamedAPIResourcePAPI } from './common.papi';
+import { NamedAPIResourcePAPI } from './common';
 
 export interface MovePAPI {
     accuracy: number | null;
@@ -6,8 +6,10 @@ export interface MovePAPI {
     pp: number;
     type: NamedAPIResourcePAPI;
     name: string;
+    [key: string]: unknown;
 }
 
 export interface PokemonMovePAPI {
     move: NamedAPIResourcePAPI;
+    [key: string]: unknown;
 }

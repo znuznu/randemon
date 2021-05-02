@@ -1,6 +1,6 @@
-import { PokemonMovePAPI } from './move.papi';
-import { PokemonTypePAPI } from './type.papi';
-import SpritePAPI from './sprite.papi';
+import { PokemonMovePAPI } from './move';
+import { PokemonTypePAPI } from './type';
+import SpritePAPI from './sprite';
 
 export interface PokemonPAPI {
     id: number;
@@ -8,4 +8,5 @@ export interface PokemonPAPI {
     sprites: SpritePAPI;
     types: [PokemonTypePAPI, PokemonTypePAPI?];
     moves: PokemonMovePAPI[];
+    [key: string]: unknown;
 }

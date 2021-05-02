@@ -1,7 +1,7 @@
 import CacheService from '../cache/cacheService';
 import { config } from '../config';
 import { logger } from '../logger';
-import { TypePokemonPAPI } from '../pokeapi/models/type.papi';
+import { TypePokemonPAPI } from '../pokeapi/models/type';
 import { Move } from '../randemon/models/move';
 import Pokemon from '../randemon/models/pokemon';
 import { Team, TeamConfig } from '../randemon/models/team';
@@ -12,7 +12,7 @@ import {
     getMoveByName,
     getPokemonById,
     getPokemonNamedAPIResourceOfTypeByName
-} from './getters';
+} from './get';
 
 const cacheService = new CacheService(
     config.REDIS_URL
@@ -56,7 +56,7 @@ async function getPokemonIdsForType(type: Type): Promise<number[]> {
         type
     );
 
-    let typeIds: number[] = [];
+    const typeIds: number[] = [];
 
     for (const resource of resourcesWithType) {
         const match = pokemonIdFromURLRegexp.exec(resource.pokemon.url);

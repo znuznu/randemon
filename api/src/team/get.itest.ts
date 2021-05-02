@@ -1,25 +1,22 @@
-import CacheService from '../../../src/cache/cacheService';
-import { loggerTest } from '../../../src/logger';
-import { config } from '../../../src/config';
-import Pokemon from '../../../src/randemon/models/pokemon';
+import CacheService from '../cache/cacheService';
+import { loggerTest } from '../logger';
+import { config } from '../config';
+import Pokemon from '../randemon/models/pokemon';
 import {
     getMoveByName,
     getPokemonById,
     getPokemonNamedAPIResourceOfTypeByName
-} from '../../../src/team/getters';
-import {
-    moveHyperBeam,
-    movePAPIHyperBeam,
-    pokemon110,
-    pokemonPAPI110,
-    typePokemonPAPIFire
-} from './getters.fixture';
+} from './get';
+import * as Fetch from './fetch';
+import { Move } from '../randemon/models/move';
+import { TypePokemonPAPI } from '../pokeapi/models/type';
+import { fakePokemonAPIMoveHyperBeam } from '../../tests/fixtures/fakePokemonAPIMove';
+import { fakeRandemonMoveHyperBeam } from '../../tests/fixtures/fakeRandemonMove';
+import { fakePokemonAPIPokemon110 } from '../../tests/fixtures/fakePokemonAPIPokemon';
+import { fakeRandemonPokemon110 } from '../../tests/fixtures/fakeRandemonPokemon';
+import { fakePokemonAPITypeFire } from '../../tests/fixtures/fakePokemonAPIType';
 
-import * as Fetch from '../../../src/team/fetch';
-import { Move } from '../../../src/randemon/models/move';
-import { TypePokemonPAPI } from '../../../src/pokeapi/models/type.papi';
-
-describe('Getters', () => {
+describe('Get - integration', () => {
     let cacheService: CacheService;
 
     beforeAll(() => {
@@ -38,7 +35,7 @@ describe('Getters', () => {
 
     describe('::getPokemonById', () => {
         const fetchPokemonMock = jest.spyOn(Fetch, 'fetchPokemon');
-        fetchPokemonMock.mockResolvedValue(pokemonPAPI110);
+        fetchPokemonMock.mockResolvedValue(fakePokemonAPIPokemon110);
 
         describe('when the pokemon is not in the cache', () => {
             let pokemonFromCache: string | null;
@@ -52,19 +49,19 @@ describe('Getters', () => {
             it('should return the pokemon from an http request', async () => {
                 pokemon = await getPokemonById(cacheService, 110);
                 expect(fetchPokemonMock).toHaveBeenCalled();
-                expect(pokemon).toEqual(pokemon110);
+                expect(pokemon).toEqual(fakeRandemonPokemon110);
             });
 
             it('should have set the pokemon in cache with id as key', async () => {
                 pokemonFromCache = await cacheService.get('pokemon:id:110');
                 expect(pokemonFromCache).not.toBeNull();
-                expect(JSON.parse(pokemonFromCache!)).toEqual(pokemon110);
+                expect(JSON.parse(pokemonFromCache!)).toEqual(fakeRandemonPokemon110);
             });
 
             it('should have set the pokemon in cache with name as key', async () => {
                 pokemonFromCache = await cacheService.get(`pokemon:name:${pokemon.name}`);
                 expect(pokemonFromCache).not.toBeNull();
-                expect(JSON.parse(pokemonFromCache!)).toEqual(pokemon110);
+                expect(JSON.parse(pokemonFromCache!)).toEqual(fakeRandemonPokemon110);
             });
         });
 
@@ -75,10 +72,13 @@ describe('Getters', () => {
             });
 
             it('should return the pokemon without an http request', async () => {
-                await cacheService.set('pokemon:id:110', JSON.stringify(pokemon110));
+                await cacheService.set(
+                    'pokemon:id:110',
+                    JSON.stringify(fakeRandemonPokemon110)
+                );
                 return getPokemonById(cacheService, 110).then((pokemon: Pokemon) => {
                     expect(fetchPokemonMock).not.toHaveBeenCalled();
-                    expect(pokemon).toEqual(pokemon110);
+                    expect(pokemon).toEqual(fakeRandemonPokemon110);
                 });
             });
         });
@@ -86,7 +86,7 @@ describe('Getters', () => {
 
     describe('::getMoveByName', () => {
         const fetchMoveMock = jest.spyOn(Fetch, 'fetchMove');
-        fetchMoveMock.mockResolvedValue(movePAPIHyperBeam);
+        fetchMoveMock.mockResolvedValue(fakePokemonAPIMoveHyperBeam);
 
         describe('when the move is not in the cache', () => {
             let moveFromCache: string | null;
@@ -99,13 +99,13 @@ describe('Getters', () => {
             it('should return the move from an http request', async () => {
                 const move = await getMoveByName(cacheService, 'hyper-beam');
                 expect(fetchMoveMock).toHaveBeenCalled();
-                expect(move).toEqual(moveHyperBeam);
+                expect(move).toEqual(fakeRandemonMoveHyperBeam);
             });
 
             it('should have set the move in cache with name as key', async () => {
                 moveFromCache = await cacheService.get('move:name:hyper-beam');
                 expect(moveFromCache).not.toBeNull();
-                expect(JSON.parse(moveFromCache!)).toEqual(moveHyperBeam);
+                expect(JSON.parse(moveFromCache!)).toEqual(fakeRandemonMoveHyperBeam);
             });
         });
 
@@ -116,10 +116,13 @@ describe('Getters', () => {
             });
 
             it('should return the move without an http request', () => {
-                cacheService.set('move:name:hyper-beam', JSON.stringify(moveHyperBeam));
+                cacheService.set(
+                    'move:name:hyper-beam',
+                    JSON.stringify(fakeRandemonMoveHyperBeam)
+                );
                 getMoveByName(cacheService, 'hyper-beam').then((move: Move) => {
                     expect(fetchMoveMock).not.toHaveBeenCalled();
-                    expect(move).toEqual(moveHyperBeam);
+                    expect(move).toEqual(fakeRandemonMoveHyperBeam);
                 });
             });
         });
@@ -130,7 +133,7 @@ describe('Getters', () => {
             Fetch,
             'fetchTypePokemonPAPIByType'
         );
-        fetchTypePokemonPAPIByType.mockResolvedValue(typePokemonPAPIFire);
+        fetchTypePokemonPAPIByType.mockResolvedValue(fakePokemonAPITypeFire);
 
         describe('when the type is not in the cache', () => {
             let typeFromCache: string | null;
@@ -146,13 +149,13 @@ describe('Getters', () => {
                     'FIRE'
                 );
                 expect(fetchTypePokemonPAPIByType).toHaveBeenCalled();
-                expect(type).toEqual(typePokemonPAPIFire);
+                expect(type).toEqual(fakePokemonAPITypeFire);
             });
 
             it('should have set the pokemon with the given type in cache with name as key', async () => {
                 typeFromCache = await cacheService.get('type:pokemon:FIRE');
                 expect(typeFromCache).not.toBeNull();
-                expect(JSON.parse(typeFromCache!)).toEqual(typePokemonPAPIFire);
+                expect(JSON.parse(typeFromCache!)).toEqual(fakePokemonAPITypeFire);
             });
         });
 
@@ -165,12 +168,12 @@ describe('Getters', () => {
             it('should return the pokemon with the given type without an http request', () => {
                 cacheService.set(
                     'type:pokemon:FIRE',
-                    JSON.stringify(typePokemonPAPIFire)
+                    JSON.stringify(fakePokemonAPITypeFire)
                 );
                 getPokemonNamedAPIResourceOfTypeByName(cacheService, 'FIRE').then(
                     (type: TypePokemonPAPI[]) => {
                         expect(fetchTypePokemonPAPIByType).not.toHaveBeenCalled();
-                        expect(type).toEqual(typePokemonPAPIFire);
+                        expect(type).toEqual(fakePokemonAPITypeFire);
                     }
                 );
             });

@@ -1,17 +1,36 @@
-import { MovePAPI } from '../pokeapi/models/move.papi';
-import { PokemonPAPI } from '../pokeapi/models/pokemon.papi';
+import { MovePAPI } from '../pokeapi/models/move';
+import { PokemonPAPI } from '../pokeapi/models/pokemon';
 import { Move } from '../randemon/models/move';
 import Pokemon from '../randemon/models/pokemon';
 import Type from '../randemon/models/type';
 
+const typeMapper: Record<string, Type> = {
+    normal: 'NORMAL',
+    fire: 'FIRE',
+    fighting: 'FIGHTING',
+    water: 'WATER',
+    flying: 'FLYING',
+    grass: 'GRASS',
+    poison: 'POISON',
+    electric: 'ELECTRIC',
+    ground: 'GROUND',
+    psychic: 'PSYCHIC',
+    rock: 'ROCK',
+    ice: 'ICE',
+    bug: 'BUG',
+    dragon: 'DRAGON',
+    ghost: 'GHOST',
+    dark: 'DARK',
+    steel: 'STEEL',
+    fairy: 'FAIRY'
+};
+
 export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
     const { id, name } = pokemonPAPI;
 
-    const allMovesNames: string[] = [];
-
-    for (const pokemonMovePAPI of pokemonPAPI.moves) {
-        allMovesNames.push(pokemonMovePAPI.move.name);
-    }
+    const allMovesNames: string[] = pokemonPAPI.moves.map(
+        (moveResource) => moveResource.move.name
+    );
 
     return {
         id,
@@ -19,8 +38,8 @@ export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
         frontSprite: pokemonPAPI.sprites.front_default,
         officialArtwork: pokemonPAPI.sprites.other['official-artwork'].front_default,
         types: [
-            pokemonPAPI.types[0].type.name.toUpperCase() as Type,
-            pokemonPAPI.types[1]?.type.name.toUpperCase() as Type
+            typeMapper[pokemonPAPI.types[0].type.name],
+            pokemonPAPI.types[1] && typeMapper[pokemonPAPI.types[1].type.name]
         ],
         allMovesNames,
         moves: [],
@@ -29,5 +48,5 @@ export function mapPokemonFromAPI(pokemonPAPI: PokemonPAPI): Pokemon {
 }
 
 export function mapMoveFromAPI(movePAPI: MovePAPI): Move {
-    return { ...movePAPI, type: movePAPI.type.name.toUpperCase() as Type };
+    return { ...movePAPI, type: typeMapper[movePAPI.type.name] };
 }

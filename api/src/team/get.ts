@@ -1,12 +1,12 @@
 import CacheService from '../cache/cacheService';
-import { range } from '../utils';
 import { mapMoveFromAPI, mapPokemonFromAPI } from '../mappers/mappers';
 import { fetchMove, fetchPokemon, fetchTypePokemonPAPIByType } from './fetch';
 import Generation from '../randemon/models/generation';
-import { TypePokemonPAPI } from '../pokeapi/models/type.papi';
+import { TypePokemonPAPI } from '../pokeapi/models/type';
 import Type from '../randemon/models/type';
 import Pokemon from '../randemon/models/pokemon';
 import { Move } from '../randemon/models/move';
+import { getRangeValues } from '../utils';
 
 interface Range {
     from: number;
@@ -37,7 +37,7 @@ export function getIndexesOfOneGeneration(generation: Generation): number[] {
         [Generation.VIII, { from: 810, to: 898 }]
     ]);
 
-    return range(
+    return getRangeValues(
         genRangeIndexes.get(generation)!.from,
         genRangeIndexes.get(generation)!.to
     );

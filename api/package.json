@@ -7,10 +7,11 @@
         "start": "tsc && node build/src/app.js",
         "test": "jest",
         "dev": "nodemon",
+        "t:u": "jest --config jest.config.utest.ts",
         "t:i": "jest --config jest.config.itest.ts",
         "lint": "eslint src/**/*.ts",
-        "lint:fix": "eslint --fix src/**/*.ts",
-        "format:fix": "prettier --write --config .prettierrc src/**/*.ts",
+        "lint-fix": "eslint --fix src/**/*.ts",
+        "fmt": "prettier --write --config .prettierrc src/**/*.ts",
         "postinstall": "tsc"
     },
     "repository": {
@@ -19,7 +20,8 @@
     },
     "keywords": [
         "pokemon",
-        "random"
+        "random",
+        "team"
     ],
     "author": "znu",
     "license": "MIT",

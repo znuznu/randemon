@@ -1,4 +1,8 @@
-export function range(from: number = 0, to: number): number[] {
+export function getRangeValues(from: number = 0, to: number): number[] {
+    if (from < 0 || to < 0) {
+        return [];
+    }
+
     return [...Array(Math.floor(to - from) + 1)].map((_, i) => from + i);
 }
 
