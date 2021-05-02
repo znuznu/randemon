@@ -6,9 +6,6 @@ import OpenSans2 from '../fonts/open-sans-v18-latin-regular.woff2';
 import Lato from '../fonts/lato-v17-latin-regular.woff';
 import Lato2 from '../fonts/lato-v17-latin-regular.woff2';
 
-import PermanentMarker from '../fonts/permanent-marker-v10-latin-regular.woff';
-import PermanentMarker2 from '../fonts/permanent-marker-v10-latin-regular.woff2';
-
 import LuckiestGuy from '../fonts/luckiest-guy-v11-latin-regular.woff';
 import LuckiestGuy2 from '../fonts/luckiest-guy-v11-latin-regular.woff2';
 
@@ -43,17 +40,7 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     font-display: fallback;
   }
-
-  @font-face {
-    font-family: 'PermanentMarker';
-    font-display: fallback;
-    src: local('PermanentMarker'), local('PermanentMarker'),
-    url(${PermanentMarker2}) format('woff2'),
-    url(${PermanentMarker}) format('woff');
-    font-style: normal;
-    font-display: fallback;
-  }
-
+  
   @font-face {
     font-family: 'LuckiestGuy';
     font-display: fallback;

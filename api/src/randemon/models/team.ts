@@ -9,5 +9,5 @@ export interface Team {
 export interface TeamConfig {
     generations: Generation[];
     numbersOfPokemon: number;
-    type?: Type;
+    types?: Type[];
 }

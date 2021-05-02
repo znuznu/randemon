@@ -47,8 +47,8 @@ const schema = buildSchema(`
             generations: [Generation]
             "How many Pokémon we want in the team."
             numbersOfPokemon: Int
-            "The type of the Pokemon of the team."
-            type: Type
+            "The types of the Pokemon of the team. If empty, all types are considered."
+            types: [Type]
         }
 
         type Move {

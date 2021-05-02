@@ -4,13 +4,13 @@ const qCreateTeamRandomly = gql`
   query createTeamRandomly(
     $generations: [Generation]
     $numbersOfPokemon: Int
-    $type: Type
+    $types: [Type]
   ) {
     createTeamRandomly(
       parameters: {
         generations: $generations
         numbersOfPokemon: $numbersOfPokemon
-        type: $type
+        types: $types
       }
     ) {
       pokemon {
@@ -36,14 +36,14 @@ const qUpdateTeamRandomly = gql`
   query updateTeamRandomly(
     $generations: [Generation]
     $numbersOfPokemon: Int
-    $type: Type
+    $types: [Type]
     $team: TeamInput
   ) {
     updateTeamRandomly(
       parameters: {
         generations: $generations
         numbersOfPokemon: $numbersOfPokemon
-        type: $type
+        types: $types
       }
       team: $team
     ) {

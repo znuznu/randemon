@@ -98,7 +98,7 @@ const Button = styled.button<ButtonProps>`
 `;
 
 const Options = () => {
-  const [type, setType] = useState<Type | null>(null);
+  const [types, setTypes] = useState(new Set<Type>());
   const [generations, setGenerations] = useState(new Set<Generation>());
   const [quantity, setQuantity] = useState(1);
 
@@ -106,30 +106,39 @@ const Options = () => {
 
   const teamContext = useContext(TeamContext);
 
-  const emitGeneration = (generation: Generation) => {
-    generations.has(generation)
+  const emitGeneration = (emittedGeneration: Generation) => {
+    generations.has(emittedGeneration)
       ? setGenerations(
-          new Set(Array.from(generations).filter((gen) => gen !== generation))
+          new Set(
+            Array.from(generations).filter(
+              (generation) => generation !== emittedGeneration
+            )
+          )
         )
-      : setGenerations(new Set([...Array.from(generations), generation]));
+      : setGenerations(new Set([...Array.from(generations), emittedGeneration]));
   };
 
   const emitType = (emittedType: Type) => {
-    type === emittedType ? setType(null) : setType(emittedType);
+    types.has(emittedType)
+      ? setTypes(new Set(Array.from(types).filter((type) => type !== emittedType)))
+      : setTypes(new Set([...Array.from(types), emittedType]));
   };
 
   const generate = () => {
     teamContext.setIsLoading!(true);
 
     if (teamContext.team) {
-      updateTeamRandomly(quantity, Array.from(generations), type, teamContext.team).then(
-        (team: Team | null) => {
-          team && teamContext.setTeam!(team);
-          teamContext.setIsLoading!(false);
-        }
-      );
+      updateTeamRandomly(
+        quantity,
+        Array.from(generations),
+        Array.from(types),
+        teamContext.team
+      ).then((team: Team | null) => {
+        team && teamContext.setTeam!(team);
+        teamContext.setIsLoading!(false);
+      });
     } else {
-      createTeamRandomly(quantity, Array.from(generations), type).then(
+      createTeamRandomly(quantity, Array.from(generations), Array.from(types)).then(
         (team: Team | null) => {
           team && teamContext.setTeam!(team);
           teamContext.setIsLoading!(false);
@@ -157,7 +166,7 @@ const Options = () => {
             title={'Types'}
             contentHeight={windowSizes.size.width < theme.breakpoints.xxs ? 250 : 170}
           >
-            <Types currentType={type} emitType={emitType} />
+            <Types currentTypes={Array.from(types)} emitType={emitType} />
           </Panel>
         </FlexColOptions>
       ) : (
@@ -171,7 +180,7 @@ const Options = () => {
           </div>
           <div>
             <OptionsHeading>Types</OptionsHeading>
-            <Types currentType={type} emitType={emitType} />
+            <Types currentTypes={Array.from(types)} emitType={emitType} />
           </div>
         </FlexRowOptions>
       )}

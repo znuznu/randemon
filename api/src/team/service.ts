@@ -25,37 +25,48 @@ const cacheService = new CacheService(
 );
 
 export async function generateTeam(config: TeamConfig): Promise<Team> {
-    const { generations, numbersOfPokemon, type } = config;
+    const { generations, numbersOfPokemon, types } = config;
     let indexes = getIndexesOfMultipleGenerations(generations);
-    let pokemonLeft = numbersOfPokemon;
 
-    if (type) {
-        indexes = await filterIdsByType(indexes, type);
+    if (types && types.length) {
+        indexes = await filterPokemonIdsByTypes(indexes, types);
     }
 
-    return getTeam(indexes, pokemonLeft);
+    return getTeam(indexes, numbersOfPokemon);
 }
 
-const pokemonIdRegexp = /\/(\d+)\/$/;
-async function filterIdsByType(indexes: number[], type: Type): Promise<number[]> {
-    const pokemonNamedAPIResources: TypePokemonPAPI[] = await getPokemonNamedAPIResourceOfTypeByName(
+async function filterPokemonIdsByTypes(
+    pokemonIds: number[],
+    types: Type[]
+): Promise<number[]> {
+    let idsFromTypes: number[] = [];
+
+    for (const type of types) {
+        const typeIds = await getPokemonIdsForType(type);
+        idsFromTypes = [...idsFromTypes, ...typeIds];
+    }
+
+    return pokemonIds.filter((id) => idsFromTypes.includes(id));
+}
+
+const pokemonIdFromURLRegexp = /\/(\d+)\/$/;
+async function getPokemonIdsForType(type: Type): Promise<number[]> {
+    const resourcesWithType: TypePokemonPAPI[] = await getPokemonNamedAPIResourceOfTypeByName(
         cacheService,
-        type!
+        type
     );
 
-    let filteredIds: number[] = [];
+    let typeIds: number[] = [];
 
-    pokemonNamedAPIResources.forEach((pokemonNamedAPIResource) => {
-        const match = pokemonIdRegexp.exec(pokemonNamedAPIResource.pokemon.url);
+    for (const resource of resourcesWithType) {
+        const match = pokemonIdFromURLRegexp.exec(resource.pokemon.url);
 
         if (match) {
-            filteredIds.push(Number(match[1]));
+            typeIds.push(parseInt(match[1]));
         }
-    });
+    }
 
-    filteredIds = filteredIds.filter((id: number) => indexes.includes(id));
-
-    return filteredIds;
+    return typeIds;
 }
 
 async function getTeam(pokemonIds: number[], amount: number): Promise<Team> {
@@ -123,7 +134,7 @@ export async function getRandomMoves(
 }
 
 export async function updateTeam(config: TeamConfig, team: Team): Promise<Team> {
-    const { generations, numbersOfPokemon, type } = config;
+    const { generations, numbersOfPokemon, types } = config;
     const { pokemon } = team;
 
     const lockedTeamIndexes: number[] = [];
@@ -145,8 +156,8 @@ export async function updateTeam(config: TeamConfig, team: Team): Promise<Team> 
 
     const lockedPokemonIds = lockedPokemon.map((pokemon) => pokemon.id);
     indexes = indexes.filter((id) => !lockedPokemonIds.includes(id));
-    if (type) {
-        indexes = await filterIdsByType(indexes, type);
+    if (types && types.length) {
+        indexes = await filterPokemonIdsByTypes(indexes, types);
     }
 
     if (!indexes.length) {

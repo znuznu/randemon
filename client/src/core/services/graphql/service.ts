@@ -21,7 +21,7 @@ interface createTeamRandomlyResponse {
 const createTeamRandomly = async (
   numbersOfPokemon: number = 6,
   generations: Generation[] = ['I'],
-  type: Type | null = null
+  types: Type[] | null = []
 ): Promise<Team | null> => {
   try {
     const response: createTeamRandomlyResponse = await request(
@@ -30,7 +30,7 @@ const createTeamRandomly = async (
       {
         generations,
         numbersOfPokemon,
-        type
+        types
       }
     );
 
@@ -50,7 +50,7 @@ interface UpdateRandomTeamResponse {
 const updateTeamRandomly = async (
   numbersOfPokemon: number = 6,
   generations: Generation[] = ['I'],
-  type: Type | null = null,
+  types: Type[] | null = [],
   team: Team
 ): Promise<Team | null> => {
   try {
@@ -60,7 +60,7 @@ const updateTeamRandomly = async (
       {
         generations,
         numbersOfPokemon,
-        type,
+        types,
         team
       }
     );

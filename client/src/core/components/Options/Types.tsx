@@ -49,18 +49,18 @@ const BadgeSelected = styled(Badge)`
 `;
 
 type TypesProps = {
-  currentType: string | null;
+  currentTypes: Type[];
   emitType: (type: Type) => void;
 };
 
-const Types = ({ currentType, emitType }: TypesProps) => {
+const Types = ({ currentTypes, emitType }: TypesProps) => {
   const currentPokemonModalContext = useContext(CurrentPokemonModalContext);
 
   return (
     <Section>
       <Badges>
         {types.map((type) =>
-          currentType === type ? (
+          currentTypes.includes(type) ? (
             <BadgeSelected
               key={`${type}`}
               color={TYPES_COLORS[type]}
