@@ -1,4 +1,4 @@
-import Pokemon from '../../src/randemon/models/pokemon';
+import Pokemon from '../../src/models/randemon/pokemon';
 
 export const fakeRandemonPokemonWithOneType: Pokemon = {
     id: 6,
@@ -7,8 +7,8 @@ export const fakeRandemonPokemonWithOneType: Pokemon = {
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
     officialArtwork:
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
-    types: ['FIRE', undefined],
-    allMovesNames: ['mega-punch', 'fire-punch', 'thunder-punch', 'scratch'],
+    types: ['FIRE', null],
+    allMoveNames: ['mega-punch', 'fire-punch', 'thunder-punch', 'scratch'],
     moves: [],
     isLocked: false
 };
@@ -21,7 +21,7 @@ export const fakeRandemonPokemonWithTwoTypes: Pokemon = {
     officialArtwork:
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
     types: ['FIRE', 'FLYING'],
-    allMovesNames: ['mega-punch', 'fire-punch', 'thunder-punch', 'scratch'],
+    allMoveNames: ['mega-punch', 'fire-punch', 'thunder-punch', 'scratch'],
     moves: [],
     isLocked: false
 };
@@ -33,6 +33,6 @@ export const fakeRandemonPokemon110: Pokemon = {
     officialArtwork: 'http://artwork',
     types: ['FIRE', 'ICE'],
     moves: [],
-    allMovesNames: ['some', 'cool', 'moves'],
+    allMoveNames: ['some', 'cool', 'moves'],
     isLocked: false
 };

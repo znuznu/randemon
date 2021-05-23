@@ -1,0 +1,62 @@
+import CacheConnector from '../../connector/cache/cacheConnector';
+import { HttpConnector as PokeApiConnector } from '../../connector/pokeApi/httpConnector';
+import { Move } from '../../models/randemon/move';
+import Pokemon from '../../models/randemon/pokemon';
+import Type from '../../models/randemon/type';
+
+class DataService {
+    constructor(
+        private pokeApiConnector: PokeApiConnector,
+        private redisConnector: CacheConnector
+    ) {}
+
+    async getIdsOfPokemonWithType(type: Type): Promise<number[]> {
+        const typeIdsInCache = await this.redisConnector.getAllPokemonIdsWithType(type);
+        if (!typeIdsInCache) {
+            const typeIds = await this.pokeApiConnector.getAllPokemonIdsWithType(type);
+            await this.redisConnector.setAllPokemonIdsWithType(type, typeIds);
+
+            return typeIds;
+        }
+
+        return typeIdsInCache;
+    }
+
+    async getPokemonById(id: string): Promise<Pokemon> {
+        const pokemon = await this.redisConnector.getPokemonById(id);
+        if (!pokemon) {
+            const pokemon = await this.pokeApiConnector.getPokemon(id);
+            await this.redisConnector.setPokemonById(id, pokemon);
+            await this.redisConnector.setPokemonByName(pokemon.name, pokemon);
+
+            return pokemon;
+        }
+
+        return pokemon;
+    }
+
+    async getMoveByName(name: string): Promise<Move> {
+        const move = await this.redisConnector.getMoveByName(name);
+        if (!move) {
+            const move = await this.pokeApiConnector.getMove(name);
+            await this.redisConnector.setMoveByName(name, move);
+
+            return move;
+        }
+
+        return move;
+    }
+
+    async getIdsOfPokemonWithTypes(types: Type[]): Promise<number[]> {
+        let typesIds: number[] = [];
+
+        for (const type of types) {
+            const typeIds = await this.getIdsOfPokemonWithType(type);
+            typesIds = [...typesIds, ...typeIds];
+        }
+
+        return Promise.resolve(typesIds);
+    }
+}
+
+export default DataService;
