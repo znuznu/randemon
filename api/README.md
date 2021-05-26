@@ -19,7 +19,6 @@ Create a .env file based on the .sample, fill it with your own variables.
 | `npm test`          | Run tests (only unit for now)                                         |
 | `dev`               | Run with nodemon                                                      |
 | `npm run t:u`       | Run unit tests                                                        |
-| `npm run t:i`       | Run integration tests (the `docker-compose` script above is required) |
 | `npm run lint`      | Check linting with ESlint                                             |
 | `npm run lint-fix`  | Fix linting                                                           |
 | `npm run fmt`       | Format code with Prettier                                             |
