@@ -3,9 +3,10 @@ import { graphqlHTTP } from 'express-graphql';
 import cors from 'cors';
 
 import { logger } from './logger';
-import rootResolver from './graphql/rootResolver';
-import schema from './graphql/schema';
+import { buildRootResolver } from './core/graphql/rootResolver';
+import schema from './core/graphql/schema';
 import { config } from './config';
+import { buildCoreServices, CoreServices } from './core/services/buildCoreServices';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -29,6 +30,9 @@ process.on('unhandledRejection', (_reason, promise) => {
     logger.error('Unhandled rejection at ', promise);
     process.exit(1);
 });
+
+const coreServices: CoreServices = buildCoreServices(config);
+const rootResolver = buildRootResolver(coreServices);
 
 app.use(
     '/queries',

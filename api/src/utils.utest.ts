@@ -1,4 +1,4 @@
-import { getRangeValues, UrlBuilder } from './utils';
+import { filterValues, getRangeValues, PathBuilder } from './utils';
 
 describe('Utils - unit', () => {
     describe('::getRangeValues', () => {
@@ -39,28 +39,48 @@ describe('Utils - unit', () => {
         });
     });
 
-    describe('#UrlBuilder', () => {
+    describe('::PathBuilder', () => {
         describe('when no `with` are called', () => {
             it('should return an URL like the base one', () => {
-                const builder = new UrlBuilder('/api');
+                const builder = new PathBuilder('/api');
 
-                expect(builder.url).toEqual('/api');
+                expect(builder.path).toEqual('/api');
             });
         });
 
         describe('when one `with` is called', () => {
             it('should return an URL with the content of `with`', () => {
-                const builder = new UrlBuilder('/api').with('something');
+                const builder = new PathBuilder('/api').with('something');
 
-                expect(builder.url).toEqual('/api/something');
+                expect(builder.path).toEqual('/api/something');
             });
         });
 
         describe('when two `with` are called', () => {
             it('should return an URL with the content of the first and second `with`', () => {
-                const builder = new UrlBuilder('/api').with('something').with('else');
+                const builder = new PathBuilder('/api').with('something').with('else');
 
-                expect(builder.url).toEqual('/api/something/else');
+                expect(builder.path).toEqual('/api/something/else');
+            });
+        });
+    });
+
+    describe('::filterValues', () => {
+        describe('when the values contains no values at all', () => {
+            it('should return an empty array', () => {
+                expect(filterValues([], [0, 5, 9, 87])).toHaveLength(0);
+            });
+        });
+
+        describe('when the values contains no includes values at all', () => {
+            it('should return an empty array', () => {
+                expect(filterValues([1, 2, 3, 4, 5, 6], [])).toHaveLength(0);
+            });
+        });
+
+        describe('when both arguments are not empty arrays', () => {
+            it('should return an empty array', () => {
+                expect(filterValues([1, 2, 3, 4, 5, 6], [3, 4, 9])).toEqual([3, 4]);
             });
         });
     });

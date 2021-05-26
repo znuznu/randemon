@@ -1,13 +1,27 @@
-import { Team } from '../randemon/models/team';
-import { generateTeam, updateTeam } from './service';
+import CacheConnector from '../connector/cache/cacheConnector';
+import { HttpConnector as PokeApiConnector } from '../connector/pokeApi/httpConnector';
+import { Team } from '../models/randemon/team';
+import { buildCreateTeamRandomlyResolver } from './createTeamRandomly/builder';
+import DataService from './service/data.service';
+import { buildUpdateTeamRandomlyResolver } from './updateTeamRandomly/builder';
 
-const teamResolver = {
-    createTeamRandomly: async (args: any): Promise<Team> => {
-        return generateTeam({ ...args.parameters });
-    },
-    updateTeamRandomly: async (args: any): Promise<Team> => {
-        return updateTeam(args.parameters, args.team);
-    }
-};
+export function createTeamResolvers(
+    pokeApiConnector: PokeApiConnector,
+    cacheConnector: CacheConnector
+): Record<string, unknown> {
+    const dataService: DataService = new DataService(pokeApiConnector, cacheConnector);
 
-export default teamResolver;
+    return {
+        createTeamRandomly: async (args: any): Promise<Team> => {
+            return buildCreateTeamRandomlyResolver(dataService).createTeamRandomly({
+                ...args.parameters
+            });
+        },
+        updateTeamRandomly: async (args: any): Promise<Team> => {
+            return buildUpdateTeamRandomlyResolver(dataService).updateTeamRandomly(
+                args.parameters,
+                args.team
+            );
+        }
+    };
+}

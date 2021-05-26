@@ -19,7 +19,7 @@ interface createTeamRandomlyResponse {
 }
 
 const createTeamRandomly = async (
-  numbersOfPokemon: number = 6,
+  numberOfPokemon: number = 6,
   generations: Generation[] = ['I'],
   types: Type[] | null = []
 ): Promise<Team | null> => {
@@ -29,7 +29,7 @@ const createTeamRandomly = async (
       qCreateTeamRandomly,
       {
         generations,
-        numbersOfPokemon,
+        numberOfPokemon,
         types
       }
     );
@@ -48,7 +48,7 @@ interface UpdateRandomTeamResponse {
 }
 
 const updateTeamRandomly = async (
-  numbersOfPokemon: number = 6,
+  numberOfPokemon: number = 6,
   generations: Generation[] = ['I'],
   types: Type[] | null = [],
   team: Team
@@ -59,7 +59,7 @@ const updateTeamRandomly = async (
       qUpdateTeamRandomly,
       {
         generations,
-        numbersOfPokemon,
+        numberOfPokemon,
         types,
         team
       }

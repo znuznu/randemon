@@ -3,13 +3,13 @@ import { gql } from 'graphql-request';
 const qCreateTeamRandomly = gql`
   query createTeamRandomly(
     $generations: [Generation]
-    $numbersOfPokemon: Int
+    $numberOfPokemon: Int
     $types: [Type]
   ) {
     createTeamRandomly(
       parameters: {
         generations: $generations
-        numbersOfPokemon: $numbersOfPokemon
+        numberOfPokemon: $numberOfPokemon
         types: $types
       }
     ) {
@@ -35,14 +35,14 @@ const qCreateTeamRandomly = gql`
 const qUpdateTeamRandomly = gql`
   query updateTeamRandomly(
     $generations: [Generation]
-    $numbersOfPokemon: Int
+    $numberOfPokemon: Int
     $types: [Type]
     $team: TeamInput
   ) {
     updateTeamRandomly(
       parameters: {
         generations: $generations
-        numbersOfPokemon: $numbersOfPokemon
+        numberOfPokemon: $numberOfPokemon
         types: $types
       }
       team: $team

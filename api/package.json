@@ -5,13 +5,15 @@
     "main": "src/app.js",
     "scripts": {
         "start": "tsc && node build/src/app.js",
-        "test": "jest",
         "dev": "nodemon",
+        "test": "jest",
         "t:u": "jest --config jest.config.utest.ts",
         "t:i": "jest --config jest.config.itest.ts",
+        "t:coverage": "jest --coverage=true",
+        "t:w": "jest --watchAll",
         "lint": "eslint src/**/*.ts",
         "lint-fix": "eslint --fix src/**/*.ts",
-        "fmt": "prettier --write --config .prettierrc src/**/*.ts",
+        "fmt": "prettier --write --config .prettierrc \"src/**/*.ts\"",
         "postinstall": "tsc"
     },
     "repository": {
@@ -51,6 +53,7 @@
         "@types/pino": "^6.3.5",
         "@typescript-eslint/eslint-plugin": "^4.15.1",
         "@typescript-eslint/parser": "^4.15.1",
+        "axios-mock-adapter": "^1.19.0",
         "babel-jest": "^26.6.3",
         "eslint": "^7.20.0",
         "jest": "^26.6.3",

@@ -8,6 +8,6 @@ export default interface Pokemon {
   officialArtwork: string | null;
   types: [Type, Type?];
   moves: Move[];
-  allMovesNames: string[];
+  allMoveNames: string[];
   isLocked: boolean;
 }
