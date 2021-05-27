@@ -8,10 +8,10 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: 'Lato';
+  font-family: 'LuckiestGuy';
   color: ${(props) => props.theme.primary};
   font-size: 100px;
-  margin: auto 0;
+  margin: auto 0 0;
   text-transform: uppercase;
 
   @media only screen and (max-width: ${(props) => props.theme.breakpoints.m}px) {
