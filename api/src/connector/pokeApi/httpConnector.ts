@@ -27,7 +27,7 @@ export class HttpConnector implements Connector {
         const response = await this.httpService.get(new URL(pathBuilder.path));
 
         if (!Object.keys(response.json()).length) {
-            throw new Error(`Not data found for the Pokemon with name or id ${nameOrId}`);
+            throw new Error(`No data found for the Pokemon with name or id ${nameOrId}`);
         }
 
         return mapPokemon(response.json<PokemonPAPI>());
@@ -40,7 +40,7 @@ export class HttpConnector implements Connector {
         const response = await this.httpService.get(new URL(pathBuilder.path));
 
         if (!Object.keys(response.json()).length) {
-            throw new Error(`Not data found for the Pokemon type ${type.toLowerCase()}`);
+            throw new Error(`No data found for the Pokemon type ${type.toLowerCase()}`);
         }
 
         return mapTypeToIds(response.json<TypePAPI>());
@@ -51,7 +51,7 @@ export class HttpConnector implements Connector {
         const response = await this.httpService.get(new URL(pathBuilder.path));
 
         if (!Object.keys(response.json()).length) {
-            throw new Error(`Not data found for the move with name or id ${nameOrId}`);
+            throw new Error(`No data found for the move with name or id ${nameOrId}`);
         }
 
         return mapMove(response.json<MovePAPI>());

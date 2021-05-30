@@ -60,7 +60,7 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
             it('should throw', async () => {
                 await expect(() => connector.getPokemon('AshKetchum')).rejects.toThrow(
-                    `Not data found for the Pokemon with name or id AshKetchum`
+                    `No data found for the Pokemon with name or id AshKetchum`
                 );
             });
         });
@@ -147,7 +147,7 @@ describe('HTTP connector to PokéAPI - unit', () => {
             it('should throw', async () => {
                 await expect(() =>
                     connector.getAllPokemonIdsWithType('FIRE')
-                ).rejects.toThrow('Not data found for the Pokemon type fire');
+                ).rejects.toThrow('No data found for the Pokemon type fire');
             });
         });
 
@@ -216,7 +216,7 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
             it('should throw', async () => {
                 await expect(() => connector.getMove('unknown')).rejects.toThrow(
-                    'Not data found for the move with name or id unknown'
+                    'No data found for the move with name or id unknown'
                 );
             });
         });
