@@ -1,13 +1,13 @@
 import { config } from '../../config';
 import { createTeamResolvers } from '../../team/resolvers';
-import { buildConnectors, Connectors } from '../connector/buildConnectors';
+import { buildAdapters, Adapters } from '../adapter/buildAdapters';
 import { CoreServices } from '../services/buildCoreServices';
 
 export function buildRootResolver(services: CoreServices) {
-    const connectors: Connectors = buildConnectors(config, services);
+    const adapters: Adapters = buildAdapters(config, services);
     const teamResolvers = createTeamResolvers(
-        connectors.pokeApiConnector,
-        connectors.cacheConnector
+        adapters.pokeApiAdapter,
+        adapters.cacheAdapter
     );
 
     return { ...teamResolvers };

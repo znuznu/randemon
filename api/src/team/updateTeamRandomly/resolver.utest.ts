@@ -5,8 +5,8 @@ import {
     fakeRandemonMoveScratch
 } from '../../../tests/fixtures/fakeRandemonMove';
 import { fakeRandemonPokemonWithOneType } from '../../../tests/fixtures/fakeRandemonPokemon';
-import CacheConnector from '../../connector/cache/cacheConnector';
-import { HttpConnector } from '../../connector/pokeApi/httpConnector';
+import CacheAdapter from '../../adapter/cache/cacheAdapter';
+import { HttpAdapter } from '../../adapter/pokeApi/httpAdapter';
 import FakeCacheService from '../../core/cache/fakeCache.service';
 import { createHttpService } from '../../core/http/mock';
 import { loggerTest } from '../../logger';
@@ -17,13 +17,13 @@ import UpdateTeamRandomlyResolver from './resolver';
 
 describe('UpdateTeamRandomlyResolver - unit', () => {
     describe('::getPokemonWithRandomMoves', () => {
-        let cacheConnector: CacheConnector;
-        let pokeApiConnector: HttpConnector;
+        let cacheAdapter: CacheAdapter;
+        let pokeApiAdapter: HttpAdapter;
         let dataService: DataService;
 
         beforeEach(() => {
-            cacheConnector = new CacheConnector(new FakeCacheService(loggerTest));
-            pokeApiConnector = new HttpConnector(
+            cacheAdapter = new CacheAdapter(new FakeCacheService(loggerTest));
+            pokeApiAdapter = new HttpAdapter(
                 {
                     BASE_URL: 'http://some-url.com'
                 },
@@ -31,7 +31,7 @@ describe('UpdateTeamRandomlyResolver - unit', () => {
                     get: { status: 200, json: fakeRandemonPokemonWithOneType }
                 })
             );
-            dataService = new DataService(pokeApiConnector, cacheConnector);
+            dataService = new DataService(pokeApiAdapter, cacheAdapter);
         });
 
         describe('when the pokemon has at least 4 moves', () => {

@@ -1,7 +1,7 @@
 import { URL } from 'url';
 
 import { HttpService } from '../../core/http/http';
-import { Connector } from './connector.interface';
+import { PokeApiPort } from './pokeApi.port';
 import { mapMove, mapPokemon, mapTypeToIds } from './mappers/mappers';
 import { PathBuilder } from '../../utils';
 import { PokemonPAPI } from '../../models/pokeapi/pokemon';
@@ -15,7 +15,7 @@ export interface Config {
     BASE_URL: string;
 }
 
-export class HttpConnector implements Connector {
+export class HttpAdapter implements PokeApiPort {
     private baseURL: string;
 
     constructor(private config: Config, private httpService: HttpService) {

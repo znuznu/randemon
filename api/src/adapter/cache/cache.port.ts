@@ -2,7 +2,7 @@ import { Move } from '../../models/randemon/move';
 import Pokemon from '../../models/randemon/pokemon';
 import Type from '../../models/randemon/type';
 
-export interface Connector {
+export interface CachePort {
     getPokemonByName(name: string): Promise<Pokemon | null>;
     setPokemonByName(name: string, pokemon: Pokemon): Promise<void>;
     getPokemonById(id: string): Promise<Pokemon | null>;

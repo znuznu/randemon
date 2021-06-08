@@ -1,6 +1,6 @@
 import { URL } from 'url';
 
-import { HttpConnector as PokeApiConnector, Config } from './httpConnector';
+import { HttpAdapter as PokeApiAdapter, Config } from './httpAdapter';
 import { fakePokeAPIMoveHyperBeam } from '../../../tests/fixtures/fakePokeAPIMove';
 import { fakePAPIPokemonWithOneType } from '../../../tests/fixtures/fakePokeAPIPokemon';
 import { HttpService } from '../../core/http/http';
@@ -9,7 +9,7 @@ import Pokemon from '../../models/randemon/pokemon';
 import { Move } from '../../models/randemon/move';
 import { fakePokeAPITypeFire } from '../../../tests/fixtures/fakePokeAPIType';
 
-describe('HTTP connector to PokéAPI - unit', () => {
+describe('HTTP adapter to PokéAPI - unit', () => {
     const config: Config = {
         BASE_URL: 'https://url.com'
     };
@@ -28,9 +28,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
                 jest.spyOn(httpService, 'get');
 
-                const connector = new PokeApiConnector(config, httpService);
+                const adapter = new PokeApiAdapter(config, httpService);
 
-                await connector.getPokemon('charizard');
+                await adapter.getPokemon('charizard');
             });
 
             afterEach(() => {
@@ -46,7 +46,7 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
         describe("when the pokemon couldn't be found", () => {
             let httpService: HttpService;
-            let connector: PokeApiConnector;
+            let adapter: PokeApiAdapter;
 
             beforeEach(() => {
                 httpService = createHttpService({
@@ -55,11 +55,11 @@ describe('HTTP connector to PokéAPI - unit', () => {
                     }
                 });
 
-                connector = new PokeApiConnector(config, httpService);
+                adapter = new PokeApiAdapter(config, httpService);
             });
 
             it('should throw', async () => {
-                await expect(() => connector.getPokemon('AshKetchum')).rejects.toThrow(
+                await expect(() => adapter.getPokemon('AshKetchum')).rejects.toThrow(
                     `No data found for the Pokemon with name or id AshKetchum`
                 );
             });
@@ -77,9 +77,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
                     }
                 });
 
-                const connector = new PokeApiConnector(config, httpService);
+                const adapter = new PokeApiAdapter(config, httpService);
 
-                result = await connector.getPokemon('charizard');
+                result = await adapter.getPokemon('charizard');
             });
 
             it('should return the pokemon mapped', () => {
@@ -118,9 +118,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
                 jest.spyOn(httpService, 'get');
 
-                const connector = new PokeApiConnector(config, httpService);
+                const adapter = new PokeApiAdapter(config, httpService);
 
-                await connector.getAllPokemonIdsWithType('FIRE');
+                await adapter.getAllPokemonIdsWithType('FIRE');
             });
 
             it('should call', () => {
@@ -132,7 +132,7 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
         describe("when the type couldn't be found", () => {
             let httpService: HttpService;
-            let connector: PokeApiConnector;
+            let adapter: PokeApiAdapter;
 
             beforeEach(() => {
                 httpService = createHttpService({
@@ -141,12 +141,12 @@ describe('HTTP connector to PokéAPI - unit', () => {
                     }
                 });
 
-                connector = new PokeApiConnector(config, httpService);
+                adapter = new PokeApiAdapter(config, httpService);
             });
 
             it('should throw', async () => {
                 await expect(() =>
-                    connector.getAllPokemonIdsWithType('FIRE')
+                    adapter.getAllPokemonIdsWithType('FIRE')
                 ).rejects.toThrow('No data found for the Pokemon type fire');
             });
         });
@@ -163,9 +163,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
                     }
                 });
 
-                const connector = new PokeApiConnector(config, httpService);
+                const adapter = new PokeApiAdapter(config, httpService);
 
-                result = await connector.getAllPokemonIdsWithType('FIRE');
+                result = await adapter.getAllPokemonIdsWithType('FIRE');
             });
 
             it('should return the ids', () => {
@@ -188,9 +188,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
                 jest.spyOn(httpService, 'get');
 
-                const connector = new PokeApiConnector(config, httpService);
+                const adapter = new PokeApiAdapter(config, httpService);
 
-                await connector.getMove('hyper-beam');
+                await adapter.getMove('hyper-beam');
             });
 
             it('should call', () => {
@@ -202,7 +202,7 @@ describe('HTTP connector to PokéAPI - unit', () => {
 
         describe("when the move couldn't be found", () => {
             let httpService: HttpService;
-            let connector: PokeApiConnector;
+            let adapter: PokeApiAdapter;
 
             beforeEach(() => {
                 httpService = createHttpService({
@@ -211,11 +211,11 @@ describe('HTTP connector to PokéAPI - unit', () => {
                     }
                 });
 
-                connector = new PokeApiConnector(config, httpService);
+                adapter = new PokeApiAdapter(config, httpService);
             });
 
             it('should throw', async () => {
-                await expect(() => connector.getMove('unknown')).rejects.toThrow(
+                await expect(() => adapter.getMove('unknown')).rejects.toThrow(
                     'No data found for the move with name or id unknown'
                 );
             });
@@ -233,9 +233,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
                     }
                 });
 
-                const connector = new PokeApiConnector(config, httpService);
+                const adapter = new PokeApiAdapter(config, httpService);
 
-                result = await connector.getMove('hyper-beam');
+                result = await adapter.getMove('hyper-beam');
             });
 
             it('should return the move mapped', () => {

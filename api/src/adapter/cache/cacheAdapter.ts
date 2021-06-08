@@ -2,13 +2,13 @@ import { CacheService } from '../../core/cache/cache.interface';
 import { Move } from '../../models/randemon/move';
 import Pokemon from '../../models/randemon/pokemon';
 import Type from '../../models/randemon/type';
-import { Connector } from './connector.interface';
+import { CachePort } from './cache.port';
 
 export interface Config {
     BASE_URL: string;
 }
 
-export default class CacheConnector implements Connector {
+export default class CacheAdapter implements CachePort {
     constructor(private cacheService: CacheService) {}
 
     async getPokemonByName(nameOrId: string): Promise<Pokemon | null> {

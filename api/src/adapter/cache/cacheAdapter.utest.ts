@@ -1,27 +1,27 @@
 import FakeCacheService from '../../core/cache/fakeCache.service';
 import { fakeRandemonPokemonWithOneType } from '../../../tests/fixtures/fakeRandemonPokemon';
 import { loggerTest } from '../../logger';
-import CacheConnector from './cacheConnector';
+import CacheAdapter from './cacheAdapter';
 import Pokemon from '../../models/randemon/pokemon';
 import { fakeRandemonTypeFireIds } from '../../../tests/fixtures/fakeRandemonFireTypeIds';
 import { Move } from '../../models/randemon/move';
 import { fakeRandemonMoveHyperBeam } from '../../../tests/fixtures/fakeRandemonMove';
 
-describe('HTTP connector to PokéAPI - unit', () => {
+describe('Cache adapter - unit', () => {
     describe('::getPokemonByName', () => {
         describe('when the Pokemon is in cache', () => {
             const cacheService = new FakeCacheService(loggerTest);
             let result: Pokemon | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
                 await cacheService.set(
                     'pokemon:name:charizard',
                     JSON.stringify(fakeRandemonPokemonWithOneType)
                 );
 
-                result = await connector.getPokemonByName('charizard');
+                result = await adapter.getPokemonByName('charizard');
             });
 
             afterAll(async () => {
@@ -55,9 +55,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             let result: Pokemon | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                result = await connector.getPokemonByName('charizard');
+                result = await adapter.getPokemonByName('charizard');
             });
 
             afterAll(async () => {
@@ -75,9 +75,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             const cacheService = new FakeCacheService(loggerTest);
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                await connector.setPokemonByName(
+                await adapter.setPokemonByName(
                     'charizard',
                     fakeRandemonPokemonWithOneType
                 );
@@ -118,14 +118,14 @@ describe('HTTP connector to PokéAPI - unit', () => {
             let result: Pokemon | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
                 await cacheService.set(
                     'pokemon:id:6',
                     JSON.stringify(fakeRandemonPokemonWithOneType)
                 );
 
-                result = await connector.getPokemonById('6');
+                result = await adapter.getPokemonById('6');
             });
 
             afterAll(async () => {
@@ -159,9 +159,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             let result: Pokemon | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                result = await connector.getPokemonById('6');
+                result = await adapter.getPokemonById('6');
             });
 
             afterAll(async () => {
@@ -179,9 +179,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             const cacheService = new FakeCacheService(loggerTest);
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                await connector.setPokemonById('6', fakeRandemonPokemonWithOneType);
+                await adapter.setPokemonById('6', fakeRandemonPokemonWithOneType);
             });
 
             afterAll(async () => {
@@ -219,14 +219,14 @@ describe('HTTP connector to PokéAPI - unit', () => {
             let result: number[] | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
                 await cacheService.set(
                     'type:pokemon:FIRE',
                     JSON.stringify(fakeRandemonTypeFireIds)
                 );
 
-                result = await connector.getAllPokemonIdsWithType('FIRE');
+                result = await adapter.getAllPokemonIdsWithType('FIRE');
             });
 
             afterAll(async () => {
@@ -244,9 +244,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             let result: number[] | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                result = await connector.getAllPokemonIdsWithType('FIRE');
+                result = await adapter.getAllPokemonIdsWithType('FIRE');
             });
 
             afterAll(async () => {
@@ -265,9 +265,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             const cacheService = new FakeCacheService(loggerTest);
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                await connector.setAllPokemonIdsWithType('FIRE', fakeRandemonTypeFireIds);
+                await adapter.setAllPokemonIdsWithType('FIRE', fakeRandemonTypeFireIds);
             });
 
             afterAll(async () => {
@@ -289,14 +289,14 @@ describe('HTTP connector to PokéAPI - unit', () => {
             let result: Move | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
                 await cacheService.set(
                     'move:name:hyper-beam',
                     JSON.stringify(fakeRandemonMoveHyperBeam)
                 );
 
-                result = await connector.getMoveByName('hyper-beam');
+                result = await adapter.getMoveByName('hyper-beam');
             });
 
             afterAll(async () => {
@@ -320,9 +320,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             let result: Move | null;
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                result = await connector.getMoveByName('hyper-beam');
+                result = await adapter.getMoveByName('hyper-beam');
             });
 
             afterAll(async () => {
@@ -340,9 +340,9 @@ describe('HTTP connector to PokéAPI - unit', () => {
             const cacheService = new FakeCacheService(loggerTest);
 
             beforeEach(async () => {
-                let connector: CacheConnector = new CacheConnector(cacheService);
+                let adapter: CacheAdapter = new CacheAdapter(cacheService);
 
-                await connector.setMoveByName('hyper-beam', fakeRandemonMoveHyperBeam);
+                await adapter.setMoveByName('hyper-beam', fakeRandemonMoveHyperBeam);
             });
 
             afterAll(async () => {

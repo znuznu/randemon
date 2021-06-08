@@ -1,7 +1,6 @@
 import { Resolver } from '../../core/graphql/resolver/resolver.interface';
 import Pokemon from '../../models/randemon/pokemon';
 import { Team, TeamConfig } from '../../models/randemon/team';
-import Type from '../../models/randemon/type';
 import { filterValues } from '../../utils';
 import DataService from '../service/data.service';
 import { GenerationService } from '../service/generation.service';

@@ -5,8 +5,8 @@ import {
 } from '../../../tests/fixtures/fakeRandemonFireTypeIds';
 import { fakeRandemonMoveHyperBeam } from '../../../tests/fixtures/fakeRandemonMove';
 import { fakeRandemonPokemonWithOneType } from '../../../tests/fixtures/fakeRandemonPokemon';
-import CacheConnector from '../../connector/cache/cacheConnector';
-import { HttpConnector } from '../../connector/pokeApi/httpConnector';
+import CacheAdapter from '../../adapter/cache/cacheAdapter';
+import { HttpAdapter } from '../../adapter/pokeApi/httpAdapter';
 import FakeCacheService from '../../core/cache/fakeCache.service';
 import { createHttpService } from '../../core/http/mock';
 import { loggerTest } from '../../logger';
@@ -14,17 +14,17 @@ import { Move } from '../../models/randemon/move';
 import Pokemon from '../../models/randemon/pokemon';
 import DataService from './data.service';
 
-jest.mock('../../connector/pokeApi/httpConnector');
-jest.mock('../../connector/cache/cacheConnector');
+jest.mock('../../adapter/pokeApi/httpAdapter');
+jest.mock('../../adapter/cache/cacheAdapter');
 
 describe('DataService - unit', () => {
     describe('::getIdsOfPokemonWithType', () => {
-        let cacheConnector: CacheConnector;
-        let pokeApiConnector: HttpConnector;
+        let cacheAdapter: CacheAdapter;
+        let pokeApiAdapter: HttpAdapter;
 
         beforeEach(() => {
-            cacheConnector = new CacheConnector(new FakeCacheService(loggerTest));
-            pokeApiConnector = new HttpConnector(
+            cacheAdapter = new CacheAdapter(new FakeCacheService(loggerTest));
+            pokeApiAdapter = new HttpAdapter(
                 {
                     BASE_URL: 'http://some-url.com'
                 },
@@ -42,12 +42,12 @@ describe('DataService - unit', () => {
             let result: number[];
 
             beforeEach(async () => {
-                const dataService = new DataService(pokeApiConnector, cacheConnector);
+                const dataService = new DataService(pokeApiAdapter, cacheAdapter);
 
-                jest.spyOn(cacheConnector, 'getAllPokemonIdsWithType').mockImplementation(
+                jest.spyOn(cacheAdapter, 'getAllPokemonIdsWithType').mockImplementation(
                     jest.fn(() => Promise.resolve(fakeRandemonTypeFireIds))
                 );
-                jest.spyOn(pokeApiConnector, 'getAllPokemonIdsWithType');
+                jest.spyOn(pokeApiAdapter, 'getAllPokemonIdsWithType');
 
                 result = await dataService.getIdsOfPokemonWithType('FIRE');
             });
@@ -58,14 +58,14 @@ describe('DataService - unit', () => {
 
             afterAll(() => jest.clearAllMocks());
 
-            it('should call the cache connector', () => {
-                expect(cacheConnector.getAllPokemonIdsWithType).toHaveBeenCalledWith(
+            it('should call the cache adapter', () => {
+                expect(cacheAdapter.getAllPokemonIdsWithType).toHaveBeenCalledWith(
                     'FIRE'
                 );
             });
 
-            it('should not call the PokéAPI connector', () => {
-                expect(pokeApiConnector.getAllPokemonIdsWithType).not.toHaveBeenCalled();
+            it('should not call the PokéAPI adapter', () => {
+                expect(pokeApiAdapter.getAllPokemonIdsWithType).not.toHaveBeenCalled();
             });
 
             it('should return the ids', () => {
@@ -77,15 +77,12 @@ describe('DataService - unit', () => {
             let result: number[];
 
             beforeEach(async () => {
-                const dataService = new DataService(pokeApiConnector, cacheConnector);
+                const dataService = new DataService(pokeApiAdapter, cacheAdapter);
 
-                jest.spyOn(cacheConnector, 'getAllPokemonIdsWithType').mockImplementation(
+                jest.spyOn(cacheAdapter, 'getAllPokemonIdsWithType').mockImplementation(
                     jest.fn(() => Promise.resolve(null))
                 );
-                jest.spyOn(
-                    pokeApiConnector,
-                    'getAllPokemonIdsWithType'
-                ).mockImplementation(
+                jest.spyOn(pokeApiAdapter, 'getAllPokemonIdsWithType').mockImplementation(
                     jest.fn(() => Promise.resolve(fakeRandemonTypeFireIds))
                 );
 
@@ -94,17 +91,18 @@ describe('DataService - unit', () => {
 
             afterAll(() => jest.clearAllMocks());
 
-            it('should call the cache connector', () => {
-                expect(cacheConnector.getAllPokemonIdsWithType).toHaveBeenCalledWith(
+            it('should call the cache adapter', () => {
+                expect(cacheAdapter.getAllPokemonIdsWithType).toHaveBeenCalledWith(
                     'FIRE'
                 );
-                expect(
-                    cacheConnector.setAllPokemonIdsWithType
-                ).toHaveBeenCalledWith('FIRE', [4, 5, 6, 37, 38, 58, 59, 77, 78, 126]);
+                expect(cacheAdapter.setAllPokemonIdsWithType).toHaveBeenCalledWith(
+                    'FIRE',
+                    [4, 5, 6, 37, 38, 58, 59, 77, 78, 126]
+                );
             });
 
-            it('should call the PokéAPI connector', () => {
-                expect(pokeApiConnector.getAllPokemonIdsWithType).toHaveBeenCalledWith(
+            it('should call the PokéAPI adapter', () => {
+                expect(pokeApiAdapter.getAllPokemonIdsWithType).toHaveBeenCalledWith(
                     'FIRE'
                 );
             });
@@ -116,12 +114,12 @@ describe('DataService - unit', () => {
     });
 
     describe('::getPokemonById', () => {
-        let cacheConnector: CacheConnector;
-        let pokeApiConnector: HttpConnector;
+        let cacheAdapter: CacheAdapter;
+        let pokeApiAdapter: HttpAdapter;
 
         beforeEach(() => {
-            cacheConnector = new CacheConnector(new FakeCacheService(loggerTest));
-            pokeApiConnector = new HttpConnector(
+            cacheAdapter = new CacheAdapter(new FakeCacheService(loggerTest));
+            pokeApiAdapter = new HttpAdapter(
                 {
                     BASE_URL: 'http://some-url.com'
                 },
@@ -139,12 +137,12 @@ describe('DataService - unit', () => {
             let result: Pokemon;
 
             beforeEach(async () => {
-                const dataService = new DataService(pokeApiConnector, cacheConnector);
+                const dataService = new DataService(pokeApiAdapter, cacheAdapter);
 
-                jest.spyOn(cacheConnector, 'getPokemonById').mockImplementation(
+                jest.spyOn(cacheAdapter, 'getPokemonById').mockImplementation(
                     jest.fn(() => Promise.resolve(fakeRandemonPokemonWithOneType))
                 );
-                jest.spyOn(pokeApiConnector, 'getPokemon');
+                jest.spyOn(pokeApiAdapter, 'getPokemon');
 
                 result = await dataService.getPokemonById('6');
             });
@@ -155,12 +153,12 @@ describe('DataService - unit', () => {
 
             afterAll(() => jest.clearAllMocks());
 
-            it('should call the cache connector', () => {
-                expect(cacheConnector.getPokemonById).toHaveBeenCalledWith('6');
+            it('should call the cache adapter', () => {
+                expect(cacheAdapter.getPokemonById).toHaveBeenCalledWith('6');
             });
 
-            it('should not call the PokéAPI connector', () => {
-                expect(pokeApiConnector.getPokemon).not.toHaveBeenCalled();
+            it('should not call the PokéAPI adapter', () => {
+                expect(pokeApiAdapter.getPokemon).not.toHaveBeenCalled();
             });
 
             it('should return the move', () => {
@@ -188,12 +186,12 @@ describe('DataService - unit', () => {
             let result: Pokemon;
 
             beforeEach(async () => {
-                const dataService = new DataService(pokeApiConnector, cacheConnector);
+                const dataService = new DataService(pokeApiAdapter, cacheAdapter);
 
-                jest.spyOn(cacheConnector, 'getPokemonById').mockImplementation(
+                jest.spyOn(cacheAdapter, 'getPokemonById').mockImplementation(
                     jest.fn(() => Promise.resolve(null))
                 );
-                jest.spyOn(pokeApiConnector, 'getPokemon').mockImplementation(
+                jest.spyOn(pokeApiAdapter, 'getPokemon').mockImplementation(
                     jest.fn(() => Promise.resolve(fakeRandemonPokemonWithOneType))
                 );
 
@@ -202,9 +200,9 @@ describe('DataService - unit', () => {
 
             afterAll(() => jest.clearAllMocks());
 
-            it('should call the cache connector', () => {
-                expect(cacheConnector.getPokemonById).toHaveBeenCalledWith('6');
-                expect(cacheConnector.setPokemonById).toHaveBeenCalledWith('6', {
+            it('should call the cache adapter', () => {
+                expect(cacheAdapter.getPokemonById).toHaveBeenCalledWith('6');
+                expect(cacheAdapter.setPokemonById).toHaveBeenCalledWith('6', {
                     id: 6,
                     name: 'charizard',
                     frontSprite:
@@ -221,30 +219,27 @@ describe('DataService - unit', () => {
                     moves: [],
                     isLocked: false
                 });
-                expect(cacheConnector.setPokemonByName).toHaveBeenCalledWith(
-                    'charizard',
-                    {
-                        id: 6,
-                        name: 'charizard',
-                        frontSprite:
-                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
-                        officialArtwork:
-                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
-                        types: ['FIRE', null],
-                        allMoveNames: [
-                            'mega-punch',
-                            'fire-punch',
-                            'thunder-punch',
-                            'scratch'
-                        ],
-                        moves: [],
-                        isLocked: false
-                    }
-                );
+                expect(cacheAdapter.setPokemonByName).toHaveBeenCalledWith('charizard', {
+                    id: 6,
+                    name: 'charizard',
+                    frontSprite:
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
+                    officialArtwork:
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+                    types: ['FIRE', null],
+                    allMoveNames: [
+                        'mega-punch',
+                        'fire-punch',
+                        'thunder-punch',
+                        'scratch'
+                    ],
+                    moves: [],
+                    isLocked: false
+                });
             });
 
-            it('should call the PokéAPI connector', () => {
-                expect(pokeApiConnector.getPokemon).toHaveBeenCalledWith('6');
+            it('should call the PokéAPI adapter', () => {
+                expect(pokeApiAdapter.getPokemon).toHaveBeenCalledWith('6');
             });
 
             it('should return the pokemon', () => {
@@ -270,12 +265,12 @@ describe('DataService - unit', () => {
     });
 
     describe('::getMoveByName', () => {
-        let cacheConnector: CacheConnector;
-        let pokeApiConnector: HttpConnector;
+        let cacheAdapter: CacheAdapter;
+        let pokeApiAdapter: HttpAdapter;
 
         beforeEach(() => {
-            cacheConnector = new CacheConnector(new FakeCacheService(loggerTest));
-            pokeApiConnector = new HttpConnector(
+            cacheAdapter = new CacheAdapter(new FakeCacheService(loggerTest));
+            pokeApiAdapter = new HttpAdapter(
                 {
                     BASE_URL: 'http://some-url.com'
                 },
@@ -293,12 +288,12 @@ describe('DataService - unit', () => {
             let result: Move;
 
             beforeEach(async () => {
-                const dataService = new DataService(pokeApiConnector, cacheConnector);
+                const dataService = new DataService(pokeApiAdapter, cacheAdapter);
 
-                jest.spyOn(cacheConnector, 'getMoveByName').mockImplementation(
+                jest.spyOn(cacheAdapter, 'getMoveByName').mockImplementation(
                     jest.fn(() => Promise.resolve(fakeRandemonMoveHyperBeam))
                 );
-                jest.spyOn(pokeApiConnector, 'getMove');
+                jest.spyOn(pokeApiAdapter, 'getMove');
 
                 result = await dataService.getMoveByName('hyper-beam');
             });
@@ -309,12 +304,12 @@ describe('DataService - unit', () => {
 
             afterAll(() => jest.clearAllMocks());
 
-            it('should call the cache connector', () => {
-                expect(cacheConnector.getMoveByName).toHaveBeenCalledWith('hyper-beam');
+            it('should call the cache adapter', () => {
+                expect(cacheAdapter.getMoveByName).toHaveBeenCalledWith('hyper-beam');
             });
 
-            it('should not call the PokéAPI connector', () => {
-                expect(pokeApiConnector.getMove).not.toHaveBeenCalled();
+            it('should not call the PokéAPI adapter', () => {
+                expect(pokeApiAdapter.getMove).not.toHaveBeenCalled();
             });
 
             it('should return the move', () => {
@@ -332,12 +327,12 @@ describe('DataService - unit', () => {
             let result: Move;
 
             beforeEach(async () => {
-                const dataService = new DataService(pokeApiConnector, cacheConnector);
+                const dataService = new DataService(pokeApiAdapter, cacheAdapter);
 
-                jest.spyOn(cacheConnector, 'getMoveByName').mockImplementation(
+                jest.spyOn(cacheAdapter, 'getMoveByName').mockImplementation(
                     jest.fn(() => Promise.resolve(null))
                 );
-                jest.spyOn(pokeApiConnector, 'getMove').mockImplementation(
+                jest.spyOn(pokeApiAdapter, 'getMove').mockImplementation(
                     jest.fn(() => Promise.resolve(fakeRandemonMoveHyperBeam))
                 );
 
@@ -350,12 +345,12 @@ describe('DataService - unit', () => {
 
             afterAll(() => jest.clearAllMocks());
 
-            it('should call the cache connector', () => {
-                expect(cacheConnector.getMoveByName).toHaveBeenCalledWith('hyper-beam');
+            it('should call the cache adapter', () => {
+                expect(cacheAdapter.getMoveByName).toHaveBeenCalledWith('hyper-beam');
             });
 
-            it('should call the PokéAPI connector', () => {
-                expect(pokeApiConnector.getMove).toHaveBeenCalledWith('hyper-beam');
+            it('should call the PokéAPI adapter', () => {
+                expect(pokeApiAdapter.getMove).toHaveBeenCalledWith('hyper-beam');
             });
 
             it('should return the move', () => {
@@ -371,13 +366,13 @@ describe('DataService - unit', () => {
     });
 
     describe('::getIdsOfPokemonWithTypes', () => {
-        let cacheConnector: CacheConnector;
-        let pokeApiConnector: HttpConnector;
+        let cacheAdapter: CacheAdapter;
+        let pokeApiAdapter: HttpAdapter;
         let dataService: DataService;
 
         beforeEach(() => {
-            cacheConnector = new CacheConnector(new FakeCacheService(loggerTest));
-            pokeApiConnector = new HttpConnector(
+            cacheAdapter = new CacheAdapter(new FakeCacheService(loggerTest));
+            pokeApiAdapter = new HttpAdapter(
                 {
                     BASE_URL: 'http://some-url.com'
                 },
@@ -385,17 +380,16 @@ describe('DataService - unit', () => {
                     get: { status: 200, json: fakeRandemonTypeFireIds }
                 })
             );
-            dataService = new DataService(pokeApiConnector, cacheConnector);
+            dataService = new DataService(pokeApiAdapter, cacheAdapter);
         });
 
         describe('when a single type is provided', () => {
             let result: number[];
 
             beforeEach(async () => {
-                jest.spyOn(
-                    cacheConnector,
-                    'getAllPokemonIdsWithType'
-                ).mockReturnValueOnce(Promise.resolve(fakeRandemonTypeFireIds));
+                jest.spyOn(cacheAdapter, 'getAllPokemonIdsWithType').mockReturnValueOnce(
+                    Promise.resolve(fakeRandemonTypeFireIds)
+                );
 
                 result = await dataService.getIdsOfPokemonWithTypes(['FIRE']);
             });
