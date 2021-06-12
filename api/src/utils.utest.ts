@@ -14,6 +14,12 @@ describe('Utils - unit', () => {
             });
         });
 
+        describe('when the provided `from` is greater than the provided `to`', () => {
+            it('should return an empty array', () => {
+                expect(getRangeValues(10, 5)).toEqual([]);
+            });
+        });
+
         describe('when the range is 0 to 0', () => {
             it('should return an array containing 0', () => {
                 expect(getRangeValues(0, 0)).toEqual([0]);

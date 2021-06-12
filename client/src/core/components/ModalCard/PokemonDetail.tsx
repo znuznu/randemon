@@ -89,6 +89,26 @@ type PokemonDetailProps = {
   pokemon: Pokemon;
 };
 
+type JapaneseNameProps = {
+  hasLongName: boolean;
+};
+
+const JapaneseName = styled.div<JapaneseNameProps>`
+  position: absolute;
+  z-index: -1;
+  opacity: 0.1;
+  top: 45px;
+  left: 10px;
+  font-weight: bold;
+  font-size: ${(props) => (props.hasLongName ? '46' : '56')}px;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    font-size: 36px;
+  }
+`;
+
 const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
   const currentPokemonModalContext = useContext(CurrentPokemonModalContext);
 
@@ -103,7 +123,12 @@ const PokemonDetail = ({ pokemon }: PokemonDetailProps) => {
         <CloseIcon opacity={1} onClick={removeCurrentPokemonDetail} />
       </Heading>
       {pokemon.officialArtwork && <Artwork src={pokemon.officialArtwork} />}
-      <Name>{pokemon.name}</Name>
+      {pokemon.names.japanese && (
+        <JapaneseName hasLongName={pokemon.names.japanese.length > 5}>
+          {pokemon.names.japanese}
+        </JapaneseName>
+      )}
+      <Name>{pokemon.names.english}</Name>
       {pokemon.types && (
         <Types>
           {pokemon.types.map((type) => {

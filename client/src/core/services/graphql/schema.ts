@@ -15,7 +15,10 @@ const qCreateTeamRandomly = gql`
     ) {
       pokemon {
         id
-        name
+        names {
+          english
+          japanese
+        }
         frontSprite
         officialArtwork
         types
@@ -49,7 +52,10 @@ const qUpdateTeamRandomly = gql`
     ) {
       pokemon {
         id
-        name
+        names {
+          english
+          japanese
+        }
         frontSprite
         officialArtwork
         types

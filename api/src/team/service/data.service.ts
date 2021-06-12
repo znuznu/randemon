@@ -23,14 +23,18 @@ class DataService {
     }
 
     async getPokemonById(id: string): Promise<Pokemon> {
-        const pokemon = await this.redisConnector.getPokemonById(id);
-        if (!pokemon) {
-            const pokemon = await this.pokeApiAdapter.getPokemon(id);
-            await this.redisConnector.setPokemonById(id, pokemon);
-            await this.redisConnector.setPokemonByName(pokemon.name, pokemon);
+        const pokemonFromCache = await this.redisConnector.getPokemonById(id);
 
-            return pokemon;
+        if (pokemonFromCache) {
+            return pokemonFromCache;
         }
+
+        const pokemonWithoutSpecies = await this.pokeApiAdapter.getPokemon(id);
+
+        const pokemon = await this.pokeApiAdapter.getSpeciesData(pokemonWithoutSpecies);
+
+        await this.redisConnector.setPokemonById(id, pokemon);
+        await this.redisConnector.setPokemonByName(pokemon.names.english, pokemon);
 
         return pokemon;
     }

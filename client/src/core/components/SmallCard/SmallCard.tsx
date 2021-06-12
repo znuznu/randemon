@@ -93,6 +93,20 @@ type BarProps = {
   teamIndex: number;
 };
 
+const JapaneseName = styled.h4`
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  opacity: 0.3;
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  z-index: -1;
+`;
+
+const Center = styled.div`
+  display: flex;
+`;
+
 const SmallCard = ({ pokemon, teamIndex }: BarProps) => {
   const teamContext = useContext(TeamContext);
   const currentPokemonModalContext = useContext(CurrentPokemonModalContext);
@@ -140,8 +154,13 @@ const SmallCard = ({ pokemon, teamIndex }: BarProps) => {
               />
             )}
           </Heading>
-          {pokemon.frontSprite && <Sprite src={pokemon.frontSprite} />}
-          <Name isStrong={isHovered || pokemon.isLocked}>{pokemon.name}</Name>
+          <Center>
+            {pokemon.names.japanese && (
+              <JapaneseName>{pokemon.names.japanese}</JapaneseName>
+            )}
+            {pokemon.frontSprite && <Sprite src={pokemon.frontSprite} />}
+          </Center>
+          <Name isStrong={isHovered || pokemon.isLocked}>{pokemon.names.english}</Name>
         </>
       )}
     </Container>

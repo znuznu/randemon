@@ -51,6 +51,9 @@ const schema = buildSchema(`
             types: [Type]
         }
 
+        """
+        Pokémon's move.
+        """
         type Move {
             accuracy: Int
             power: Int
@@ -60,11 +63,19 @@ const schema = buildSchema(`
         }
 
         """
+        The Pokémon names in english and japanese (optional).
+        """
+        type PokemonNames {
+            english: String!,
+            japanese: String
+        }
+
+        """
         Our favorite pocket monsters.
         """
         type Pokemon {
             id: Int!
-            name: String!
+            names: PokemonNames!
             frontSprite: String
             officialArtwork: String
             types: [Type]!
@@ -80,6 +91,11 @@ const schema = buildSchema(`
             pokemon: [Pokemon]!
         }
 
+        input PokemonNamesInput {
+            english: String!,
+            japanese: String
+        }
+
         input MoveInput {
             accuracy: Int
             power: Int
@@ -90,7 +106,7 @@ const schema = buildSchema(`
 
         input PokemonInput {
             id: Int!
-            name: String!
+            names: PokemonNamesInput!
             frontSprite: String
             officialArtwork: String
             types: [Type]!

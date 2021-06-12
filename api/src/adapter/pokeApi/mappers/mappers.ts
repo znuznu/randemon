@@ -1,5 +1,6 @@
 import { MovePAPI } from '../../../models/pokeapi/move';
 import { PokemonPAPI } from '../../../models/pokeapi/pokemon';
+import { SpeciesPAPI } from '../../../models/pokeapi/species';
 import { TypePAPI } from '../../../models/pokeapi/type';
 import { Move } from '../../../models/randemon/move';
 import Pokemon from '../../../models/randemon/pokemon';
@@ -35,7 +36,7 @@ export function mapPokemon(pokemonPAPI: PokemonPAPI): Pokemon {
 
     return {
         id,
-        name,
+        names: { english: name },
         frontSprite: pokemonPAPI.sprites.front_default,
         officialArtwork: pokemonPAPI.sprites.other['official-artwork'].front_default,
         types: [
@@ -65,4 +66,20 @@ export function mapTypeToIds(pokemonType: TypePAPI): number[] {
     });
 
     return typeIds;
+}
+
+export function mapSpecies(species: SpeciesPAPI, pokemon: Pokemon): Pokemon {
+    for (const speciesName of species.names) {
+        if (speciesName.language.name === 'ja-Hrkt') {
+            return {
+                ...pokemon,
+                names: {
+                    ...pokemon.names,
+                    japanese: speciesName.name
+                }
+            };
+        }
+    }
+
+    return pokemon;
 }

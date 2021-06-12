@@ -4,7 +4,10 @@ import {
     fakeRandemonTypeWaterIds
 } from '../../../tests/fixtures/fakeRandemonFireTypeIds';
 import { fakeRandemonMoveHyperBeam } from '../../../tests/fixtures/fakeRandemonMove';
-import { fakeRandemonPokemonWithOneType } from '../../../tests/fixtures/fakeRandemonPokemon';
+import {
+    fakeRandemonPokemonWithOneType,
+    fakeRandemonPokemonWithSpeciesData
+} from '../../../tests/fixtures/fakeRandemonPokemon';
 import CacheAdapter from '../../adapter/cache/cacheAdapter';
 import { HttpAdapter } from '../../adapter/pokeApi/httpAdapter';
 import FakeCacheService from '../../core/cache/fakeCache.service';
@@ -123,9 +126,7 @@ describe('DataService - unit', () => {
                 {
                     BASE_URL: 'http://some-url.com'
                 },
-                createHttpService({
-                    get: { status: 200, json: fakeRandemonTypeFireIds }
-                })
+                createHttpService()
             );
         });
 
@@ -140,9 +141,10 @@ describe('DataService - unit', () => {
                 const dataService = new DataService(pokeApiAdapter, cacheAdapter);
 
                 jest.spyOn(cacheAdapter, 'getPokemonById').mockImplementation(
-                    jest.fn(() => Promise.resolve(fakeRandemonPokemonWithOneType))
+                    jest.fn(() => Promise.resolve(fakeRandemonPokemonWithSpeciesData))
                 );
                 jest.spyOn(pokeApiAdapter, 'getPokemon');
+                jest.spyOn(pokeApiAdapter, 'getSpeciesData');
 
                 result = await dataService.getPokemonById('6');
             });
@@ -159,12 +161,16 @@ describe('DataService - unit', () => {
 
             it('should not call the PokéAPI adapter', () => {
                 expect(pokeApiAdapter.getPokemon).not.toHaveBeenCalled();
+                expect(pokeApiAdapter.getSpeciesData).not.toHaveBeenCalled();
             });
 
-            it('should return the move', () => {
+            it('should return the pokemon', () => {
                 expect(result).toEqual({
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard',
+                        japanese: 'リザードン'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -194,6 +200,9 @@ describe('DataService - unit', () => {
                 jest.spyOn(pokeApiAdapter, 'getPokemon').mockImplementation(
                     jest.fn(() => Promise.resolve(fakeRandemonPokemonWithOneType))
                 );
+                jest.spyOn(pokeApiAdapter, 'getSpeciesData').mockImplementation(
+                    jest.fn(() => Promise.resolve(fakeRandemonPokemonWithSpeciesData))
+                );
 
                 result = await dataService.getPokemonById('6');
             });
@@ -204,7 +213,10 @@ describe('DataService - unit', () => {
                 expect(cacheAdapter.getPokemonById).toHaveBeenCalledWith('6');
                 expect(cacheAdapter.setPokemonById).toHaveBeenCalledWith('6', {
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard',
+                        japanese: 'リザードン'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -221,7 +233,10 @@ describe('DataService - unit', () => {
                 });
                 expect(cacheAdapter.setPokemonByName).toHaveBeenCalledWith('charizard', {
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard',
+                        japanese: 'リザードン'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -245,7 +260,10 @@ describe('DataService - unit', () => {
             it('should return the pokemon', () => {
                 expect(result).toEqual({
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard',
+                        japanese: 'リザードン'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
