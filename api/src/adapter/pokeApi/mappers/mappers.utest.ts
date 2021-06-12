@@ -1,18 +1,22 @@
 import { fakePokeAPIMoveHyperBeam } from '../../../../tests/fixtures/fakePokeAPIMove';
 import {
-    fakePAPIPokemonWithOneType,
-    fakePAPIPokemonWithTwoTypes
+    fakePokeAPIPokemonWithOneType,
+    fakePokeAPIPokemonWithTwoTypes
 } from '../../../../tests/fixtures/fakePokeAPIPokemon';
+import { fakePokeAPISpeciesCharizard } from '../../../../tests/fixtures/fakePokeAPISpecies';
 import { fakePokeAPITypeFire } from '../../../../tests/fixtures/fakePokeAPIType';
-import { mapMove, mapPokemon, mapTypeToIds } from './mappers';
+import { fakeRandemonPokemonWithOneType } from '../../../../tests/fixtures/fakeRandemonPokemon';
+import { mapMove, mapPokemon, mapSpecies, mapTypeToIds } from './mappers';
 
 describe('Mappers - unit', () => {
     describe('#mapPokemon', () => {
         describe('when a pokemon from the API with one type is passed', () => {
             it('should return the pokemon mapped', () => {
-                expect(mapPokemon(fakePAPIPokemonWithOneType)).toEqual({
+                expect(mapPokemon(fakePokeAPIPokemonWithOneType)).toEqual({
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -32,9 +36,11 @@ describe('Mappers - unit', () => {
 
         describe('when a pokemon from API with two types is passed', () => {
             it('should return the pokemon mapped', () => {
-                expect(mapPokemon(fakePAPIPokemonWithTwoTypes)).toEqual({
+                expect(mapPokemon(fakePokeAPIPokemonWithTwoTypes)).toEqual({
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -82,6 +88,38 @@ describe('Mappers - unit', () => {
                     78,
                     126
                 ]);
+            });
+        });
+    });
+
+    describe('#mapSpecies', () => {
+        describe('when the species has names', () => {
+            it('should map the pokemon with species informations', () => {
+                expect(
+                    mapSpecies(
+                        fakePokeAPISpeciesCharizard,
+                        fakeRandemonPokemonWithOneType
+                    )
+                ).toEqual({
+                    id: 6,
+                    names: {
+                        english: 'charizard',
+                        japanese: 'リザードン'
+                    },
+                    frontSprite:
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
+                    officialArtwork:
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+                    types: ['FIRE', null],
+                    allMoveNames: [
+                        'mega-punch',
+                        'fire-punch',
+                        'thunder-punch',
+                        'scratch'
+                    ],
+                    moves: [],
+                    isLocked: false
+                });
             });
         });
     });

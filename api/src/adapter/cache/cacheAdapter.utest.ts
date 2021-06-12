@@ -32,7 +32,9 @@ describe('Cache adapter - unit', () => {
             it('should return the Pokemon', () => {
                 expect(result).toEqual({
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -92,7 +94,9 @@ describe('Cache adapter - unit', () => {
                 expect(cacheService.get('pokemon:name:charizard')).resolves.toEqual(
                     JSON.stringify({
                         id: 6,
-                        name: 'charizard',
+                        names: {
+                            english: 'charizard'
+                        },
                         frontSprite:
                             'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                         officialArtwork:
@@ -136,7 +140,9 @@ describe('Cache adapter - unit', () => {
             it('should return the Pokemon', () => {
                 expect(result).toEqual({
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -193,7 +199,9 @@ describe('Cache adapter - unit', () => {
                 expect(cacheService.get('pokemon:id:6')).resolves.toEqual(
                     JSON.stringify({
                         id: 6,
-                        name: 'charizard',
+                        names: {
+                            english: 'charizard'
+                        },
                         frontSprite:
                             'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                         officialArtwork:

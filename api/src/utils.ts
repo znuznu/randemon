@@ -1,4 +1,8 @@
 export function getRangeValues(from: number = 0, to: number): number[] {
+    if (from > to) {
+        return [];
+    }
+
     if (from < 0 || to < 0) {
         return [];
     }

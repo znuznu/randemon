@@ -6,4 +6,5 @@ export interface PokeApiPort {
     getPokemon(nameOrId: string): Promise<Pokemon>;
     getAllPokemonIdsWithType(type: Type): Promise<number[]>;
     getMove(nameOrId: string): Promise<Move>;
+    getSpeciesData(pokemon: Pokemon): Promise<Pokemon>;
 }

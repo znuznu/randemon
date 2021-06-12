@@ -1,7 +1,7 @@
 export interface Config {
     APP_NAME: string;
     LOG_LEVEL: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
-    LOG_LEVEL_TEST: 'error';
+    LOG_LEVEL_TEST: 'warn';
     API_URL: string;
     REDIS_URL: string | undefined;
     REDIS_HOST: string;
@@ -14,7 +14,7 @@ export interface Config {
 const config: Config = {
     APP_NAME: 'randemon-api',
     LOG_LEVEL: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
-    LOG_LEVEL_TEST: 'error',
+    LOG_LEVEL_TEST: 'warn',
     API_URL: 'https://pokeapi.co/api/v2/',
     REDIS_URL:
         process.env.NODE_ENV === 'production' && process.env.REDIS_URL

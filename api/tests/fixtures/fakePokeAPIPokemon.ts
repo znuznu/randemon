@@ -1,6 +1,6 @@
 import { PokemonPAPI } from '../../src/models/pokeapi/pokemon';
 
-export const fakePAPIPokemonWithOneType: PokemonPAPI = {
+export const fakePokeAPIPokemonWithOneType: PokemonPAPI = {
     abilities: [
         {
             ability: {
@@ -495,7 +495,7 @@ export const fakePAPIPokemonWithOneType: PokemonPAPI = {
     weight: 905
 };
 
-export const fakePAPIPokemonWithTwoTypes: PokemonPAPI = {
+export const fakePokeAPIPokemonWithTwoTypes: PokemonPAPI = {
     abilities: [
         {
             ability: {

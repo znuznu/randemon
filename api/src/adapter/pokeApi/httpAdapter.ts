@@ -2,7 +2,7 @@ import { URL } from 'url';
 
 import { HttpService } from '../../core/http/http';
 import { PokeApiPort } from './pokeApi.port';
-import { mapMove, mapPokemon, mapTypeToIds } from './mappers/mappers';
+import { mapMove, mapPokemon, mapSpecies, mapTypeToIds } from './mappers/mappers';
 import { PathBuilder } from '../../utils';
 import { PokemonPAPI } from '../../models/pokeapi/pokemon';
 import Type from '../../models/randemon/type';
@@ -10,6 +10,8 @@ import { TypePAPI } from '../../models/pokeapi/type';
 import { Move } from '../../models/randemon/move';
 import { MovePAPI } from '../../models/pokeapi/move';
 import Pokemon from '../../models/randemon/pokemon';
+import { url } from 'inspector';
+import { SpeciesPAPI } from '../../models/pokeapi/species';
 
 export interface Config {
     BASE_URL: string;
@@ -55,5 +57,18 @@ export class HttpAdapter implements PokeApiPort {
         }
 
         return mapMove(response.json<MovePAPI>());
+    }
+
+    async getSpeciesData(pokemon: Pokemon): Promise<Pokemon> {
+        const pathBuilder = new PathBuilder(this.baseURL)
+            .with('pokemon-species')
+            .with(pokemon.id.toString());
+        const response = await this.httpService.get(new URL(pathBuilder.path));
+
+        if (!Object.keys(response.json()).length) {
+            throw new Error(`No data found for the species with id ${pokemon.id}`);
+        }
+
+        return mapSpecies(response.json<SpeciesPAPI>(), pokemon);
     }
 }

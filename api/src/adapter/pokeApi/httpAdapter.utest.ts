@@ -2,12 +2,14 @@ import { URL } from 'url';
 
 import { HttpAdapter as PokeApiAdapter, Config } from './httpAdapter';
 import { fakePokeAPIMoveHyperBeam } from '../../../tests/fixtures/fakePokeAPIMove';
-import { fakePAPIPokemonWithOneType } from '../../../tests/fixtures/fakePokeAPIPokemon';
+import { fakePokeAPIPokemonWithOneType } from '../../../tests/fixtures/fakePokeAPIPokemon';
 import { HttpService } from '../../core/http/http';
 import { createHttpService } from '../../core/http/mock';
 import Pokemon from '../../models/randemon/pokemon';
 import { Move } from '../../models/randemon/move';
 import { fakePokeAPITypeFire } from '../../../tests/fixtures/fakePokeAPIType';
+import { fakePokeAPISpeciesCharizard } from '../../../tests/fixtures/fakePokeAPISpecies';
+import { fakeRandemonPokemonWithOneType } from '../../../tests/fixtures/fakeRandemonPokemon';
 
 describe('HTTP adapter to PokéAPI - unit', () => {
     const config: Config = {
@@ -22,7 +24,7 @@ describe('HTTP adapter to PokéAPI - unit', () => {
                 httpService = createHttpService({
                     get: {
                         status: 200,
-                        json: fakePAPIPokemonWithOneType
+                        json: fakePokeAPIPokemonWithOneType
                     }
                 });
 
@@ -73,7 +75,7 @@ describe('HTTP adapter to PokéAPI - unit', () => {
                 httpService = createHttpService({
                     get: {
                         status: 200,
-                        json: fakePAPIPokemonWithOneType
+                        json: fakePokeAPIPokemonWithOneType
                     }
                 });
 
@@ -85,7 +87,9 @@ describe('HTTP adapter to PokéAPI - unit', () => {
             it('should return the pokemon mapped', () => {
                 expect(result).toEqual({
                     id: 6,
-                    name: 'charizard',
+                    names: {
+                        english: 'charizard'
+                    },
                     frontSprite:
                         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
                     officialArtwork:
@@ -245,6 +249,95 @@ describe('HTTP adapter to PokéAPI - unit', () => {
                     pp: 5,
                     type: 'NORMAL',
                     name: 'hyper-beam'
+                });
+            });
+        });
+    });
+
+    describe('::getSpeciesData', () => {
+        describe('call to PokéAPI', () => {
+            let httpService: HttpService;
+
+            beforeEach(async () => {
+                httpService = createHttpService({
+                    get: {
+                        status: 200,
+                        json: fakePokeAPISpeciesCharizard
+                    }
+                });
+
+                jest.spyOn(httpService, 'get');
+
+                const adapter = new PokeApiAdapter(config, httpService);
+
+                await adapter.getSpeciesData(fakeRandemonPokemonWithOneType);
+            });
+
+            it('should call', () => {
+                expect(httpService.get).toHaveBeenCalledWith(
+                    new URL('https://url.com/pokemon-species/6')
+                );
+            });
+        });
+
+        describe("when the species data couldn't be found", () => {
+            let httpService: HttpService;
+            let adapter: PokeApiAdapter;
+
+            beforeEach(() => {
+                httpService = createHttpService({
+                    get: {
+                        status: 404
+                    }
+                });
+
+                adapter = new PokeApiAdapter(config, httpService);
+            });
+
+            it('should throw', async () => {
+                await expect(() =>
+                    adapter.getSpeciesData(fakeRandemonPokemonWithOneType)
+                ).rejects.toThrow('No data found for the species with id 6');
+            });
+        });
+
+        describe('when the species data has been found', () => {
+            let httpService: HttpService;
+            let result: Pokemon;
+
+            beforeEach(async () => {
+                httpService = createHttpService({
+                    get: {
+                        status: 200,
+                        json: fakePokeAPISpeciesCharizard
+                    }
+                });
+
+                const adapter = new PokeApiAdapter(config, httpService);
+
+                result = await adapter.getSpeciesData(fakeRandemonPokemonWithOneType);
+            });
+
+            it('should return the move mapped', () => {
+                expect(result).toEqual({
+                    id: 6,
+                    names: {
+                        english: 'charizard',
+                        japanese: 'リザードン'
+                    },
+                    frontSprite:
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
+                    officialArtwork:
+                        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+                    types: ['FIRE', null],
+                    allMoveNames: [
+                        'mega-punch',
+                        'fire-punch',
+                        'thunder-punch',
+                        'scratch'
+                    ],
+                    moves: [],
+                    isLocked: false
                 });
             });
         });
