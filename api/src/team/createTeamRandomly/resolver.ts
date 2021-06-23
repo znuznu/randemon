@@ -11,13 +11,13 @@ class CreateTeamRandomlyResolver implements Resolver {
 
     async createTeamRandomly(config: TeamConfig): Promise<Team> {
         const { generations, numberOfPokemon, types } = config;
-        let generationsIds = GenerationService.getIndexesOfMultipleGenerations(
+        const generationsIds = GenerationService.getIndexesOfMultipleGenerations(
             generations
         );
         let indexes: number[] = generationsIds;
 
         if (types && types.length) {
-            let typeIds = await this.dataService.getIdsOfPokemonWithTypes(types);
+            const typeIds = await this.dataService.getIdsOfPokemonWithTypes(types);
             indexes = filterValues(generationsIds, typeIds);
         }
 
