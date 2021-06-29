@@ -44,27 +44,28 @@ class UpdateTeamRandomlyResolver implements Resolver {
         const newTeam: Team = { pokemon: [] };
 
         for (const teamPokemon of pokemon) {
-            if (!poolIds.length) {
-                break;
-            }
-
-            if (!teamPokemon.isLocked && poolIds.length) {
-                if (!pokemonLeft) {
-                    continue;
-                }
-
-                const newPokemonId = poolIds.splice(
-                    getRandomNumberInRange(0, poolIds.length),
-                    1
-                )[0];
-                const newPokemon = await this.getPokemonWithRandomMoves(
-                    newPokemonId.toString()
-                );
-                newTeam.pokemon.push(newPokemon);
-                pokemonLeft--;
-            } else {
+            if (teamPokemon.isLocked) {
                 newTeam.pokemon.push(teamPokemon);
+                continue;
             }
+
+            if (!poolIds.length) {
+                continue;
+            }
+
+            if (!pokemonLeft) {
+                continue;
+            }
+
+            const newPokemonId = poolIds.splice(
+                getRandomNumberInRange(0, poolIds.length),
+                1
+            )[0];
+            const newPokemon = await this.getPokemonWithRandomMoves(
+                newPokemonId.toString()
+            );
+            newTeam.pokemon.push(newPokemon);
+            pokemonLeft--;
         }
 
         while (poolIds.length && pokemonLeft) {
