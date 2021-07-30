@@ -10,7 +10,6 @@ import { TypePAPI } from '../../models/pokeapi/type';
 import { Move } from '../../models/randemon/move';
 import { MovePAPI } from '../../models/pokeapi/move';
 import Pokemon from '../../models/randemon/pokemon';
-import { url } from 'inspector';
 import { SpeciesPAPI } from '../../models/pokeapi/species';
 
 export interface Config {

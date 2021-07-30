@@ -2,7 +2,7 @@ import IORedis from 'ioredis';
 import { Logger } from 'pino';
 import { CacheService } from './cache.interface';
 
-class RedisService implements CacheService {
+class RedisCacheService implements CacheService {
     private client: IORedis.Redis;
     private logger: Logger;
 
@@ -60,4 +60,4 @@ export interface RedisConfig {
     reconnectingRetryAttempts?: number;
 }
 
-export default RedisService;
+export default RedisCacheService;
