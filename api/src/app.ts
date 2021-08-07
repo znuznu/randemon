@@ -2,11 +2,13 @@ import express, { Request, Response } from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import cors from 'cors';
 
-import { logger } from './logger';
-import { buildRootResolver } from './core/graphql/rootResolver';
-import schema from './core/graphql/schema';
-import { config } from './config';
-import { buildCoreServices, CoreServices } from './core/services/buildCoreServices';
+import { logger } from './infrastructure/services/logger';
+import { buildRootResolver } from './application/graphql/rootResolver';
+import schema from './application/graphql/schema';
+import { config } from './infrastructure/server/config';
+import { buildInfrastructureServices, InfrastructureServices } from './infrastructure/services/buildInfrastructureServices';
+
+// Note: Could have move every express related stuff in infrastructure/ but the project is small
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -31,7 +33,7 @@ process.on('unhandledRejection', (reason) => {
     process.exit(1);
 });
 
-const coreServices: CoreServices = buildCoreServices(config);
+const coreServices: InfrastructureServices = buildInfrastructureServices(config);
 const rootResolver = buildRootResolver(coreServices);
 
 app.use(

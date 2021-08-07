@@ -1,6 +1,7 @@
 # Randemon API
 
-This folder is the API folder of Randemon.
+This folder is the API folder of Randemon. It's a simple hexagonal architecture with a good coverage.  
+The only part not really covered is the resolvers, but mocking random values is _reaaaaaaally_ boring and tricky.
 
 # Requirements
 

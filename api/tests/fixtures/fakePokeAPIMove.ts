@@ -1,4 +1,4 @@
-import { MovePAPI } from '../../src/models/pokeapi/move';
+import { MovePAPI } from '../../src/infrastructure/pokeApi/models/move';
 
 export const fakePokeAPIMoveHyperBeam: MovePAPI = {
     accuracy: 90,

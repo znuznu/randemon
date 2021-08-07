@@ -1,4 +1,4 @@
-import { Move } from '../../src/models/randemon/move';
+import { Move } from '../../src/domain/models/move';
 
 export const fakeRandemonMoveHyperBeam: Move = {
     accuracy: 90,

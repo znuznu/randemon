@@ -1,4 +1,4 @@
-import { TypePAPI } from '../../src/models/pokeapi/type';
+import { TypePAPI } from '../../src/infrastructure/pokeApi/models/type';
 
 export const fakePokeAPITypeFire: TypePAPI = {
     name: 'fire',

@@ -1,4 +1,4 @@
-import Pokemon from '../../src/models/randemon/pokemon';
+import Pokemon from '../../src/domain/models/pokemon';
 
 export const fakeRandemonPokemonWithOneType: Pokemon = {
     id: 6,

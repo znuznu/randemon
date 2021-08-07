@@ -1,4 +1,4 @@
-import { PokemonPAPI } from '../../src/models/pokeapi/pokemon';
+import { PokemonPAPI } from '../../src/infrastructure/pokeApi/models/pokemon';
 
 export const fakePokeAPIPokemonWithOneType: PokemonPAPI = {
     abilities: [

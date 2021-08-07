@@ -1,4 +1,4 @@
-import { SpeciesPAPI } from '../../src/models/pokeapi/species';
+import { SpeciesPAPI } from '../../src/infrastructure/pokeApi/models/species';
 
 export const fakePokeAPISpeciesCharizard: SpeciesPAPI = {
     id: 6,
